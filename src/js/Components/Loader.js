@@ -37,7 +37,7 @@ class Loader {
       delay: anime.stagger(150)
     }, '-=2400')
     
-    this.imgArr = document.images
+    this.imgArr = ['/media/bayzat/hover.png', '/media/dxblive/hover.png', '/media/rivoli/hover.png', '/media/ddw/hover.png', '/media/mtli/hover.png']
     this.m.listeners = new Listeners()
     this.loading()
 
@@ -48,7 +48,7 @@ class Loader {
       let img = new Image;
       return img.onload = function (t) {
           loadedCb()
-      }, img.crossOrigin = "anonymous", img.src = imgToLoad.src, img
+      }, img.crossOrigin = "anonymous", img.src = imgToLoad, img
     }
     
     !function (imgArr) {
@@ -74,8 +74,11 @@ class Loader {
   loading = () => {
     this.intro()
 
-    this.anim()
-    // this.loadImgs(this.imgArr, this.anim)
+    if (this.m.page.is.home) {
+      this.loadImgs(this.imgArr, this.anim)      
+    } else {
+      this.anim()
+     }
   }
 
   intro = () => {
@@ -86,9 +89,10 @@ class Loader {
   }
 
   anim = () => {
+    let delay = this.m.page.is.home ? 1500 : 500
     setTimeout(() => {
       this.hideCb()
-  }, 1500)
+  }, delay)
   }
 
   hideCb = () => {
