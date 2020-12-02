@@ -3,11 +3,7 @@ import XhrInitializer from './Components/Xhr/initializer'
 import MainController from './Components/MainController'
 
 class App {
-  constructor() {
-    if (!location.href.endsWith('/')) {
-      window.location = location.href + '/'
-    }
-    
+  constructor() {    
     Promise.all([App.domReady()]).then(this.init.bind(this))
   }
 
