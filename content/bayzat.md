@@ -4,8 +4,8 @@ img: '/media/bayzat/hover.png'
 year: 2020
 live: 'https://bayzat.com'
 responsibilities: ['Gatsby/React', 'Styled Components', 'Semantic HTML', 'Responsive CSS', 'Page generation from API', 'SEO', 'Performance Testing', 'Browser Testing']
-next: '/dxblive'    
-prev: '/mtli'
+next: '/dxblive/'    
+prev: '/mtli/'
 media:
   - src: '/media/bayzat/1.jpg'
     alt: ''

@@ -4,6 +4,10 @@ import MainController from './Components/MainController'
 
 class App {
   constructor() {
+    if (!location.href.endsWith('/')) {
+      window.location = location.href + '/'
+    }
+    
     Promise.all([App.domReady()]).then(this.init.bind(this))
   }
 
