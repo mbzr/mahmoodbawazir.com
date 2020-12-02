@@ -1,0 +1,30 @@
+<footer class="footer" id="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__row">
+        <div class="footer__col">
+          <ul class="footer__list">
+            {{ range .Params.footer.social }}
+              <li class="footer__item">
+                <a href="{{ .url }}" target="_blank" class="no-xhr footer__anchor line-wrap">{{ .title }}</a>
+              </li>
+            {{ end }}
+          </ul>
+        </div>
+        <div class="footer__col right">
+          <div>
+            <div class="footer__link-wrap">
+              <a href="{{ .Params.footer.resume.link }}" target="_blank" class="no-xhr footer__link link link--primary line-wrap line-wrap--primary">{{ .Params.footer.resume.text }}</a>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__copy-wrap">
+        <div class="footer__copy">Mahmood Bawazir &copy; 2020</div>
+      </div>
+    </div>
+  </div>
+</footer>

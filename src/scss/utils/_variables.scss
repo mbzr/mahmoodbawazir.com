@@ -1,0 +1,128 @@
+// ----------------------------------------------------------------------
+// Colors
+// ----------------------------------------------------------------------
+
+//Global colors
+$black: rgb(0, 0, 0);
+$white: rgb(255, 255, 255);
+$gray-darkest: rgb(32, 32, 32);
+$gray-darker: rgb(64, 64, 64);
+$gray-dark: rgb(96, 96, 96);
+$gray-medium: rgb(128, 128, 128);
+$gray-light: rgb(160, 160, 160);
+$gray-lighter: rgb(192, 192, 192);
+$gray-lightest: rgb(224, 224, 224);
+$transparent: rgba(0, 0, 0, 0);
+
+//Project colors
+// $brand-primary: #D4E1DF;
+$brand-primary: #f4650f;
+$brand-cream: #f2efdd;
+$brand-black: #000000;
+
+$b-shadow1: rgba(0, 0, 0, 0.21) 0 42px 94px 0;
+// ----------------------------------------------------------------------
+// Typography
+// ----------------------------------------------------------------------
+
+$fallbackFont: 'Arial';
+
+//Fonts
+$font-dw: 'DW';
+$font-roboto: 'Roboto';
+
+$font-size-num: 16;
+$font-size-base: unquote('#{$font-size-num}px');
+
+$headings-color: $brand-primary;
+$headings-line-height: 1.1;
+$headings-text-transform: uppercase;
+$transparent-bg: transparent;
+
+$font-weights: ("light": 300, "regular": 400, "medium": 500, "bold": 700);
+$font-styles: ("normal": normal, "italic": italic);
+$spacings: ("xs": 15, "sm": 30, "md": 60, "lg": 120, "xl": 160, "xxl": 240);
+$fonts: ("dw": $font-dw, "roboto": $font-roboto);
+// ----------------------------------------------------------------------
+// Paths
+// ----------------------------------------------------------------------
+
+$fonts-dir: '/fonts';
+$img-dir: '/images';
+
+//== Media queries breakpoints
+//
+//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
+
+// Extra small screen / phone
+//** Deprecated `$screen-xs` as of v3.0.1
+$screen-xs: 480 !default;
+//** Deprecated `$screen-xs-min` as of v3.2.0
+$screen-xs-min: $screen-xs !default;
+//** Deprecated `$screen-phone` as of v3.0.1
+$screen-phone: $screen-xs-min !default;
+
+// Small screen / tablet
+//** Deprecated `$screen-sm` as of v3.0.1
+$screen-sm: 768 !default;
+$screen-sm-min: $screen-sm !default;
+//** Deprecated `$screen-tablet` as of v3.0.1
+$screen-tablet: $screen-sm-min !default;
+
+// Medium screen / desktop
+//** Deprecated `$screen-md` as of v3.0.1
+$screen-md: 992 !default;
+$screen-md-min: $screen-md !default;
+//** Deprecated `$screen-desktop` as of v3.0.1
+$screen-desktop: $screen-md-min !default;
+
+$screen-tab: 1025 !default;
+$screen-tab-min: $screen-tab !default;
+//** Deprecated `$screen-desktop` as of v3.0.1
+$screen-desktop: $screen-tab-min !default;
+
+// Large screen / wide desktop
+//** Deprecated `$screen-lg` as of v3.0.1
+$screen-lg: 1200 !default;
+$screen-lg-min: $screen-lg !default;
+//** Deprecated `$screen-lg-desktop` as of v3.0.1
+$screen-lg-desktop: $screen-lg-min !default;
+
+// So media queries don't overlap when required, provide a maximum
+$screen-xs-max: ($screen-xs-min - 1) !default;
+$screen-sm-max: ($screen-sm-min - 1) !default;
+$screen-md-max: ($screen-md-min - 1) !default;
+$screen-tab-max: ($screen-tab-min - 1) !default;
+
+//== Grid system
+//
+//## Define your custom responsive grid.
+
+//** Number of columns in the grid.
+$grid-columns: 12 !default;
+//** Padding between columns. Gets divided in half for the left and right.
+$grid-gutter-width: 30px !default;
+// Navbar collapse
+//** Point at which the navbar becomes uncollapsed.
+$grid-float-breakpoint: $screen-sm-min !default;
+//** Point at which the navbar begins collapsing.
+$grid-float-breakpoint-max: ($grid-float-breakpoint - 1) !default;
+
+//== Container sizes
+//
+//## Define the maximum width of `.container` for different screen sizes.
+
+// Small screen / tablet
+$container-tablet: (720px + $grid-gutter-width) !default;
+//** For `$screen-sm-min` and up.
+$container-sm: $container-tablet !default;
+
+// Medium screen / desktop
+$container-desktop: (940px + $grid-gutter-width) !default;
+//** For `$screen-md-min` and up.
+$container-md: $container-desktop !default;
+
+// Large screen / wide desktop
+$container-large-desktop: (1140px + $grid-gutter-width) !default;
+//** For `$screen-lg-min` and up.
+$container-lg: $container-large-desktop !default;

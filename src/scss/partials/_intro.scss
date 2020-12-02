@@ -1,0 +1,31 @@
+.intro {
+  height: 100vh;
+
+  @include min-breakpoint(1025){
+    height: 100vh;
+  }
+  
+  .container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__content {
+    @include min-breakpoint(500){
+      padding: 0 vw(98);
+    }
+  }
+
+  h1 {
+    span.highlighted {
+      display: inline-block;
+      color: $brand-primary;
+      // text-decoration: underline;
+    }
+  }
+}
+
+.about {
+  padding: vw(120) 0;
+}

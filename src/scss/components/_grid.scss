@@ -1,0 +1,42 @@
+.container {
+  max-width: vw(1620);
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  &.h-center {
+    align-items: center;
+  }
+
+  &.v-center {
+    justify-content: center;
+  }
+
+  @include breakpoint(767){
+    display: block;
+  }
+}
+
+.col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+
+  flex-grow: 1;
+  flex-basis: 0;
+
+  &.h-center {
+    align-items: center;
+  }
+
+  &.v-center {
+    justify-content: center;
+  }
+}

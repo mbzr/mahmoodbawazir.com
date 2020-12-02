@@ -1,0 +1,150 @@
+// Miscellaneous useful HTML classes
+.h-pull-left {
+  float: left !important;
+}
+
+.h-pull-right {
+  float: right !important;
+}
+
+.h-text-left {
+  text-align: left !important;
+}
+
+.h-text-right {
+  text-align: right !important;
+}
+
+.h-text-center {
+  text-align: center !important;
+}
+
+.h-text-justify {
+  text-align: justify !important;
+}
+
+.h-text-uppercase {
+  text-transform: uppercase;
+}
+
+.h-text-notransform {
+  text-transform: none;
+}
+
+.h-text-nodecoration {
+  text-decoration: none;
+}
+
+/*
+ * Hide visually and from screen readers:
+ * http://juicystudio.com/article/screen-readers-display-none.php
+ */
+.h-hidden {
+  display: none !important;
+  visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ */
+.h-visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  clip: rect(0 0 0 0);
+
+  /*
+   * Extends the .visuallyhidden class to allow the element
+   * to be focusable when navigated to via the keyboard:
+   * https://www.drupal.org/node/897638
+   */
+  &.is-focusable {
+    &:active,
+    &:focus {
+      position: static;
+      overflow: visible;
+      width: auto;
+      height: auto;
+      margin: 0;
+      clip: auto;
+    }
+  }
+}
+
+
+/* The very latest clearfix needed: http://cssmojo.com/the-very-latest-clearfix-reloaded/ */
+.h-clearfix:after {
+  content: " ";
+  display: block;
+  clear: both; }
+
+/* for supporting browsers, this is the standard way to clear floats in an element */
+/* Some good discussion here: https://rachelandrew.co.uk/archives/2017/01/24/the-end-of-the-clearfix-hack/ (see comments) */
+.h-clearfix {
+  display: flow-root; }
+
+.h-inline-block {
+  display: inline-block !important;
+}
+
+.h-table {
+  display: table !important;
+}
+
+.h-cell {
+  display: table-cell !important;
+}
+
+.h-va-middle {
+  vertical-align: middle !important;
+}
+
+/**
+ * Text hyphenation
+ *
+ * Break strings when their length exceeds the width of their container
+ * and hyphenate words at the end of lines using the `hyphens` property.
+ * Browser support for hyphenation: http://caniuse.com/#search=hyphenation
+ */
+.h-text-hyphenate {
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+/**
+ * Prevent line breaks
+ */
+.h-nobr {
+  white-space: nowrap;
+}
+
+.h-sr-only {
+  clip: rect(1px, 1px, 1px, 1px);
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden; }
+
+/* Visually hide any element (mostly text) accessibly. 
+   Support includes IE9+ */
+.h-sr-only {
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px; }
+
+  .text-primary {
+    color: $brand-primary;
+  }
+
+  .h-o-hidden {
+    overflow: hidden;
+  }

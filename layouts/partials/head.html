@@ -1,0 +1,33 @@
+<head>
+  <meta name="generator" content="Hugo 0.76.5">
+	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5">
+  <title>{{ .Site.Title }} — {{ .Title }}</title>  
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="robots" content="all">
+  <meta name="language" content="{{ .Site.LanguageCode }}">
+  <link rel="canonical" href="{{ .Site.BaseURL }}">
+  <meta name="description" content="{{ $.Site.Params.description }}">
+  <meta name="keywords" content="{{ $.Site.Params.Keywords }}">
+  <link href="https://github.com/MahmoodBawazir" rel="author">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="{{ .Site.BaseURL }}">
+  <meta name="twitter:title" property="og:title" content="{{ .Title }}">
+  <meta name="twitter:image" content="{{ .Site.BaseURL }}/media/images/open-graph.jpg">
+  <meta name="twitter:site" content="@visualeyez">
+  <meta property="og:url" content="{{ .Site.BaseURL }}">
+  <meta property="og:title" content="{{ .Title }}">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="{{ .Site.BaseURL }}/images/open-graph.jpg">
+	<link rel="apple-touch-icon" sizes="180x180" href="/fav/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/fav/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/fav/favicon-16x16.png">
+  <link rel="manifest" href="/fav/site.webmanifest">
+  <meta name="theme-color" content="{{ $.Site.Params.ThemeColor }}">
+  <meta name="msapplication-TileColor" content="{{ $.Site.Params.ThemeColor }}">
+  <link rel="shortcut icon" href="/fav/favicon.ico">
+  {{ $stylesheet := index .Site.Data.manifest.main "css" }}
+  {{ with $stylesheet }}
+    <link href="{{ relURL . }}" rel="stylesheet" type="text/css">
+  {{ end }}
+</head>

@@ -1,0 +1,239 @@
+.case-banner {
+  min-height: vw(865);
+  display: flex;
+
+  @include breakpoint(767){
+    min-height: auto;
+    padding: em(60) 0;
+  }
+
+  .container {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__title {
+  @include breakpoint(767){
+
+    font-size: em(30);
+  }
+  }
+
+  &__row {
+    display: flex;
+    @include breakpoint(767){
+      display: block;
+    }
+  }
+
+  &__col {
+    flex-basis: 50%;
+    max-width: 50%;
+  }
+
+  &__info {
+    padding-top: vw(30);
+  }
+
+  &__info-title {
+    font-size: vw(18);
+    // font-family: font-family(roboto);
+    margin-bottom: vw(30);
+    @include breakpoint(767){
+      font-size: em(9);
+      margin-top: em(30);
+    }
+  }
+
+  &__year {
+    font-size: vw(16);
+    font-weight: font-weight(bold);
+    margin-top: vw(30);
+
+    @include breakpoint(767){
+      font-size: em(8);
+    }
+  }
+
+  &__link-wrap {
+    margin-top: vw(60);
+  }
+
+  &__info-list {
+    li {
+      font-size: vw(16);
+      margin-bottom: vw(7.5);
+
+    @include breakpoint(767){
+      font-size: em(11);
+    }
+    }
+  }
+}
+
+.case-media {
+  &__container {
+    max-width: vw(1320);
+    margin: 0 auto;
+  }
+
+  img,
+  video {
+    width: vw(1320);
+    padding-bottom: vw(120);
+  }
+}
+
+/*
+  Bayzat
+*/
+
+.bayzat-1 {
+  height: vw(1488);
+}
+
+.bayzat-2 {
+  height: vw(2119);
+}
+
+.bayzat-3 {
+  height: vw(720);
+}
+
+.bayzat-4 {
+  height: vw(720);
+}
+
+.bayzat-5 {
+  height: vw(1670);
+}
+
+.bayzat-6 {
+  height: vw(2025);
+}
+
+.bayzat-7 {
+  height: vw(2382);
+}
+
+.bayzat-8 {
+  height: vw(3066);
+}
+
+/* Dubai Design Week */
+
+.ddw-1 {
+  height: vw(720);
+}
+
+.ddw-2 {
+  height: vw(1316);
+}
+
+.ddw-3 {
+  height: vw(2352);
+}
+
+.ddw-4 {
+  height: vw(1540);
+}
+
+.ddw-5 {
+  height: vw(1074);
+}
+
+.ddw-6 {
+  height: vw(765);
+}
+
+/*
+  Rivoli
+*/
+.rivoli-1 {
+  height: vw(720);
+}
+
+.rivoli-2 {
+  height: vw(720);
+}
+
+.rivoli-3 {
+  height: vw(638);
+}
+
+.rivoli-4 {
+  height: vw(1104);
+}
+
+.rivoli-5 {
+  height: vw(1779);
+}
+
+.rivoli-6 {
+  height: vw(1272);
+}
+
+/*
+  DXB Live
+*/
+
+.dxblive-1,
+.dxblive-2 {
+  height: vw(720);
+}
+
+.dxblive-3 {
+  height: vw(2293);
+}
+
+.dxblive-4 {
+  height: vw(1642);
+}
+
+.dxblive-5 {
+  height: vw(4000);
+}
+
+.dxblive-6 {
+  height: vw(720);
+}
+
+/* MTLI */
+
+.mtli-1 {
+  height: vw(720);
+}
+
+.mtli-2 {
+  height: vw(2827);
+}
+
+.mtli-3 {
+  height: vw(1981);
+}
+
+.mtli-4 {
+  height: vw(808);
+}
+
+.case-next {
+  padding: vw(120) 0;
+  text-align: center;
+
+
+  &__container {
+    max-width: vw(1320);
+    margin: auto;
+    display: flex;
+    justify-self: center;
+    align-items: center;
+  }
+
+  &__title-wrap {
+    max-width: 50%;
+    flex-basis: 50%;
+  }
+}

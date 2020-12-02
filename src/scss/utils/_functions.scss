@@ -1,0 +1,45 @@
+@function font-weight($key) {
+  @if map-has-key($font-weights, $key) {
+    @return map-get($font-weights, $key);
+  }
+
+  @warn "Unknown `#{$key}` in $font-weights.";
+  @return null;
+}
+
+@function font-style($key) {
+  @if map-has-key($font-styles, $key) {
+    @return map-get($font-styles, $key);
+  }
+
+  @warn "Unknown `#{$key}` in $font-styles.";
+  @return null;
+}
+
+@function font-family($key) {
+  @if map-has-key($fonts, $key) {
+    @return map-get($fonts, $key);
+  }
+
+  @warn "Unknown `#{$key}` in $fonts.";
+  @return null;
+}
+
+@function spacing($key) {
+  @if map-has-key($spacings, $key) {
+    @return map-get($spacings, $key);
+  }
+
+  @warn "Unknown `#{$key}` in $spacings.";
+  @return null;
+}
+
+@function em($pixels, $context: $font-size-num) {
+  @return #{$pixels/$context}em;
+}
+
+@function vw($target) { 
+  $vw-context: (1920 * 0.01) * 1px;
+  $target: $target * 1px;
+  @return ($target / $vw-context) * 1vw;
+}
