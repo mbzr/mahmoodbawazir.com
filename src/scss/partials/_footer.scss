@@ -1,0 +1,63 @@
+.footer {
+  padding: vw(120) 0 0;
+
+  &__item {
+    font-size: vw(22);
+    margin-bottom: vw(15);
+    @extend .h-o-hidden;
+
+    @include breakpoint(767){
+      font-size: em(13);
+    }
+  }
+
+  &__anchor {
+      display: inline-block;
+  }
+
+  &__link-wrap {
+    @extend .h-o-hidden;
+  }
+
+  &__link {
+    // color: $brand-primary;
+    // font-size: vw(22);
+    // font-weight: font-weight(bold);
+    // text-transform: uppercase;
+  }
+
+  &__top {
+    padding: vw(30) 0;
+  }
+
+  &__copy-wrap {
+    @extend .h-o-hidden;
+  }
+
+  &__copy {
+    font-size: vw(16);
+    text-align: center;
+    padding: vw(15) 0;
+
+    @include breakpoint(767){
+      font-size: em(13);
+    }
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__col {
+    display: flex;
+
+    max-width: 50%;
+    flex-basis: 50%;
+  }
+
+  &__col.right {
+    justify-content: flex-end;
+    align-items: center;
+  }
+}

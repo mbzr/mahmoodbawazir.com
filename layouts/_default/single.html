@@ -1,0 +1,69 @@
+{{ define "main" }}
+<div id="case">
+  <section class="case-banner" id="case-banner">
+    <div class="container">
+      {{ $title := split .Title " " }}
+      
+      <div class="case-banner__row">
+        <div class="case-banner__col">
+          <div class="case-banner__title-wrap">
+            <h1 class="case-banner__title">
+              {{ range $val := $title }}
+                <span>
+                  {{ $val }}
+                </span>
+              {{ end }}
+            </h1>
+          </div>
+        </div>
+      </div>
+      <div class="case-banner__row">
+        <div class="case-banner__col">
+          <div class="case-banner__year-wrap">
+            <div class="case-banner__year">
+              {{ .Params.year }}
+            </div>
+          </div>
+          <div class="case-banner__link-wrap">
+            <a href="{{ .Params.live }}" target="_blank" class="link line-wrap no-xhr">Visit site</a>
+          </div>
+        </div>
+        <div class="case-banner__col">
+          <div class="case-banner__info">
+            
+            <h4 class="case-banner__info-title">Responsibilities</h4>
+            <ul class="case-banner__info-list">
+              {{ range .Params.responsibilities }}
+                <li>{{ . }}</li>
+              {{ end }}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-media" id="case-media">
+    <div class="case-media__container">
+      {{ range .Params.media }}
+        {{ if (isset . "video") }}
+          <video autoplay muted loop="loop" playsinline src="{{ .src }}" class="{{ .class }}"></video>
+        {{ else }}
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=" data-src="{{ .src }}" alt="{{ .alt }}" class="{{ .class }} lazy">
+        {{ end }}
+      {{ end }}
+    </div>
+  </section>
+
+  <section class="case-next" id="case-next">
+    <div class="case-next__container">
+      <div class="case-next__title-wrap">
+        <h2 class="case-next__title"><a href="{{ .Params.prev }}">Prev</a></h2>
+      </div>
+      <div class="case-next__title-wrap">
+        <h2 class="case-next__title"><a href="{{ .Params.next }}">Next</a></h2>
+      </div>
+    </div>
+  </section>
+</div>
+{{ end }}

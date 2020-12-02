@@ -1,0 +1,26 @@
+.rs {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: vw(150);
+  margin-top: vw(55);
+
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+
+  &__item {
+    font-size: vw(14);
+    text-transform: uppercase;
+    margin: vw(30) 0;
+
+    writing-mode: vertical-lr;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}

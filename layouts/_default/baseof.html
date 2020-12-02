@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  {{ partial "head.html" . }}
+  <body>    
+
+  {{ partial "icons.html" . }}
+
+    <main id="app">
+      <canvas id="cv"></canvas>
+      
+      <div id="page">
+        
+        <div class="ls" id="ls">
+          <a href="/" class="ls__logo">
+            <svg class="icon"><use xlink:href="#logo" /></svg>
+          </a>
+          <div class="ls__years-wrap">
+            <div class="ls__years text-primary">
+              2016 — 2020
+            </div>
+          </div>
+          <div class="ls__scroll-wrap">
+            <div class="ls__scroll">Scroll</div>
+          </div>
+        </div>
+
+        <div id="xhr">
+          {{ block "main" . }}{{ end }}
+        </div>
+
+        <!-- <div class="rs">
+          <div class="rs__list">
+            <div class="rs__item">
+              About
+            </div>
+            <div class="rs__item">
+              Projects
+            </div>
+            <div class="rs__item">
+              Skills
+            </div>
+            <div class="rs__item">
+              Contact
+            </div>
+          </div>
+        </div> -->
+        
+        <div id="page-splash"></div>
+      </div>
+    </main>
+    <!-- <div id="_p"></div> -->
+    <div class="mobile-turn">Please turn your device.</div>
+    <div class="update-browser"><div class="update-browser-text">Please update your browser to view this website.</div></div>
+    <noscript><div class="ej">Please enable JavaScript to view this website.</div></noscript>
+
+    {{ $script := index .Site.Data.manifest.main "js" }}
+    {{ with $script }}
+      <script src="{{ relURL . }}"></script>
+    {{ end }}
+  </body>
+</html>

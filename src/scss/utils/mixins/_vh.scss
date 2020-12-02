@@ -1,0 +1,4 @@
+@function vh($target) {
+  $vh-context: (960 * 0.01) * 1px;
+  @return ($target / $vh-context) * 1vh;
+}

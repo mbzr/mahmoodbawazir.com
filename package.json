@@ -1,0 +1,73 @@
+{
+  "name": "mahmoodbawazir",
+  "version": "1.0.0",
+  "description": "Mahmood Bawazir's personal site",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run start:webpack\" \"npm run start:hugo\"",
+    "start:hugo": "hugo -d dist -vw",
+    "start:webpack": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js --hot",
+    "preview": "concurrently \"npm run preview:webpack\" \"npm run preview:hugo\"",
+    "preview:hugo": "npm run start:hugo -- -D -F",
+    "preview:webpack": "npm run start:webpack",
+    "prebuild": "rimraf dist",
+    "build": "npm run build:webpack && npm run build:hugo",
+    "build:preview": "npm run build:webpack && npm run build:hugo:preview",
+    "build:hugo": "hugo -d dist -v --gc --minify",
+    "build:hugo:preview": "npm run build:hugo -- -D -F",
+    "build:webpack": "cross-env NODE_ENV=production webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MahmoodBawazir/mahmoodbawazir.git"
+  },
+  "author": "Mahmood Bawazir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MahmoodBawazir/mahmoodbawazir/issues"
+  },
+  "homepage": "https://github.com/MahmoodBawazir/mahmoodbawazir#readme",
+  "dependencies": {
+    "@ariiiman/s": "^2.4.0",
+    "animejs": "^3.2.1",
+    "normalize.css": "^4.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-transform-arrow-functions": "^7.12.1",
+    "@babel/preset-env": "^7.5.5",
+    "assets-webpack-plugin": "^6.0.4",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-latest": "^6.24.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^4.1.1",
+    "cross-env": "^5.2.0",
+    "css-loader": "^0.28.11",
+    "cssnano": "^4.1.10",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "extract-loader": "^1.0.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.2.0",
+    "image-webpack-loader": "^4.6.0",
+    "mini-css-extract-plugin": "^0.4.5",
+    "node-sass": "^4.12.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "rimraf": "^2.6.3",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.20.3",
+    "uglifyjs-webpack-plugin": "^2.1.3",
+    "webpack": "^4.38.0",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.7.2",
+    "webpack-merge": "^4.2.1",
+    "webpack-stream": "^4.0.3"
+  }
+}

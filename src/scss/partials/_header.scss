@@ -1,0 +1,30 @@
+.h {
+  position: relative;
+  padding-top: vw(spacing(xl));
+
+  &__container {
+    max-width: vw(1264);
+    margin: auto;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  &__col {
+    position: relative;
+  
+    flex-grow: 1;
+    flex-basis: 0;
+  }
+
+  &__name,
+  &__info {
+    font-size: vw(24);
+    @extend .h-text-uppercase;
+    line-height: vw(18);
+  }
+}

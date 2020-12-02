@@ -1,0 +1,50 @@
+// File Name: _typography.scss
+// Description: global typography styles
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  line-height: 1;
+
+  padding: 0;
+  margin: 0;
+
+  font-family: font-family(dw);
+  font-weight: font-weight(medium);
+  font-style: font-style(normal);
+  text-transform: uppercase;
+}
+
+h1,
+.h1 {
+  font-size: vw(92);
+  line-height: em(110, 92);
+}
+
+h2 {
+  font-size: vw(40);
+  // line-height: em(82, 40);
+
+  @include breakpoint(767){
+    font-size: em(21);
+  }
+}
+
+p {
+  font-size: vw(22);
+  line-height: em(32, 22);
+  margin-bottom: em(32, 22);
+
+  @include breakpoint(767){
+    font-size: em(16);
+    line-height: em(22), 16;
+  }
+}

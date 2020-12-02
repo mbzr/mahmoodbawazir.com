@@ -1,0 +1,17 @@
+baseURL = "https://mbz.codes/"
+languageCode = "en-us"
+title = "Mahmood Bawazir"
+
+# RSS, categories and tags disabled for an easy start
+# See configuration options for more details: 
+# https://gohugo.io/getting-started/configuration/#toml-configuration
+disableKinds = ["RSS", "taxonomy", "taxonomyTerm"]
+
+[outputs]
+    page = ["HTML", "json"]
+    home = ["HTML", "json"] # Everything
+
+[params]
+  author = "Mahmood Bawazir"
+  description = "Portfolio of Mahmood Bawazir, a Front-End Developer based in Dubai"
+  keywords = "freelancer, front-end web developer, HTML, CSS, SVG, JS, React, Vue, ES6, UI, UX, Dubai"
