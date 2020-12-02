@@ -4,8 +4,8 @@ img: '/media/rivoli/hover.png'
 year: 2018
 live: 'https://rivoligroup.com'
 responsibilities: ['JavaScript', 'Semantic HTML', 'Responsive CSS', 'Content Management', 'SEO', 'Performance Testing', 'Browser Testing']
-next: '/dubai-design-week'    
-prev: '/dxblive'
+next: '/dubai-design-week/'    
+prev: '/dxblive/'
 media:
   - src: '/media/rivoli/1.mp4'
     video: true

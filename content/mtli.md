@@ -4,8 +4,8 @@ img: '/media/mtli/hover.png'
 year: 2017
 live: 'https://mtli.com'
 responsibilities: ['JavaScript', 'Semantic HTML', 'Responsive CSS', 'Content Management', 'SEO', 'Performance Testing', 'Browser Testing']
-next: '/bayzat'    
-prev: '/dubai-design-week'
+next: '/bayzat/'    
+prev: '/dubai-design-week/'
 media:
   - src: '/media/mtli/1.mp4'
     video: true

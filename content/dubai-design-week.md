@@ -4,8 +4,8 @@ img: '/media/ddw/hover.png'
 year: 2018
 live: 'https://dubaidesignweek.ae'
 responsibilities: ['JavaScript', 'Semantic HTML', 'Responsive CSS', 'Content Management', 'SEO', 'Performance Testing', 'Browser Testing']
-next: '/mtli'    
-prev: '/rivoli'
+next: '/mtli/'    
+prev: '/rivoli/'
 media:
   - src: '/media/ddw/1.mp4'
     video: true
