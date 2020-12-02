@@ -47,7 +47,7 @@ export default class Listeners {
   constructor() {
     this.m = MBZ
     this.isDesktop = this.m.device === 'desktop'
-    this.canvasOn = this.m.page.is.home || (this.m.page.is.case && this.m.path.new === '/')
+
     this.canvas = new Canvas()
     this.ro = new M.RO({
       cb: this.resize,
@@ -58,6 +58,8 @@ export default class Listeners {
   }
 
   init = () => {
+    this.canvasOn = this.m.page.is.home || (this.m.page.is.case && this.m.path.new === '/')
+    console.log(this.m.page.is.case, this.m.path.new)
     const parallaxArr = this.m.page.is.home ? parallax.home : parallax.case
     this.m.scroll.init(parallaxArr)
     this.resize()
