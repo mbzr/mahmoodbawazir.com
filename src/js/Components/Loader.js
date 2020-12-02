@@ -74,7 +74,7 @@ class Loader {
   loading = () => {
     this.intro()
 
-    if (this.m.page.is.home) {
+    if (this.m.page.is.home && this.m.device === 'desktop') {
       this.loadImgs(this.imgArr, this.anim)      
     } else {
       this.anim()
