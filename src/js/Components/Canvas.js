@@ -72,6 +72,7 @@ class Canvas {
   reset = () => {
     if (this.activeIndex !== null) {
       this.activeIndex = null
+      this.image.src = ''
       this.canvasContext.clearRect(0, 0, this.m.win.w, this.m.win.h) 
     }
   }
