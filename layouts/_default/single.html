@@ -47,7 +47,7 @@
     <div class="case-media__container">
       {{ range .Params.media }}
         {{ if (isset . "video") }}
-          <video autoplay muted loop="loop" playsinline src="{{ .src }}" class="{{ .class }}"></video>
+          <video autoplay muted loop="loop" playsinline src="{{ .src }}" poster="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=" class="{{ .class }}"></video>
         {{ else }}
           <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=" data-src="{{ .src }}" alt="{{ .alt }}" class="{{ .class }} lazy">
         {{ end }}
