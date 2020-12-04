@@ -4,7 +4,7 @@ export default new (class PathListener {
     const newPath = this.m.path.new
     const paths = {
       home: '/' === newPath,
-      case: 'rivoli' === newPath
+      case: '/' !== newPath
     }
 
     return {
