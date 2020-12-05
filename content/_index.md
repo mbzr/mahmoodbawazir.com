@@ -19,7 +19,7 @@ footer:
     - title: 'LinkedIn'
       url: 'https://linkedin.com/in/mahmoodbawazir'
     - title: 'Github'
-      url: 'https:github.com/mahmoodbawazir'
+      url: 'https://github.com/mahmoodbawazir'
     - title: 'Instagram'
       url: 'https://instagram.com'
 ---
