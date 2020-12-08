@@ -13,13 +13,11 @@ contact:
 footer:
   copy: 'Mahmood Bawazir &copy; 2020'
   resume:
-    text: 'Download my CV'
+    text: 'Download Resume'
     link: '/media/pdf/MBZ_CV.pdf'
   social:
     - title: 'LinkedIn'
       url: 'https://linkedin.com/in/mahmoodbawazir'
     - title: 'Github'
       url: 'https://github.com/mahmoodbawazir'
-    - title: 'Instagram'
-      url: 'https://instagram.com'
 ---
