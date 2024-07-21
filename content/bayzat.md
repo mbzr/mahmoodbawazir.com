@@ -3,7 +3,7 @@ title: 'Bayzat'
 img: '/media/bayzat/hover.png'
 year: 2020
 live: 'https://bayzat.com'
-responsibilities: ['Gatsby/React', 'Styled Components', 'Semantic HTML', 'Responsive CSS', 'Page generation from API', 'SEO', 'Performance Testing', 'Browser Testing']
+responsibilities: ['React / Gatsby', 'Framer Motion', 'Styled Components', 'Page generation from API', 'SEO', 'Performance Testing', 'Browser Testing']
 next: '/dxblive/'    
 prev: '/mtli/'
 media:

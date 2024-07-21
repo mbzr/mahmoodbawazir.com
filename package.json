@@ -19,14 +19,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MahmoodBawazir/mahmoodbawazir.git"
+    "url": "git+https://github.com/mbzr/mbzr.dev.git"
   },
   "author": "Mahmood Bawazir",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MahmoodBawazir/mahmoodbawazir/issues"
+    "url": "https://github.com/mbzr/mbzr.dev/issues"
   },
-  "homepage": "https://github.com/MahmoodBawazir/mahmoodbawazir#readme",
+  "homepage": "https://github.com/mbzr/mbzr.dev#readme",
   "dependencies": {
     "@ariiiman/s": "^2.4.0",
     "animejs": "^3.2.1",

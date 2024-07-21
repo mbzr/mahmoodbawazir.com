@@ -5,13 +5,13 @@ projects:
   description: 'Check out my selected projects below.'
 contact:
   email:
-    name: 'hello'
-    domain: '@mbz.codes'
+    name: 'mbzr07'
+    domain: '@gmail.com'
   phone:
     general: '058 5601051'
     withcode: '+971585601051'
 footer:
-  copy: 'Mahmood Bawazir &copy; 2020'
+  copy: 'Mahmood Bawazir &copy; 2024'
   resume:
     text: 'Download Resume'
     link: '/media/pdf/MBZ_CV_JAN2021.pdf'
@@ -19,5 +19,5 @@ footer:
     - title: 'LinkedIn'
       url: 'https://linkedin.com/in/mahmoodbawazir'
     - title: 'Github'
-      url: 'https://github.com/mahmoodbawazir'
+      url: 'https://github.com/mbzr'
 ---
