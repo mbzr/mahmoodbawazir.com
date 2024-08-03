@@ -14,7 +14,6 @@ footer:
   copy: 'Mahmood Bawazir &copy; 2024'
   resume:
     text: 'Download Resume'
-    link: '/media/pdf/MBZ_CV_JAN2021.pdf'
   social:
     - title: 'LinkedIn'
       url: 'https://linkedin.com/in/mahmoodbawazir'
