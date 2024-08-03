@@ -1,4 +1,4 @@
-import BM from './BM'
+import BM from './bind-manager'
 
 /*
 ──────────────────────────────────────────

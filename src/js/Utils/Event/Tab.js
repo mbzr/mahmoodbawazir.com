@@ -1,5 +1,5 @@
-import BM from '../Core/BM'
-import L from '../Listener/L'
+import BM from '../core/bind-manager'
+import L from '../listener/listener'
 /*
 
 ──────────────────────────────────────────

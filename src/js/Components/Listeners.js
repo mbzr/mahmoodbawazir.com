@@ -1,7 +1,7 @@
 import M from 'utils'
-import ScrollEvents from './Scroll/events'
-import Canvas from './Canvas'
-import LazyLoader from './LazyLoader'
+import ScrollEvents from './scroll/events'
+import Canvas from './canvas'
+import LazyLoader from './lazy-loader'
 
 const parallax = {
   home: [

@@ -1,5 +1,5 @@
-import Is from '../Core/Is'
-import G from './G'
+import Is from '../core/is'
+import G from './get-element-by'
 /*
 
 ──────────────────────────────────────────
@@ -15,7 +15,7 @@ const name = M.Select.name(selector)
 */
 
 export default {
-  el: function(s) {
+  el: function (s) {
     var el = []
     if (Is.str(s)) {
       var elName = s.substring(1)
@@ -30,11 +30,11 @@ export default {
     return el
   },
 
-  type: function(s) {
+  type: function (s) {
     return s.charAt(0) === '#' ? 'id' : 'class'
   },
 
-  name: function(s) {
+  name: function (s) {
     return s.substring(1)
-  }
+  },
 }

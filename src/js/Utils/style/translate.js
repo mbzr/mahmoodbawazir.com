@@ -1,4 +1,4 @@
-import Is from '../Core/Is'
+import Is from '../core/is'
 /**
  * Translate
  * @param {string} el element
@@ -21,7 +21,7 @@ M.T(element, translateX, translateY, unity)
 
 */
 
-export default function(el, x, y, u) {
+export default function (el, x, y, u) {
   var uN = Is.und(u) ? '%' : u
   el.style.transform = 'translate3d(' + x + uN + ',' + y + uN + ',0)'
 }

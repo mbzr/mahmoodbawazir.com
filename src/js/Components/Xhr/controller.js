@@ -1,7 +1,8 @@
-import PathListener from '../PathListener'
-import M from 'utils'
 import anime from 'animejs/lib/anime.es'
-import Transitions from '../Transitions'
+
+import M from 'utils'
+import PathListener from '../path-listener'
+import Transitions from '../transitions'
 
 export default new (class XhrController {
   constructor() {

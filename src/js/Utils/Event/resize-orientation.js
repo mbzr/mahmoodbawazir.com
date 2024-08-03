@@ -1,8 +1,8 @@
-import BM from '../Core/BM'
-import Raf from '../Core/Raf'
-import Detect from '../Core/Detect'
-import Throttle from '../Core/Throttle'
-import L from '../Listener/L'
+import BM from '../core/bind-manager'
+import Raf from '../core/raf'
+import Detect from '../core/detect'
+import Throttle from '../core/throttle'
+import L from '../listener/listener'
 
 /*
 

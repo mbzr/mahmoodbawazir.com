@@ -1,6 +1,6 @@
-import Is from '../Core/Is'
-import Detect from '../Core/Detect'
-import Select from '../El/Select'
+import Is from '../core/is'
+import Detect from '../core/detect'
+import Select from '../el/select'
 
 /**
  * Event Listener
@@ -39,7 +39,7 @@ this.listen('r')
 
 */
 
-export default function(el, a, e, cb) {
+export default function (el, a, e, cb) {
   const d = document
   var el = Select.el(el)
   const elL = el.length
