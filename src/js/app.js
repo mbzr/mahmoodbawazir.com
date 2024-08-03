@@ -1,6 +1,6 @@
-import Support from 'components/support'
-import XhrInitializer from 'components/xhr/initializer'
-import MainController from 'components/main-controller'
+import Support from '@components/support'
+import XhrInitializer from '@components/xhr/initializer'
+import MainController from '@components/main-controller'
 
 class App {
   constructor() {

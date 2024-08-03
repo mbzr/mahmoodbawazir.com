@@ -45,8 +45,8 @@ module.exports = function (env, argv) {
     },
     resolve: {
       alias: {
-        components: usePath.resolve(__dirname, './src/js/components/'),
-        utils: usePath.resolve(__dirname, './src/js/utils/'),
+        '@components': usePath.resolve(__dirname, './src/js/components/'),
+        '@utils': usePath.resolve(__dirname, './src/js/utils/'),
       },
     },
     module: {

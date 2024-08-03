@@ -1,4 +1,4 @@
-import M from 'utils/index'
+import M from '@utils/index'
 
 export default class Support {
   constructor() {
