@@ -6,10 +6,12 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const path = require('path')
+const pathWin32 = require('path').win32
 
 const srcPath = path.resolve(__dirname, './src')
 const buildPath = path.resolve(__dirname, './dist')
 const jsPath = path.resolve(srcPath, 'js')
+const usePath = process.platform == 'win32' ? pathWin32 : path
 
 module.exports = function (env, argv) {
   const devMode = process.env.NODE_ENV === 'development'
@@ -43,8 +45,8 @@ module.exports = function (env, argv) {
     },
     resolve: {
       alias: {
-        components: path.resolve(__dirname, 'src/js/components/'),
-        utils: path.resolve(__dirname, 'src/js/utils/'),
+        components: usePath.resolve(__dirname, './src/js/components/'),
+        utils: usePath.resolve(__dirname, './src/js/utils/'),
       },
     },
     module: {
