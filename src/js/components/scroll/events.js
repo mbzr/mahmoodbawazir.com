@@ -3,7 +3,7 @@ import Scroll from './index'
 import ScrollSections from './sections'
 // import PointerEvents from '../PointerEvents'
 
-import Fx from '../Fx'
+import Fx from '../fx'
 
 class ScrollEvents {
   constructor() {
