@@ -1,6 +1,6 @@
 import anime from 'animejs/lib/anime.es.js'
 
-import M from 'utils'
+import M from '@utils'
 
 export default new (class Transitions {
   run() {

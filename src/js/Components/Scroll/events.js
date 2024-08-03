@@ -1,4 +1,4 @@
-import M from 'utils'
+import M from '@utils'
 import Scroll from './index'
 import ScrollSections from './sections'
 // import PointerEvents from '../PointerEvents'

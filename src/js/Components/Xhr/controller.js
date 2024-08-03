@@ -1,6 +1,6 @@
 import anime from 'animejs/lib/anime.es'
 
-import M from 'utils'
+import M from '@utils'
 import PathListener from '../path-listener'
 import Transitions from '../transitions'
 

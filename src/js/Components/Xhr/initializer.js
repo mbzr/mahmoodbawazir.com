@@ -1,4 +1,4 @@
-import M from 'utils'
+import M from '@utils'
 import Xhr from './xhr'
 import XhrEvents from './events'
 
