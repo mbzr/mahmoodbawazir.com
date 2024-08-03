@@ -35,11 +35,11 @@
 }
 
 @function em($pixels, $context: $font-size-num) {
-  @return #{$pixels/$context}em;
+  @return #{calc($pixels/$context)}em;
 }
 
-@function vw($target) { 
+@function vw($target) {
   $vw-context: (1920 * 0.01) * 1px;
   $target: $target * 1px;
-  @return ($target / $vw-context) * 1vw;
+  @return calc($target / $vw-context) * 1vw;
 }

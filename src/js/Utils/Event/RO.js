@@ -28,63 +28,65 @@ this.ro.off()
 class RO {
   constructor(o) {
     this.cb = o.cb
-    //set eventType
+    // Set eventType
     this.eT = Detect.isMobile ? 'orientationchange' : 'resize'
-    //set a tick flag
+    // Set a tick flag
     this.tick = false
-    //bind funcs
+    // Bind funcs
     BM(this, ['gT', 'gRaf', 'run'])
-    //set throttle
+    // Set throttle
     this.t = new Throttle({
       delay: o.throttleDelay,
       onlyAtEnd: true,
-      cb: this.gRaf
+      cb: this.gRaf,
     })
-    //set rAF
+    // Set rAF
     this.raf = new Raf(this.run)
   }
-}
 
-RO.prototype = {
-  //add listener
-  on: function() {
+  // Add listener
+  on() {
     this.l('a')
-  },
-  //remove listener
-  off: function() {
+  }
+
+  // Remove listener
+  off() {
     this.l('r')
-  },
-  //listener
-  l: function(a) {
+  }
+
+  // Listener
+  l(a) {
     L(window, a, this.eT, this.gT)
-  },
-  //getThrottle
-  gT: function(e) {
-    //get and set event object
+  }
+
+  // GetThrottle
+  gT(e) {
+    // Get and set event object
     this.e = e
-    //run throttle
+    // Run throttle
     this.t.run()
-  },
-  //getRaf
-  gRaf: function() {
-    //if the rAF is not already running
+  }
+
+  // GetRaf
+  gRaf() {
+    // If the rAF is not already running
     if (!this.tick) {
-      //set tick flag to true
+      // Set tick flag to true
       this.tick = true
 
-      //run rAF
+      // Run rAF
       this.raf.run()
     }
-  },
+  }
 
-  run: function() {
-    //call callback and pass in the event object
+  run() {
+    // Call callback and pass in the event object
     this.cb(this.e)
 
-    //cancel rAF
+    // Cancel rAF
     this.raf.stop()
 
-    //reset tick flag
+    // Reset tick flag
     this.tick = false
   }
 }

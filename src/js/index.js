@@ -1,6 +1,3 @@
 import App from './app.js'
-window.MBZ = {
-  
-}
-
-;(_ => new App())()
+window.MBZ = {}
+;((_) => new App())()

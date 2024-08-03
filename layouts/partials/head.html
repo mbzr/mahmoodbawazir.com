@@ -25,6 +25,18 @@
   <meta name="theme-color" content="{{ $.Site.Params.ThemeColor }}">
   <meta name="msapplication-TileColor" content="{{ $.Site.Params.ThemeColor }}">
   <link rel="shortcut icon" href="/fav/favicon.ico">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+    @font-face {
+      font-family: 'DW';
+      src: url('/fonts/dw/Doublewide-Medium.eot');
+      src: url('/fonts/dw/Doublewide-Medium.woff2') format('woff2'),
+        url('/fonts/dw/Doublewide-Medium.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+    }
+  </style>
   {{ $stylesheet := index .Site.Data.manifest.main "css" }}
   {{ with $stylesheet }}
     <link href="{{ relURL . }}" rel="stylesheet" type="text/css">

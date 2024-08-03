@@ -40,7 +40,7 @@
       font-family: font-family(dw);
       text-transform: uppercase;
 
-      @include breakpoint(767){
+      @include breakpoint(767) {
         font-size: em(16);
       }
     }
@@ -56,12 +56,11 @@
 
     &__line {
       // transform: translate3d(0,101%,0);
-      border-top: 2px solid #3a3a3a;
+      border-top: 2px solid #f5f5f5;
     }
 
     &__year-wrap {
       @extend .h-o-hidden;
-
     }
 
     &__year {
@@ -69,7 +68,7 @@
       font-family: font-family(roboto);
       font-weight: font-weight(bold);
 
-      @include breakpoint(767){
+      @include breakpoint(767) {
         font-size: em(13);
       }
     }

@@ -1,4 +1,4 @@
-import M from '../Utils'
+import M from '@/utils'
 import ScrollEvents from './Scroll/events'
 import Canvas from './Canvas'
 import LazyLoader from './LazyLoader'
@@ -6,41 +6,41 @@ import LazyLoader from './LazyLoader'
 const parallax = {
   home: [
     {
-      id: 'ls'
+      id: 'ls',
     },
     {
-      id: 'intro'
+      id: 'intro',
     },
     {
-      id: 'about'
+      id: 'about',
     },
     {
-      id: 'work'
+      id: 'work',
     },
     {
-      id: 'skills'
+      id: 'skills',
     },
     {
-      id: 'contact'
+      id: 'contact',
     },
     {
-      id: 'footer'
-    }
+      id: 'footer',
+    },
   ],
   case: [
     {
-      id: 'ls'
+      id: 'ls',
     },
     {
-      id: 'case-banner'
+      id: 'case-banner',
     },
     {
-      id: 'case-media'
+      id: 'case-media',
     },
     {
-      id: 'case-next'
-    }
-  ]
+      id: 'case-next',
+    },
+  ],
 }
 
 export default class Listeners {
@@ -51,14 +51,15 @@ export default class Listeners {
     this.canvas = new Canvas()
     this.ro = new M.RO({
       cb: this.resize,
-      throttleDelay: 150
+      throttleDelay: 150,
     })
     this.m.scroll = new ScrollEvents()
     this.raf = new M.Raf(this.loop)
   }
 
   init = () => {
-    this.canvasOn = this.m.page.is.home || (this.m.page.is.case && this.m.path.new === '/')
+    this.canvasOn =
+      this.m.page.is.home || (this.m.page.is.case && this.m.path.new === '/')
     console.log(this.m.page.is.case, this.m.path.new)
     const parallaxArr = this.m.page.is.home ? parallax.home : parallax.case
     this.m.scroll.init(parallaxArr)
@@ -68,16 +69,16 @@ export default class Listeners {
 
   resize = () => {
     this.m.scroll.resize()
-    
+
     if (this.isDesktop) {
       this.canvasOn && this.canvas.resize()
     }
-  } 
+  }
 
   on = () => {
     this.raf.run()
     this.m.scroll.on({
-      reset: true
+      reset: true,
     })
     if (this.isDesktop) {
       this.canvasOn && this.canvas.on()

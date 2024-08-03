@@ -1,4 +1,4 @@
-import M from '../Utils'
+import M from '@/utils'
 
 class Canvas {
   constructor() {
@@ -15,12 +15,14 @@ class Canvas {
   listeners = (action) => {
     this.workItems = M.G.class('work__item__anchor')
     this.workItemsL = this.workItems.length
-    
+
     M.L(window, action, 'mousemove', this.mm)
     M.L(document, action, 'mouseWheel', this.reset)
-    
+
     for (let i = 0; i < this.workItemsL; i++) {
-      M.L(this.workItems[i], action, 'mouseenter', (e) => this.moE(i, e.currentTarget.getAttribute('data-img')))
+      M.L(this.workItems[i], action, 'mouseenter', (e) =>
+        this.moE(i, e.currentTarget.getAttribute('data-img'))
+      )
       M.L(this.workItems[i], action, 'mouseleave', this.moL)
     }
   }
@@ -33,9 +35,9 @@ class Canvas {
     this.listeners('r')
     setTimeout(() => {
       this.reset()
-    }, 500);
+    }, 500)
   }
-  
+
   resize = () => {
     this.canvasEl.width = this.m.win.w
     this.canvasEl.height = this.m.win.h
@@ -49,7 +51,8 @@ class Canvas {
     if (this.lastMousePosition.x !== null) {
       const distance = Math.floor(
         Math.sqrt(
-          Math.pow(this.mousePosition.x - this.lastMousePosition.x, 2) + Math.pow(this.mousePosition.y - this.lastMousePosition.y, 2)
+          Math.pow(this.mousePosition.x - this.lastMousePosition.x, 2) +
+            Math.pow(this.mousePosition.y - this.lastMousePosition.y, 2)
         )
       )
 
@@ -73,7 +76,7 @@ class Canvas {
     if (this.activeIndex !== null) {
       this.activeIndex = null
       this.image.src = ''
-      this.canvasContext.clearRect(0, 0, this.m.win.w, this.m.win.h) 
+      this.canvasContext.clearRect(0, 0, this.m.win.w, this.m.win.h)
     }
   }
 

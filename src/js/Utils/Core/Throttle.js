@@ -17,29 +17,27 @@ throttle.run()
 */
 class Throttle {
   constructor(options) {
-    //get options
+    // Get options
     this.delay = options.delay
     this.onlyAtEnd = options.onlyAtEnd
     this.cb = options.cb
-    //set vars
-    this.last
-    this.timeout
-    //bind funcs
+    // Set vars
+    this.last = null
+    this.timeout = null
+    // Bind funcs
     this.run = this.run.bind(this)
   }
-}
 
-Throttle.prototype = {
-  run: function() {
+  run() {
     let firstTime = true
     let now = Date.now()
 
-    //if last isnt undefined and initial date is less than timeout date + delay
+    // If last isn't undefined and initial date is less than timeout date + delay
     if ((this.last && now < this.last + this.delay) || firstTime) {
       firstTime = false
-      //start with clearing timeout
+      // Start with clearing timeout
       clearTimeout(this.timeout)
-      //run timeout
+      // Run timeout
       this.timeout = setTimeout(() => {
         this.last = now
         this.cb()
