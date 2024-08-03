@@ -110,53 +110,48 @@ body {
 
 .line-wrap {
   display: inline-block;
-    overflow: hidden;
-    position: relative;
-    vertical-align: middle;
-    transition: all .2s ease-out;
-    
-    &::before,
-    &::after {
-      background-color: #000;
-      bottom: 0;
-      content: "";
-      height: 1px;
-      left: 0;
-      position: absolute;
-      width: 100%;
-    }
+  overflow: hidden;
+  position: relative;
+  vertical-align: middle;
+  transition: all 0.2s ease-out;
 
+  &::before,
+  &::after {
+    background-color: currentColor;
+    bottom: 0;
+    content: '';
+    height: 1px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  &::before {
+    opacity: 0;
+    transform: translate3d(-102%, 0, 0);
+  }
+
+  &::after {
+    opacity: 1;
+    transform: translate3d(102%, 0, 0);
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1),
+      -webkit-transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  &:hover {
     &::before {
-      opacity: 0;
-      transform: translate3d(-102%,0,0);
+      opacity: 1;
+      transform: translateZ(0);
+      transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1),
+        -webkit-transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
     &::after {
-      opacity: 1;
-      transform: translate3d(102%,0,0);
-      transition: transform .8s cubic-bezier(.165,.84,.44,1),-webkit-transform .8s cubic-bezier(.165,.84,.44,1);
+      opacity: 0;
+      transform: translateZ(0);
+      transition: none;
     }
-
-    &--primary {
-      &::before,
-      &::after {
-        background-color: $brand-primary;
-      }
-    }
-
-    &:hover {
-      &::before {
-        opacity: 1;
-        transform: translateZ(0);
-        transition: transform .6s cubic-bezier(.165,.84,.44,1),-webkit-transform .6s cubic-bezier(.165,.84,.44,1);
-      }
-
-      &::after {
-        opacity: 0;
-        transform: translateZ(0);
-        transition: none;
-      }
-    }
+  }
 }
 
 .link {
@@ -164,7 +159,7 @@ body {
   font-weight: font-weight(bold);
   text-transform: uppercase;
 
-  @include breakpoint(767){
+  @include breakpoint(767) {
     font-size: em(13);
   }
 
@@ -174,7 +169,7 @@ body {
 }
 
 #page-splash {
-  background: $brand-cream;
+  background: $brand-bg;
   bottom: 0;
   left: 0;
   opacity: 0;

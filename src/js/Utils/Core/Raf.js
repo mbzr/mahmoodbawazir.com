@@ -17,43 +17,46 @@ loop (elapsed) {
 }
 */
 
-const Raf = function(c) {
-  //get callback
-  this.cb = c
+class Raf {
+  constructor(c) {
+    // Get callback
+    this.cb = c
 
-  //flag to track if rAF is running
-  this.running = false
-
-  this.c = this
-
-  BM(this, ['loop'])
-}
-
-Raf.prototype = {
-  run: function() {
-    //run rAF
-    this.gR()
-    //set running flag to true
-    this.running = true
-  },
-  stop: function(tab) {
-    //reset running flag
+    // Flag to track if rAF is running
     this.running = false
-    //cancel rAF
+
+    this.c = this
+
+    BM(this, ['loop'])
+  }
+
+  run() {
+    // Run rAF
+    this.gR()
+    // Set running flag to true
+    this.running = true
+  }
+
+  stop(tab) {
+    // Reset running flag
+    this.running = false
+    // Cancel rAF
     cancelAnimationFrame(this.raf)
-  },
-  //getRaf
-  gR: function() {
-    //initialize rAF
+  }
+
+  // GetRaf
+  gR() {
+    // Initialize rAF
     this.raf = requestAnimationFrame(this.loop)
-  },
-  loop: function() {
-    //call the callback
+  }
+
+  loop() {
+    // Call the callback
     this.cb()
 
-    //if rAF is set to run
+    // If rAF is set to run
     if (this.running) {
-      //run rAF
+      // Run rAF
       this.gR()
     }
   }

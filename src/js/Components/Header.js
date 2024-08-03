@@ -1,6 +1,6 @@
 import gsap from 'gsap'
 
-import M from '../../Utils'
+import M from '@/utils'
 
 export default new (class Header {
   constructor() {
@@ -15,7 +15,7 @@ export default new (class Header {
     this.ease = 'text-up'
 
     gsap.set(this.navUp, {
-      yPercent: 100
+      yPercent: 100,
     })
 
     this.tl = gsap.timeline({ paused: true })
@@ -23,14 +23,14 @@ export default new (class Header {
       .to(this.nav, {
         duration: 0.5,
         autoAlpha: 1,
-        display: 'flex'
+        display: 'flex',
       })
       .to(
         this.navUp,
         {
           yPercent: 0,
           duration: 1.5,
-          ease: this.ease
+          ease: this.ease,
         },
         '-=.3'
       )

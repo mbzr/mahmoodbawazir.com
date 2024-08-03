@@ -1,5 +1,5 @@
-import M from "../../Utils"
-import Scroll from "./index"
+import M from '@/utils'
+import Scroll from './index'
 import ScrollSections from './sections'
 // import PointerEvents from '../PointerEvents'
 
@@ -12,19 +12,19 @@ class ScrollEvents {
     this.fx = new Fx()
     // this.pointerEvents = new PointerEvents()
     this.m.s = {
-      y: 0
+      y: 0,
     }
     this.m.takeScroll = false
     this.a = {
-      pause: (t) => {}
+      pause: (t) => {},
     }
     this.s = {
-      y: {}
+      y: {},
     }
     this.vScroll = new Scroll({
       cb: {
-        y: this.scrollY
-      }
+        y: this.scrollY,
+      },
     })
   }
 
@@ -34,10 +34,10 @@ class ScrollEvents {
     this.scrollUp(0)
     this.scrollSections.init({
       cb: this.draw,
-      arr: arr
+      arr: arr,
     })
   }
-  
+
   resize = () => {
     const h = M.G.id('page').offsetHeight - this.m.win.h
     this.vScroll.resize(h)
@@ -64,7 +64,7 @@ class ScrollEvents {
       // this.pointerEvents.run()
     }
   }
-  
+
   loop = () => {
     if (this.s.y.currR !== this.s.y.targ) {
       const difference = this.s.y.targ - this.s.y.curr
@@ -81,7 +81,7 @@ class ScrollEvents {
   }
 
   scrollUp = (val) => {
-    console.log('scrollUp',val)
+    console.log('scrollUp', val)
     this.s.y.targ = val
     this.s.y.curr = val
     this.s.y.currR = val

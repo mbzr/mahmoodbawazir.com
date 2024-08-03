@@ -2,7 +2,7 @@
   min-height: vw(865);
   display: flex;
 
-  @include breakpoint(767){
+  @include breakpoint(767) {
     min-height: auto;
     padding: em(60) 0;
   }
@@ -16,15 +16,14 @@
   }
 
   &__title {
-  @include breakpoint(767){
-
-    font-size: em(30);
-  }
+    @include breakpoint(767) {
+      font-size: em(30);
+    }
   }
 
   &__row {
     display: flex;
-    @include breakpoint(767){
+    @include breakpoint(767) {
       display: block;
     }
   }
@@ -42,7 +41,7 @@
     font-size: vw(18);
     // font-family: font-family(roboto);
     margin-bottom: vw(30);
-    @include breakpoint(767){
+    @include breakpoint(767) {
       font-size: em(9);
       margin-top: em(30);
     }
@@ -53,7 +52,7 @@
     font-weight: font-weight(bold);
     margin-top: vw(30);
 
-    @include breakpoint(767){
+    @include breakpoint(767) {
       font-size: em(8);
     }
   }
@@ -67,9 +66,9 @@
       font-size: vw(16);
       margin-bottom: vw(7.5);
 
-    @include breakpoint(767){
-      font-size: em(11);
-    }
+      @include breakpoint(767) {
+        font-size: em(11);
+      }
     }
   }
 }
@@ -223,7 +222,6 @@
   padding: vw(120) 0;
   text-align: center;
 
-
   &__container {
     max-width: vw(1320);
     margin: auto;
@@ -235,5 +233,13 @@
   &__title-wrap {
     max-width: 50%;
     flex-basis: 50%;
+  }
+
+  &__title {
+    transition: 0.3s ease;
+
+    &:hover {
+      color: $brand-primary;
+    }
   }
 }

@@ -25,16 +25,14 @@
     line-height: em(82, 92);
     white-space: nowrap;
     padding: vw(15) 0;
-    transition: .3s ease;
+    transition: 0.3s ease;
     cursor: default;
 
-    &:nth-child(odd){
-      -webkit-text-stroke-color: #000;
-        -webkit-text-stroke-width: 1px;
-        color: transparent;
+    &:nth-child(odd) {
+      -webkit-text-stroke-color: $brand-color;
+      -webkit-text-stroke-width: 1px;
+      color: transparent;
     }
-  
-  
 
     span {
       display: inline-block;
@@ -53,8 +51,8 @@ html.is-desktop {
     &__item {
       &:hover {
         color: $brand-primary;
-  
-        &:nth-child(odd){
+
+        &:nth-child(odd) {
           -webkit-text-stroke-color: $brand-primary;
         }
       }

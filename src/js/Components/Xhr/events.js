@@ -1,4 +1,4 @@
-import M from '../../Utils'
+import M from '@/utils'
 
 import Xhr from './xhr'
 
@@ -8,33 +8,39 @@ class XhrEvents {
     this.m = MBZ
     this.xhr = M.G.id('xhr')
     M.L(M.Dom.body, 'a', 'click', this.eventDelegation)
-    console.log('this.getController', this.getController)
   }
 
   eventDelegation = (event) => {
     // event.preventDefault()
     console.log(event)
     console.log('eventDelegation')
-    
-    
-    for (var win = window,target = event.target,
+
+    for (
+      var win = window,
+        target = event.target,
         isAnchor = false,
-      isSubmitButton = false; target;) {
-        if (target.tagName === 'A') {
-          isAnchor = true
-          break
-        } 
-        if ((target.tagName === 'INPUT' || target.tagName === 'BUTTON') && target.type === 'submit') {
-          isSubmitButton = true
-          break
-        }
-      
-        target = target.parentNode 
+        isSubmitButton = false;
+      target;
+
+    ) {
+      if (target.tagName === 'A') {
+        isAnchor = true
+        break
+      }
+      if (
+        (target.tagName === 'INPUT' || target.tagName === 'BUTTON') &&
+        target.type === 'submit'
+      ) {
+        isSubmitButton = true
+        break
+      }
+
+      target = target.parentNode
     }
 
     // return
 
-    if(isAnchor) {
+    if (isAnchor) {
       let href = target.href
       console.log(href)
       if (target.classList.contains('no-xhr')) {
@@ -42,25 +48,25 @@ class XhrEvents {
         win.open(href)
       } else {
         const isEmail = 'mailto' === href.substring(0, 6)
-        if (isEmail) { 
+        if (isEmail) {
           event.preventDefault()
 
           let emailWindow = win.open(href)
           setTimeout(() => {
             emailWindow.close()
-          }, 300);
+          }, 300)
         } else {
           event.preventDefault()
           console.log('notEmail')
 
           if (this.m.outroIsOn) {
-          console.log('outroIsOn')
+            console.log('outroIsOn')
 
             this.path = {
               old: M.Win.path,
-              new: href.replace(/^.*\/\/[^/]+/, "")
+              new: href.replace(/^.*\/\/[^/]+/, ''),
             }
-            
+
             if (this.path.old !== this.path.new) {
               this.m.outroIsOn = false
               this.target = target
@@ -70,7 +76,6 @@ class XhrEvents {
         }
       }
     }
-
   }
 
   xhrReq = () => {
@@ -97,7 +102,7 @@ class XhrEvents {
       removeOld: () => {
         const container = this.xhr.children[0]
         container.parentNode.removeChild(container)
-      }
+      },
     }
     this.m.outroIsOn = true
     controller.intro()

@@ -20,34 +20,33 @@ class Tab {
     BM(this, ['run'])
     L(document, 'a', 'visibilitychange', this.run)
   }
-}
 
-Tab.prototype = {
-  add: function(id, cb) {
+  add(id, cb) {
     this.arr.push([id, cb])
     this.arrL++
-  },
+  }
 
-  remove: function(id) {
-    for (var i = 0; i < this.arrL; i++) {
+  remove(id) {
+    for (let i = 0; i < this.arrL; i++) {
       if (this.arr[i][0] === id) {
         this.arr.splice(i, 1)
         this.arrL--
+        break
       }
     }
-  },
+  }
 
-  run: function() {
-    var now = performance.now()
+  run() {
+    const now = performance.now()
 
     if (document.hidden) {
-      this.pause = performance.now()
-      for (var i = 0; i < this.arrL; i++) {
+      this.pause = now
+      for (let i = 0; i < this.arrL; i++) {
         this.arr[i][1].stop(true)
       }
     } else {
-      var elapsed = now - this.pause
-      for (var i = 0; i < this.arrL; i++) {
+      const elapsed = now - this.pause
+      for (let i = 0; i < this.arrL; i++) {
         this.arr[i][1].run(elapsed)
       }
     }

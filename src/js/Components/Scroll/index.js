@@ -1,4 +1,4 @@
-import M from '../../Utils'
+import M from '@/utils'
 
 class Scroll {
   constructor(opts) {
@@ -13,7 +13,7 @@ class Scroll {
   listeners = (action) => {
     const events = ['mouseWheel', 'keydown', 'touchmove']
     const eventsL = events.length
-    M.L(document, action, "touchstart", this.touchStart)
+    M.L(document, action, 'touchstart', this.touchStart)
     for (let i = 0; i < eventsL; i++) {
       M.L(document, action, events[i], this.raf)
     }
@@ -40,7 +40,7 @@ class Scroll {
   resize = (max) => {
     this.max = max
     this.spaceGap = this.m.win.h - 40
-     this.getCb()
+    this.getCb()
   }
 
   raf = (mE) => {
@@ -49,19 +49,24 @@ class Scroll {
     this.mEType = mE.type
     this.mEKey = mE.key
 
-    !mE.cancelable || ("keydown" === this.mEType && "Tab" !== this.mEKey) ||
-                        mE.preventDefault(),
-                      this.isOn &&
-                        ((this.m.takeScroll = !0),
-                        this.tick ||
-                          (requestAnimationFrame(this.run), (this.tick = !0)));
-
+    !mE.cancelable ||
+      ('keydown' === this.mEType && 'Tab' !== this.mEKey) ||
+      mE.preventDefault(),
+      this.isOn &&
+        ((this.m.takeScroll = !0),
+        this.tick || (requestAnimationFrame(this.run), (this.tick = !0)))
   }
 
   run = () => {
     const type = this.mEType
     // type === 'wheel' ? this.wheel() : type === 'mousewheel' ? this.mouseWheel() : type === 'keydown' && this.keyDown() ? type === 'touchmove' && this.touchMove() : ''
-    "wheel" === type ? this.wheel() : "mousewheel" === type ? this.mouseWheel() : "touchmove" === type ? this.touchMove() : "keydown" === type && this.keyDown()
+    'wheel' === type
+      ? this.wheel()
+      : 'mousewheel' === type
+      ? this.mouseWheel()
+      : 'touchmove' === type
+      ? this.touchMove()
+      : 'keydown' === type && this.keyDown()
   }
 
   mouseWheel = () => {
@@ -74,9 +79,9 @@ class Scroll {
     let delta = this.mE.wheelDeltaY || -1 * this.mE.deltaY
 
     this.isFirefox && 1 === this.mE.deltaMode && (delta *= 60),
-                      (delta *= 0.556),
-                      (this.y += delta),
-                      this.getCb()
+      (delta *= 0.556),
+      (this.y += delta),
+      this.getCb()
   }
 
   keyDown = () => {
@@ -110,9 +115,9 @@ class Scroll {
 
   touchMove = () => {
     console.log('touchMove')
-
-    this.y = 2 * (this.mE.targetTouches[0].pageY - this.start) + this.prevMove,
-    this.getCb()
+    ;(this.y =
+      2 * (this.mE.targetTouches[0].pageY - this.start) + this.prevMove),
+      this.getCb()
   }
 
   getCb = () => {
@@ -120,7 +125,7 @@ class Scroll {
       this.y = M.R(M.Clamp(this.y, -this.max, 0))
       this.cbY(-this.y)
       this.tick = false
-    } 
+    }
   }
 }
 

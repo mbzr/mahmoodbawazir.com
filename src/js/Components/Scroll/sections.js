@@ -1,4 +1,4 @@
-import M from '../../Utils'
+import M from '@/utils'
 
 export default class ScrollSections {
   constructor() {
@@ -25,7 +25,7 @@ export default class ScrollSections {
       const el = skillsItems[i]
       this.skillsParallax[i] = {
         el,
-        speed: (i % 2) === 0 ? -.1 : .1
+        speed: i % 2 === 0 ? -0.1 : 0.1,
       }
     }
     this.skillsParallaxL = this.skillsParallax.length
@@ -41,13 +41,13 @@ export default class ScrollSections {
   resize = () => {
     const sY = this.m.s.y,
       winH = this.m.win.h
-    
+
     for (let i = 0; i < this.arrL; i++) {
       const el = this.arr[i]
       this.draw(el, sY)
       const elTop = el.dom.getBoundingClientRect().top,
         elHeight = elTop + el.dom.offsetHeight
-      
+
       el.inside.top = elTop - winH + sY
       el.inside.bottom = elHeight + sY
     }
@@ -56,22 +56,25 @@ export default class ScrollSections {
   run = () => {
     const sY = this.m.s.y
     for (let i = 0; i < this.arrL; i++) {
-      let el = this.arr[i];
-      sY >= el.inside.top && sY <= el.inside.bottom ? (el.isOut && (el.isOut = false), this.draw(el, sY)) : el.isOut || ((el.isOut = true), this.draw(el, sY))
-      
+      let el = this.arr[i]
+      sY >= el.inside.top && sY <= el.inside.bottom
+        ? (el.isOut && (el.isOut = false), this.draw(el, sY))
+        : el.isOut || ((el.isOut = true), this.draw(el, sY))
+
       if (el.dom.id === 'skills') {
-        for (let j = 0; j < this.skillsParallaxL; j++){
-            let offset = this.skillsParallax[j].el.getBoundingClientRect().top,
+        for (let j = 0; j < this.skillsParallaxL; j++) {
+          let offset = this.skillsParallax[j].el.getBoundingClientRect().top,
             height = this.skillsParallax[j].el.offsetHeight,
             scrollTop = this.skillsParallax[j].el.scrollTop,
             speed = this.skillsParallax[j].speed,
-            total = (((offset - (this.m.win.h / 2) + height) - scrollTop) * speed)
-          
-          el.isOut ? M.T(this.skillsParallax[j].el, 0, 0, 'px') : M.T(this.skillsParallax[j].el, total, 0, 'px')
+            total = (offset - this.m.win.h / 2 + height - scrollTop) * speed
+
+          el.isOut
+            ? M.T(this.skillsParallax[j].el, 0, 0, 'px')
+            : M.T(this.skillsParallax[j].el, total, 0, 'px')
         }
       }
     }
-    
   }
 
   draw = (el, sY) => {
