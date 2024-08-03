@@ -1,41 +1,16 @@
-import L from '../Listener/L'
+import Is from '../core/is'
 /*
 
 ──────────────────────────────────────────
 ──────────────────────────────────────────
-WHEEL & TOUCH PREVENT
+Round
 ──────────────────────────────────────────
 ──────────────────────────────────────────
 
-M.WTP.on()
-M.WTP.off()
+const round = M.R(val)
 
 */
-
-const WTP = {
-  p: function(e) {
-    if (e.cancelable) {
-      e.preventDefault()
-    }
-  },
-
-  l: function(a) {
-    var d = document
-
-    L(d, a, 'mouseWheel', this.p)
-    L(d, a, 'touchmove', this.p)
-  },
-
-  on: function () {
-    console.log('WTP ON')
-    this.l('a')
-  },
-
-  off: function () {
-    console.log('WTP OFF')
-    
-    this.l('r')
-  }
+export default (t, i) => {
+  var e = Is.und(i) ? 100 : Math.pow(10, i)
+  return Math.round(t * e) / e
 }
-
-export default WTP

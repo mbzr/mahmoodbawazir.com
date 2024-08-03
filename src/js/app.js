@@ -1,9 +1,9 @@
-import Support from './Components/Support'
-import XhrInitializer from './Components/Xhr/initializer'
-import MainController from './Components/MainController'
+import Support from 'components/support'
+import XhrInitializer from 'components/xhr/initializer'
+import MainController from 'components/main-controller'
 
 class App {
-  constructor() {    
+  constructor() {
     Promise.all([App.domReady()]).then(this.init.bind(this))
   }
 
@@ -17,7 +17,7 @@ class App {
     new Support()
     new XhrInitializer({
       main: MainController,
-      m404: () => {}
+      m404: () => {},
     })
   }
 }

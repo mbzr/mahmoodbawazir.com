@@ -1,9 +1,9 @@
 import anime from 'animejs/lib/anime.es.js'
 
-import Transitions from './Transitions'
-import Listeners from './Listeners'
-import PathListener from './PathListener'
 import M from 'utils'
+import Transitions from './transitions'
+import Listeners from './listeners'
+import PathListener from './path-listener'
 
 class Loader {
   constructor() {

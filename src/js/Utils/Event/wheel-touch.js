@@ -1,6 +1,6 @@
-import BM from '../Core/BM'
-import Detect from '../Core/Detect'
-import L from '../Listener/L'
+import BM from '../core/bind-manager'
+import Detect from '../core/detect'
+import L from '../listener/listener'
 /*
 
 ──────────────────────────────────────────
