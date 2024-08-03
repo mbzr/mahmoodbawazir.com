@@ -1,4 +1,4 @@
-import M from '@/utils'
+import M from 'utils'
 import ScrollEvents from './Scroll/events'
 import Canvas from './Canvas'
 import LazyLoader from './LazyLoader'

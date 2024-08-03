@@ -43,7 +43,7 @@ module.exports = function (env, argv) {
     },
     resolve: {
       alias: {
-        '@/utils': path.resolve(__dirname, 'src/js/utils/'),
+        utils: path.resolve(__dirname, 'src/js/utils/'),
       },
     },
     module: {

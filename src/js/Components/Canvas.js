@@ -1,4 +1,4 @@
-import M from '@/utils'
+import M from 'utils'
 
 class Canvas {
   constructor() {

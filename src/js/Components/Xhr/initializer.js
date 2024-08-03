@@ -1,7 +1,7 @@
 import Xhr from './xhr'
 import XhrEvents from './events'
 
-import M from '@/utils'
+import M from 'utils'
 
 class XhrInitializer {
   constructor(params) {
