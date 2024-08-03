@@ -1,6 +1,6 @@
 import anime from 'animejs/lib/anime.es'
 
-import M from '@/utils'
+import M from 'utils'
 
 class Fx {
   constructor() {

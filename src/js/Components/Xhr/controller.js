@@ -1,5 +1,5 @@
 import PathListener from '../PathListener'
-import M from '@/utils'
+import M from 'utils'
 import anime from 'animejs/lib/anime.es'
 import Transitions from '../Transitions'
 

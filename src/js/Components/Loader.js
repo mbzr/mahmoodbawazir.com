@@ -3,7 +3,7 @@ import anime from 'animejs/lib/anime.es.js'
 import Transitions from './Transitions'
 import Listeners from './Listeners'
 import PathListener from './PathListener'
-import M from '@/utils'
+import M from 'utils'
 
 class Loader {
   constructor() {
