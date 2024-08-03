@@ -1,6 +1,6 @@
 {
   "name": "mbzr",
-  "version": "2.0.2.4",
+  "version": "2.0.24",
   "description": "Mahmood Bawazir's personal site",
   "scripts": {
     "start": "concurrently \"npm run start:webpack\" \"npm run start:hugo\"",
