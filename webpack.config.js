@@ -41,50 +41,9 @@ module.exports = function (env, argv) {
         rewrites: [{ from: /./, to: '404.html' }],
       },
     },
-    /*
-     * NOTE: Optimization will only run on production mode
-     */
-    optimization: {
-      minimizer: [
-        new CssMinimizerPlugin({
-          minimizerOptions: {
-            preset: [
-              'default',
-              {
-                discardComments: { removeAll: true },
-              },
-            ],
-          },
-        }),
-        /*
-         * Minimize javascript
-         */
-        new TerserPlugin({
-          minify: TerserPlugin.uglifyJsMinify,
-          parallel: true,
-          extractComments: false,
-          terserOptions: {
-            warnings: false,
-            compress: {
-              drop_console: true,
-              side_effects: false,
-              keep_fnames: false,
-            },
-            mangle: {
-              keep_fnames: false,
-              toplevel: true,
-            },
-            output: {
-              beautify: false,
-              comments: false,
-            },
-          },
-        }),
-      ],
-    },
     resolve: {
       alias: {
-        '@/utils': path.resolve(jsPath, 'utils'),
+        '@/utils': path.resolve(__dirname, 'src/js/utils/'),
       },
     },
     module: {
@@ -156,5 +115,46 @@ module.exports = function (env, argv) {
         chunkFilename: `css/[id]${hash}.min.css`,
       }),
     ],
+    /*
+     * NOTE: Optimization will only run on production mode
+     */
+    optimization: {
+      minimizer: [
+        new CssMinimizerPlugin({
+          minimizerOptions: {
+            preset: [
+              'default',
+              {
+                discardComments: { removeAll: true },
+              },
+            ],
+          },
+        }),
+        /*
+         * Minimize javascript
+         */
+        new TerserPlugin({
+          minify: TerserPlugin.uglifyJsMinify,
+          parallel: true,
+          extractComments: false,
+          terserOptions: {
+            warnings: false,
+            compress: {
+              drop_console: true,
+              side_effects: false,
+              keep_fnames: false,
+            },
+            mangle: {
+              keep_fnames: false,
+              toplevel: true,
+            },
+            output: {
+              beautify: false,
+              comments: false,
+            },
+          },
+        }),
+      ],
+    },
   }
 }
