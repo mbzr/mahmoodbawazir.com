@@ -10,5 +10,5 @@ disableKinds = ["RSS", "taxonomy"]
 [params]
   author = "Mahmood Bawazir"
   description = "Portfolio of Mahmood Bawazir, a Front-End Developer based in Dubai"
-  keywords = "freelancer, front-end web developer, HTML, CSS, SVG, JS, React, Vue, ES6, UI, UX, Dubai"
+  keywords = "freelancer, front-end web developer, HTML, CSS, SVG, JS, React, Next.js, GatsbyJS, ES6, UI, UX, Dubai"
   cv = "/media/pdf/MBZR_CV.pdf"
