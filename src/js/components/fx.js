@@ -64,11 +64,13 @@ class Fx {
         '-=1500'
       )
 
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 4; i++) {
+        // Adjusted for 4 work items
         this.trigger[2 + i] = M.G.class('work__item')[i]
       }
 
-      for (let j = 0; j < 5; j++) {
+      for (let j = 0; j < 4; j++) {
+        // Adjusted for 4 work items
         let index = 2 + j,
           line = M.G.class('work__item__line', this.trigger[index]),
           name = M.G.class('work__item__name', this.trigger[index]),
@@ -107,15 +109,15 @@ class Fx {
         skillsTitleTxt = M.G.class('txt-up', skillsTitle),
         skillsDesc = M.G.class('skills__desc')[0]
 
-      this.trigger[7] = M.G.class('skills__header')[0]
-      this.tl[7] = anime.timeline(tlOpts)
-      this.tl[7].add({
+      this.trigger[6] = M.G.class('skills__header')[0]
+      this.tl[6] = anime.timeline(tlOpts)
+      this.tl[6].add({
         targets: skillsTitleTxt,
         translateY: ['100%', 0],
         easing,
         duration,
       })
-      this.tl[7].add(
+      this.tl[6].add(
         {
           targets: skillsDesc,
           translateY: ['20px', 0],
@@ -127,11 +129,11 @@ class Fx {
       )
 
       for (let l = 0; l < 5; l++) {
-        this.trigger[8 + l] = M.G.class('skills__item')[l]
+        this.trigger[7 + l] = M.G.class('skills__item')[l]
       }
 
       for (let m = 0; m < 5; m++) {
-        let index = 8 + m
+        let index = 7 + m
         this.tl[index] = anime.timeline(tlOpts)
         this.tl[index].add({
           targets: this.trigger[index],
@@ -142,8 +144,8 @@ class Fx {
       }
 
       //Contact
-      for (let k = 0; k < 2; k++) {
-        let index = 13 + k
+      for (let k = 0; k < 1; k++) {
+        let index = 12 + k
         this.trigger[index] = M.G.class('contact__block')[k]
         let contactTitleText = M.G.class(
           'contact__title-text',
@@ -175,18 +177,18 @@ class Fx {
       const footerItems = M.G.class('footer__anchor'),
         footerLink = M.G.class('footer__link')[0],
         footerCopy = M.G.class('footer__copy')[0]
-      this.trigger[15] = M.G.id('footer')
-      this.tl[15] = anime.timeline(tlOpts)
-      this.sensibility[15] = 0.9
+      this.trigger[13] = M.G.id('footer')
+      this.tl[13] = anime.timeline(tlOpts)
+      this.sensibility[13] = 0.9
 
-      this.tl[15].add({
+      this.tl[13].add({
         targets: footerItems,
         translateY: ['100%', 0],
         duration,
         easing,
         delay: anime.stagger(100),
       })
-      this.tl[15].add(
+      this.tl[13].add(
         {
           targets: [footerLink, footerCopy],
           translateY: ['100%', 0],
