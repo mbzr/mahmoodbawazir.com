@@ -11,7 +11,7 @@ contact:
     general: '058 5601051'
     withcode: '+971585601051'
 footer:
-  copy: 'Mahmood Bawazir &copy; 2024'
+  copy: 'Mahmood Bawazir &copy; 2025'
   resume:
     text: 'Download Resume'
   social:
