@@ -4,7 +4,7 @@
   "description": "Mahmood Bawazir's personal site",
   "scripts": {
     "start": "concurrently \"npm run start:webpack\" \"npm run start:hugo\"",
-    "start:hugo": "hugo -d dist -vw",
+    "start:hugo": "hugo -d dist -w",
     "start:webpack": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js --hot",
     "preview": "concurrently \"npm run preview:webpack\" \"npm run preview:hugo\"",
     "preview:hugo": "npm run start:hugo -- -D -F",
