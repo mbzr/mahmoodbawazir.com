@@ -5,13 +5,13 @@ projects:
   description: 'Check out my selected projects below.'
 contact:
   email:
-    name: 'mbzr07'
+    name: 'bwzrmhd'
     domain: '@gmail.com'
   phone:
-    general: '058 5601051'
-    withcode: '+971585601051'
+    general: '050 3374534'
+    withcode: '+971503374534'
 footer:
-  copy: 'Mahmood Bawazir &copy; 2025'
+  copy: 'Mahmood Bawazir &copy; 2026'
   resume:
     text: 'Download Resume'
   social:
