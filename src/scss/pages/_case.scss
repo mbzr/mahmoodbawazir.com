@@ -122,127 +122,6 @@
   height: vw(3066);
 }
 
-/* Dubai Design Week */
-
-.ddw-1 {
-  height: vw(720);
-}
-
-.ddw-2 {
-  height: vw(1316);
-}
-
-.ddw-3 {
-  height: vw(2352);
-}
-
-.ddw-4 {
-  height: vw(1540);
-}
-
-.ddw-5 {
-  height: vw(1074);
-}
-
-.ddw-6 {
-  height: vw(765);
-}
-
-/*
-  Rivoli
-*/
-.rivoli-1 {
-  height: vw(720);
-}
-
-.rivoli-2 {
-  height: vw(720);
-}
-
-.rivoli-3 {
-  height: vw(638);
-}
-
-.rivoli-4 {
-  height: vw(1104);
-}
-
-.rivoli-5 {
-  height: vw(1779);
-}
-
-.rivoli-6 {
-  height: vw(1272);
-}
-
-/*
-  DXB Live
-*/
-
-.dxblive-1,
-.dxblive-2 {
-  height: vw(720);
-}
-
-.dxblive-3 {
-  height: vw(2293);
-}
-
-.dxblive-4 {
-  height: vw(1642);
-}
-
-.dxblive-5 {
-  height: vw(4000);
-}
-
-.dxblive-6 {
-  height: vw(720);
-}
-
-/* MTLI */
-
-.mtli-1 {
-  height: vw(720);
-}
-
-.mtli-2 {
-  height: vw(2827);
-}
-
-.mtli-3 {
-  height: vw(1981);
-}
-
-.mtli-4 {
-  height: vw(808);
-}
-
-/*
-  Cygnus
-*/
-
-.cygnus-1,
-.cygnus-3 {
-  height: vw(720);
-}
-
-.cygnus-2 {
-  height: vw(1864);
-}
-
-.cygnus-4 {
-  height: vw(958);
-}
-
-.cygnus-5 {
-  height: vw(2365);
-}
-
-.cygnus-6 {
-  height: vw(786);
-}
-
 /*
   Puffy
 */
@@ -267,7 +146,7 @@
     max-width: vw(1320);
     margin: auto;
     display: flex;
-    justify-self: center;
+    justify-content: space-between;
     align-items: center;
   }
 
