@@ -13,8 +13,6 @@ responsibilities:
     'Performance Testing',
     'Browser Testing',
   ]
-next: '/dxblive/'
-prev: '/cygnus/'
 media:
   - src: 'media/1.jpg'
     alt: ''

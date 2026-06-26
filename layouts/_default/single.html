@@ -56,12 +56,43 @@
   </section>
 
   <section class="case-next" id="case-next">
+    {{ $current := . }}
+    {{ $projects := slice }}
+    {{ range ($.Site.Pages.ByParam "year").Reverse }}
+      {{ if isset .Params "year" }}
+        {{ $projects = $projects | append . }}
+      {{ end }}
+    {{ end }}
+    {{ $idx := -1 }}
+    {{ range $i, $p := $projects }}
+      {{ if eq $p.File.UniqueID $current.File.UniqueID }}
+        {{ $idx = $i }}
+      {{ end }}
+    {{ end }}
+    {{ $prevPage := false }}
+    {{ $nextPage := false }}
+    {{ if ge $idx 0 }}
+      {{ if gt $idx 0 }}
+        {{ $prevPage = index $projects (sub $idx 1) }}
+      {{ end }}
+      {{ if lt $idx (sub (len $projects) 1) }}
+        {{ $nextPage = index $projects (add $idx 1) }}
+      {{ end }}
+    {{ end }}
     <div class="case-next__container">
       <div class="case-next__title-wrap">
-        <h2 class="case-next__title"><a href="{{ .Params.prev }}">Prev</a></h2>
+        {{ with $prevPage }}
+          <h2 class="case-next__title">
+            <a href="{{ if isset .Params "external" }}{{ .Params.external }}{{ else }}{{ .RelPermalink }}{{ end }}"{{ if isset .Params "external" }} class="no-xhr"{{ end }}>Prev</a>
+          </h2>
+        {{ end }}
       </div>
       <div class="case-next__title-wrap">
-        <h2 class="case-next__title"><a href="{{ .Params.next }}">Next</a></h2>
+        {{ with $nextPage }}
+          <h2 class="case-next__title">
+            <a href="{{ if isset .Params "external" }}{{ .Params.external }}{{ else }}{{ .RelPermalink }}{{ end }}"{{ if isset .Params "external" }} class="no-xhr"{{ end }}>Next</a>
+          </h2>
+        {{ end }}
       </div>
     </div>
   </section>

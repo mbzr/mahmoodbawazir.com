@@ -17,6 +17,4 @@ footer:
   social:
     - title: 'LinkedIn'
       url: 'https://linkedin.com/in/mbzr'
-    - title: 'Github'
-      url: 'https://github.com/mbzr'
 ---

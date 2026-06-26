@@ -4,8 +4,6 @@ img: '/puffy/media/hover.png'
 year: 2021 - 2025
 live: 'https://puffy.com'
 responsibilities: ['Next.js', 'Tailwind', 'Shopify', 'GraphQL']
-next: '/cygnus/'
-prev: '/dxblive/'
 media:
   - src: 'media/1.png'
     class: 'puffy-1'
