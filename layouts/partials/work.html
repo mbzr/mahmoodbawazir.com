@@ -17,7 +17,7 @@
       {{ range ($.Site.Pages.ByParam "year").Reverse }}
         {{ if isset .Params "year" }}
         <li class="work__item">
-          <a href="{{ .Permalink }}" class="work__item__anchor" data-img="{{ .Params.img }}">
+          <a href="{{ if isset .Params "external" }}{{ .Params.external }}{{ else }}{{ .Permalink }}{{ end }}" class="work__item__anchor{{ if isset .Params "external" }} no-xhr{{ end }}"{{ with .Params.img }} data-img="{{ . }}"{{ end }}>
             <span class="work__item__line-wrap">
               <span class="work__item__line"></span>
             </span>
