@@ -40,38 +40,48 @@ class XhrEvents {
     // return
 
     if (isAnchor) {
-      let href = target.href
-      console.log(href)
+      const href = target.href
+      const url = new URL(href, win.location.href)
+
       if (target.classList.contains('no-xhr')) {
         event.preventDefault()
         win.open(href)
-      } else {
-        const isEmail = 'mailto' === href.substring(0, 6)
-        if (isEmail) {
-          event.preventDefault()
+        return
+      }
 
-          let emailWindow = win.open(href)
-          setTimeout(() => {
-            emailWindow.close()
-          }, 300)
-        } else {
-          event.preventDefault()
-          console.log('notEmail')
+      if (url.protocol === 'mailto:' || url.protocol === 'tel:') {
+        event.preventDefault()
+        let emailWindow = win.open(href)
+        setTimeout(() => {
+          emailWindow.close()
+        }, 300)
+        return
+      }
 
-          if (this.m.outroIsOn) {
-            console.log('outroIsOn')
+      const sameOrigin = url.origin === win.location.origin
+      const samePath = url.pathname === win.location.pathname
+      const hash = url.hash
 
-            this.path = {
-              old: M.Win.path,
-              new: href.replace(/^.*\/\/[^/]+/, ''),
-            }
+      if (sameOrigin && (hash === '#top' || (samePath && hash))) {
+        event.preventDefault()
+        if (this.m.scroll) this.m.scroll.scrollToHash(hash)
+        return
+      }
 
-            if (this.path.old !== this.path.new) {
-              this.m.outroIsOn = false
-              this.target = target
-              this.xhrReq()
-            }
-          }
+      if (!sameOrigin) return
+
+      event.preventDefault()
+
+      if (this.m.outroIsOn) {
+        this.path = {
+          old: M.Win.path,
+          new: href.replace(/^.*\/\/[^/]+/, ''),
+        }
+
+        if (this.path.old !== this.path.new) {
+          this.m.outroIsOn = false
+          this.target = target
+          this.xhrReq()
         }
       }
     }

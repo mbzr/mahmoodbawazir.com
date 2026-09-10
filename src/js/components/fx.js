@@ -1,127 +1,203 @@
 import anime from 'animejs/lib/anime.es'
 
 import M from '@utils'
+import splitLines from '@utils/el/split-lines'
+
+const duration = 1800
+const easing = 'easeOutExpo'
 
 class Fx {
   constructor() {
     this.m = MBZ
-    this.trigger = []
-    this.sensibility = []
-    this.tl = []
-    this.isInViewport = []
-    this.limit = []
   }
 
-  init = () => {
-    const duration = 1800,
-      easing = 'easeOutExpo',
-      tlOpts = { autoplay: false }
+  init = (scroll) => {
+    this.scroll = scroll
+    this.scroll.clearTriggers()
+    if (!this.m.page.is.home) return
 
-    if (this.m.page.is.home) {
-      let idx = 0
+    const run = () => {
+      this.work()
+      this.about()
+      this.testimonials()
+      this.footer()
+      this.scroll.resize()
+    }
 
-      //About
-      const aboutTitle = M.G.id('about-title'),
-        aboutDescs = M.G.class('about__desc')
-      this.trigger[idx] = M.G.id('about')
-      this.tl[idx] = anime.timeline(tlOpts)
-      this.tl[idx].add({
-        targets: aboutTitle,
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(run)
+    } else {
+      run()
+    }
+  }
+
+  play = (el, build, offset) => {
+    const tl = anime.timeline({ autoplay: false })
+    build(tl)
+    this.scroll.when(el, () => tl.play(), offset)
+  }
+
+  about = () => {
+    const heading = M.G.class('txt-up', M.G.class('about-heading')[0])
+    const subheading = M.G.class('about-subheading')[0]
+    const leadTxt = splitLines(subheading)
+
+    this.play(M.G.class('about-intro')[0], (tl) => {
+      tl.add({
+        targets: heading,
         translateY: ['101%', 0],
         easing,
         duration,
       })
-      this.tl[idx].add(
+      tl.add(
         {
-          targets: aboutDescs,
-          translateY: [15, 0],
-          opacity: [0, 1],
+          targets: leadTxt,
+          translateY: ['101%', 0],
           easing,
           duration,
-          delay: anime.stagger(150),
+          delay: (_, i) => i * 100,
         },
-        '-=1500'
+        '-=1600'
       )
-      idx++
+    })
 
-      //Work
-      const workTitle = M.G.id('work-title'),
-        workTitleTxt = M.G.class('txt-up', workTitle),
-        workDesc = M.G.class('work__desc')[0],
-        workItems = M.G.class('work__item')
-      this.trigger[idx] = M.G.class('work__header')[0]
-      this.tl[idx] = anime.timeline(tlOpts)
-      this.tl[idx].add({
-        targets: workTitleTxt,
-        translateY: ['100%', 0],
-        easing,
-        duration,
-      })
-      this.tl[idx].add(
-        {
-          targets: workDesc,
-          translateY: ['20px', 0],
-          opacity: [0, 1],
-          easing,
-          duration,
-        },
-        '-=1500'
-      )
-      idx++
+    const items = M.G.class('about-item')
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i]
+      const line = M.G.class('about-item-line', item)
+      const number = M.G.class('txt-up', M.G.class('about-item-number', item)[0])
+      const title = M.G.class('txt-up', M.G.class('about-item-title', item)[0])
+      const desc = M.G.class('txt-up', M.G.class('about-item-desc', item)[0])
 
-      for (let i = 0; i < workItems.length; i++) {
-        const item = workItems[i],
-          line = M.G.class('work__item__line', item),
-          name = M.G.class('work__item__name', item),
-          year = M.G.class('work__item__year', item)
-
-        this.trigger[idx] = item
-        this.tl[idx] = anime.timeline(tlOpts)
-        this.tl[idx].add({
+      this.play(item, (tl) => {
+        tl.add({
           targets: line,
           translateX: ['-100%', 0],
-          transformOrigin: [0, 0],
           duration: 2000,
           easing,
         })
-        this.tl[idx].add(
+        tl.add(
           {
-            targets: name,
-            translateY: ['100%', 0],
+            targets: [number, title],
+            translateY: ['101%', 0],
             duration: 2000,
             easing,
           },
           '-=2000'
         )
-        this.tl[idx].add(
+        tl.add(
           {
-            targets: year,
-            translateY: ['100%', 0],
+            targets: desc,
+            translateY: ['101%', 0],
             duration: 2000,
             easing,
           },
           '-=1600'
         )
-        idx++
-      }
+      })
+    }
+  }
 
-      //Skills
-      const skillsTitle = M.G.id('skills-title'),
-        skillsTitleTxt = M.G.class('txt-up', skillsTitle),
-        skillsDesc = M.G.class('skills__desc')[0],
-        skillsItems = M.G.class('skills__item')
+  work = () => {
+    const header = M.G.class('work-header')[0]
+    const heading = M.G.class('txt-up', M.G.class('section-heading', header)[0])
+    const subheading = M.G.class('txt-up', M.G.class('section-subheading', header)[0])
 
-      this.trigger[idx] = M.G.class('skills__header')[0]
-      this.tl[idx] = anime.timeline(tlOpts)
-      this.tl[idx].add({
-        targets: skillsTitleTxt,
-        translateY: ['100%', 0],
+    this.play(header, (tl) => {
+      tl.add({
+        targets: heading,
+        translateY: ['101%', 0],
         easing,
         duration,
       })
-      this.tl[idx].add(
+      tl.add(
         {
-          targets: skillsDesc,
+          targets: subheading,
+          translateY: ['101%', 0],
+          easing,
+          duration,
+        },
+        '-=1600'
+      )
+    })
+
+    const items = M.G.class('work-item')
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i]
+      const overlay = M.G.class('work-item-overlay', item)[0]
+      const title = M.G.class('txt-up', M.G.class('work-item-title', item)[0])
+      const desc = M.G.class('txt-up', M.G.class('work-item-description', item)[0])
+
+      this.play(item, (tl) => {
+        tl.add({
+          targets: overlay,
+          translateY: ['0%', '-100%'],
+          easing,
+          duration: 1500,
+        })
+        tl.add(
+          {
+            targets: [title, desc],
+            translateY: ['101%', 0],
+            easing,
+            duration,
+            delay: anime.stagger(80),
+          },
+          '-=1200'
+        )
+      })
+    }
+  }
+
+  testimonials = () => {
+    const heading = M.G.class('txt-up', M.G.class('testimonials-heading')[0])
+    const quote = M.G.class('testimonial-quote')[0]
+    if (quote) quote.style.textWrap = 'unset'
+    const quoteLines = splitLines(quote)
+    const author = M.G.class('testimonial-author--fx')[0]
+    const controls = M.G.class('testimonials-controls')[0]
+
+    this.play(M.G.id('testimonials'), (tl) => {
+      tl.add({
+        targets: heading,
+        translateY: ['101%', 0],
+        easing,
+        duration,
+      })
+      tl.add(
+        {
+          targets: quoteLines,
+          translateY: ['101%', 0],
+          easing,
+          duration,
+          delay: (_, i) => i * 80,
+        },
+        '-=1600'
+      )
+      tl.add(
+        {
+          targets: [author, controls].filter(Boolean),
+          translateY: [16, 0],
+          opacity: [0, 1],
+          easing,
+          duration,
+        },
+        '-=1500'
+      )
+    })
+  }
+
+  skills = () => {
+    const title = M.G.id('skills-title')
+    const titleTxt = M.G.class('txt-up', title)
+    const desc = M.G.class('skills__desc')[0]
+    const items = M.G.class('skills__item')
+
+    this.play(M.G.class('skills__header')[0], (tl) => {
+      tl.add({ targets: titleTxt, translateY: ['100%', 0], easing, duration })
+      tl.add(
+        {
+          targets: desc,
           translateY: ['20px', 0],
           opacity: [0, 1],
           easing,
@@ -129,106 +205,108 @@ class Fx {
         },
         '-=1500'
       )
-      idx++
+    })
 
-      for (let i = 0; i < skillsItems.length; i++) {
-        this.trigger[idx] = skillsItems[i]
-        this.tl[idx] = anime.timeline(tlOpts)
-        this.tl[idx].add({
-          targets: this.trigger[idx],
-          opacity: [0, 1],
-          easing,
-          duration,
-        })
-        idx++
-      }
+    for (let i = 0; i < items.length; i++) {
+      this.play(items[i], (tl) => {
+        tl.add({ targets: items[i], opacity: [0, 1], easing, duration })
+      })
+    }
+  }
 
-      //Contact
-      const contactBlocks = M.G.class('contact__block')
-      for (let i = 0; i < contactBlocks.length; i++) {
-        this.trigger[idx] = contactBlocks[i]
-        const contactTitleText = M.G.class(
-            'contact__title-text',
-            this.trigger[idx]
-          ),
-          contactLabel = M.G.class('contact__label', this.trigger[idx])
-        this.sensibility[idx] = 0.9
-        this.tl[idx] = anime.timeline(tlOpts)
-        this.tl[idx].add({
-          targets: contactLabel,
-          translateY: ['15px', 0],
-          opacity: [0, 1],
-          easing,
-          duration,
-        })
-        this.tl[idx].add(
-          {
-            targets: contactTitleText,
-            translateY: ['100%', 0],
+  contact = () => {
+    const blocks = M.G.class('contact__block')
+    for (let i = 0; i < blocks.length; i++) {
+      const block = blocks[i]
+      const title = M.G.class('contact__title-text', block)
+      const label = M.G.class('contact__label', block)
+
+      this.play(
+        block,
+        (tl) => {
+          tl.add({
+            targets: label,
+            translateY: ['15px', 0],
+            opacity: [0, 1],
             easing,
             duration,
-            delay: (_, i) => (i === 0 ? 0 : 100),
-          },
-          '-=1500'
-        )
-        idx++
-      }
-
-      //Footer
-      const footerItems = M.G.class('footer__anchor'),
-        footerLink = M.G.class('footer__link')[0],
-        footerCopy = M.G.class('footer__copy')[0]
-      this.trigger[idx] = M.G.id('footer')
-      this.tl[idx] = anime.timeline(tlOpts)
-      this.sensibility[idx] = 0.9
-
-      this.tl[idx].add({
-        targets: footerItems,
-        translateY: ['100%', 0],
-        duration,
-        easing,
-        delay: anime.stagger(100),
-      })
-      this.tl[idx].add(
-        {
-          targets: [footerLink, footerCopy].filter(Boolean),
-          translateY: ['100%', 0],
-          duration,
-          easing,
-          delay: anime.stagger(150),
+          })
+          tl.add(
+            {
+              targets: title,
+              translateY: ['100%', 0],
+              easing,
+              duration,
+              delay: (_, i) => (i === 0 ? 0 : 100),
+            },
+            '-=1500'
+          )
         },
-        '-=1500'
+        0.9
       )
-      idx++
-
-      this.triggerL = idx
-      for (var u = 0; u < this.triggerL; u++) {
-        this.isInViewport[u] = false
-      }
     }
   }
 
-  resize = () => {
-    let sy = this.m.s.y,
-      wh = this.m.win.h
+  footer = () => {
+    const heading = M.G.class('footer-cta-heading')[0]
+    const headingLines = splitLines(heading)
+    const ctaLink = M.G.class('txt-up', M.G.class('footer-cta-link')[0])
+    const divider = M.G.class('footer-divider-line')[0]
+    const cols = M.G.class('footer-columns')[0]
+    const colTxt = cols ? M.G.class('txt-up', cols) : []
+    const wordmark = M.G.class('footer-wordmark')[0]
 
-    for (let e = 0; e < this.triggerL; e++) {
-      0 !== this.trigger[e] &&
-        (this.limit[e] =
-          this.trigger[e].getBoundingClientRect().top +
-          sy -
-          wh * (this.sensibility[e] || 0.7))
-    }
-  }
-
-  run = () => {
-    let sy = this.m.s.y
-
-    for (let i = 0; i < this.triggerL; i++) {
-      sy > this.limit[i] &&
-        !this.isInViewport[i] &&
-        ((this.isInViewport[i] = true), this.tl[i].play())
-    }
+    this.play(
+      M.G.id('footer'),
+      (tl) => {
+        tl.add({
+          targets: headingLines,
+          translateY: ['101%', 0],
+          easing,
+          duration,
+          delay: (_, i) => i * 100,
+        })
+        tl.add(
+          {
+            targets: ctaLink,
+            translateY: ['101%', 0],
+            easing,
+            duration,
+          },
+          '-=1800'
+        )
+        tl.add(
+          {
+            targets: divider,
+            translateX: ['-100%', 0],
+            duration: 2000,
+            easing,
+          },
+          '-=1600'
+        )
+        tl.add(
+          {
+            targets: colTxt,
+            translateY: ['101%', 0],
+            easing,
+            duration,
+            delay: anime.stagger(50),
+          },
+          '-=1800'
+        )
+        tl.add(
+          {
+            targets: wordmark,
+            translateY: ['40%', 0],
+            opacity: [0, 1],
+            easing,
+            duration: 2000,
+          },
+          '-=1600'
+        )
+      },
+      0.9
+    )
   }
 }
 

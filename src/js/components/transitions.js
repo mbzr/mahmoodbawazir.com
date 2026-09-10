@@ -1,6 +1,7 @@
 import anime from 'animejs/lib/anime.es.js'
 
 import M from '@utils'
+import splitLines from '@utils/el/split-lines'
 
 export default new (class Transitions {
   run() {
@@ -10,23 +11,94 @@ export default new (class Transitions {
   }
 
   homeIntro = () => {
-    this.introTL = anime.timeline({
-      autoplay: false,
-    })
+    const play = () => {
+      const pageSplash = M.G.id('page-splash'),
+        nav = M.G.class('nav')[0],
+        lead = M.G.class('intro__lead')[0],
+        leadTxt = splitLines(lead),
+        titleTxt = M.G.class('txt-up', M.G.class('intro__title')[0]),
+        scrollTxt = M.G.class('link-block')[0],
+        duration = 2000,
+        easing = 'easeOutExpo',
+        splashDur = 1500,
+        contentAt = splashDur - 400
 
-    const title = M.G.class('intro__title')[0],
-      titleTxt = M.G.class('txt-up', title),
-      duration = 2000,
-      easing = 'easeOutExpo'
+      if (nav) {
+        nav.classList.add('is-intro')
+        nav.classList.remove('is-visible', 'is-ready', 'is-light')
+      }
 
-    this.introTL.add({
-      targets: titleTxt,
-      translateY: ['100%', 0],
-      easing,
-      duration,
-      delay: (_, i) => (0 === i ? 0 : i * 100),
-    })
+      this.introTL = anime.timeline({
+        autoplay: false,
+        complete: () => {
+          if (!nav) return
+          nav.classList.add('is-visible', 'is-ready')
+          nav.style.removeProperty('transform')
+          nav.classList.remove('is-intro')
+        },
+      })
 
-    this.introTL.play()
+      this.introTL.add(
+        {
+          targets: pageSplash,
+          opacity: [0, 1],
+          translateY: ['100%', 0],
+          easing,
+          duration: splashDur,
+        },
+        0
+      )
+
+      this.introTL.add(
+        {
+          targets: nav,
+          translateY: ['-110%', '0%'],
+          easing,
+          duration,
+        },
+        contentAt
+      )
+
+      this.introTL.add(
+        {
+          targets: leadTxt,
+          opacity: [0, 1],
+          translateY: ['100%', 0],
+          easing,
+          duration,
+          delay: (_, i) => i * 100,
+        },
+        contentAt
+      )
+
+      this.introTL.add(
+        {
+          targets: titleTxt,
+          translateY: ['100%', 0],
+          easing,
+          duration,
+          delay: (_, i) => i * 100,
+        },
+        contentAt
+      )
+
+      this.introTL.add(
+        {
+          targets: scrollTxt,
+          opacity: [0, 1],
+          easing,
+          duration,
+        },
+        contentAt
+      )
+
+      this.introTL.play()
+    }
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(play)
+    } else {
+      play()
+    }
   }
 })()

@@ -1,30 +1,38 @@
-<footer class="footer" id="footer">
+<footer class="footer-section" id="footer">
   <div class="container">
-    <div class="footer__top">
-      <div class="footer__row">
-        <div class="footer__col">
-          <ul class="footer__list">
-            {{ range .Params.footer.social }}
-              <li class="footer__item">
-                <a href="{{ .url }}" target="_blank" class="no-xhr footer__anchor line-wrap">{{ .title }}</a>
-              </li>
-            {{ end }}
-          </ul>
-        </div>
-        <div class="footer__col right">
-          <div>
-            <!-- <div class="footer__link-wrap">
-              <a href="{{ $.Site.Params.cv }}" target="_blank" class="no-xhr footer__link link link--primary line-wrap line-wrap--primary">{{ .Params.footer.resume.text }}</a>
-            </div> -->
-          </div>
-          
-        </div>
+    <div class="footer-cta">
+      <h2 class="footer-cta-heading">Let's build something exceptional together.</h2>
+      <a href="mailto:hello@mahmoodbawazir.com" class="footer-cta-link"><span class="txt-up-wrap"><span class="txt-up">Get in touch<span class="line-current-underline"></span></span></span></a>
+    </div>
+
+    <div class="footer-divider">
+      <span class="footer-divider-line"></span>
+    </div>
+
+    <div class="footer-columns">
+      <div class="footer-col footer-col-contact">
+        <h3 class="footer-col-title"><span class="txt-up-wrap"><span class="txt-up">Contact</span></span></h3>
+        <ul class="footer-list">
+          <li><span class="txt-up-wrap"><span class="txt-up"><a href="mailto:hello@mahmoodbawazir.com">hello@mahmoodbawazir.com</a></span></span></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-socials">
+        <h3 class="footer-col-title"><span class="txt-up-wrap"><span class="txt-up">Socials</span></span></h3>
+        <ul class="footer-list">
+          <li><span class="txt-up-wrap"><span class="txt-up"><a href="https://www.linkedin.com/in/mbzr" target="_blank" rel="noopener">LinkedIn</a></span></span></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-backtop">
+        <span class="txt-up-wrap"><span class="txt-up"><a href="#top" class="footer-backtop" data-back-to-top>Back to top ↑</a></span></span>
+      </div>
+
+      <div class="footer-col footer-col-copyright">
+        <span class="txt-up-wrap"><span class="txt-up"><span class="footer-copyright">Copyright © 2026</span></span></span>
       </div>
     </div>
-    <div class="footer__bottom">
-      <div class="footer__copy-wrap">
-        <div class="footer__copy">{{ .Params.footer.copy | safeHTML }}</div>
-      </div>
-    </div>
+
+    <div class="footer-wordmark">Mahmood Bawazir</div>
   </div>
 </footer>

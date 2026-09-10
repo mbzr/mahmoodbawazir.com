@@ -170,20 +170,283 @@ body {
 }
 
 #page-splash {
-  background: $brand-bg;
-  bottom: 0;
-  left: 0;
+  background: #fcfcfc;
   opacity: 0;
   pointer-events: none;
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 5;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .section-header {
   // margin-bottom: vw(115);
   &__content {
     padding-top: vw(60);
+  }
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10000;
+  font-size: 1.25em;
+  color: #000000;
+  transform: translate3d(0, -110%, 0);
+  pointer-events: none;
+  transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1),
+    color 0.35s ease;
+}
+
+.nav.is-visible {
+  transform: translate3d(0, 0, 0);
+  pointer-events: auto;
+}
+
+.nav.is-intro {
+  transition: color 0.35s ease;
+}
+
+.nav.is-light {
+  color: #fcfcfc;
+}
+
+.nav-spacer {
+  height: 1.5em;
+}
+
+.nav-layout {
+  grid-row-gap: 0px;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  width: 100%;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-column-gap: 1.25em;
+}
+
+.brand-link {
+  grid-column: 1 / 7;
+  justify-self: start;
+}
+
+.nav-links {
+  grid-column: 7 / 11;
+  align-self: start;
+  display: flex;
+  gap: 1.5em;
+}
+
+.nav-contact {
+  grid-column: 11 / 13;
+  justify-self: end;
+}
+
+.nav a {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  position: relative;
+}
+
+@include breakpoint(767) {
+  .nav {
+    font-size: 1em;
+  }
+
+  .nav-spacer {
+    height: 1.25em;
+  }
+
+  .nav-layout {
+    grid-template-columns: 1fr auto;
+  }
+
+  .brand-link {
+    grid-column: 1;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-contact {
+    grid-column: 2;
+  }
+}
+
+
+.work {
+  padding-block: 8.5em;
+}
+
+.work-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4em;
+}
+
+.work-item-overlay {
+  z-index: 1;
+  background-color: #000000;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+
+.section-heading {
+  font-size: 3.875em;
+  line-height: 104%;
+  letter-spacing: -.045em;
+  margin-left: -0.1em;
+  margin-right: -0.1em;
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+  font-weight: 500;
+}
+
+.section-subheading {
+  font-size: 1.125em;
+  line-height: 116%;
+  letter-spacing: -.035em;
+  font-weight: 500;
+}
+
+
+.work-list {
+  grid-column-gap: 1.25em;
+  grid-row-gap: 3em;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-columns: 1fr;
+  display: grid;
+}
+
+.work-item {
+  flex-flow: column;
+  width: 100%;
+  display: flex;
+}
+
+.work-item-link {
+  color: inherit;
+  text-decoration: none;
+  max-width: 100%;
+  display: block;
+}
+
+.work-item-image {
+  aspect-ratio: 1.735;
+  border-radius: .5em;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 1em;
+}
+
+.work-item-image img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transform: scale(1);
+  transform-origin: center center;
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  .work-item-link:hover .work-item-img {
+    transform: scale(1.08);
+  }
+}
+
+.work-item-title {
+  margin-bottom: 0.25em;
+}
+
+.work-item-description {
+  color: #6b6375;
+  white-space: nowrap;
+}
+
+@include breakpoint(767) {
+  .work {
+    padding-block: 4.5em;
+  }
+
+  .work-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75em;
+    margin-bottom: 2.5em;
+  }
+
+  .section-heading {
+    font-size: 2.25em;
+  }
+
+  .work-list {
+    grid-template-columns: 1fr;
+    grid-row-gap: 2em;
+  }
+
+  .work-item-image {
+    aspect-ratio: 1.5;
+  }
+
+  .work-item-description {
+    white-space: normal;
+  }
+}
+
+.line-hover-underline {
+  border-top: 1px solid currentColor;
+  width: 100%;
+  display: block;
+  position: absolute;
+  inset: auto 0% 0%;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-out;
+  transform-origin: right center;
+}
+
+.nav a:hover .line-hover-underline {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.line-current-underline {
+  border-top: 1px solid currentColor;
+  width: 100%;
+  display: block;
+  position: absolute;
+  inset: auto 0% 0%;
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.nav a:hover .line-current-underline {
+  animation: line-scale-out-in 0.55s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@keyframes line-scale-out-in {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+  50% {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+  51% {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left center;
   }
 }

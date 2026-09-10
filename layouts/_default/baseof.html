@@ -7,10 +7,9 @@
 
     <main id="app">
       <canvas id="cv"></canvas>
-      
       <div id="page">
         
-        <div class="ls" id="ls">
+        <div class="ls" id="ls" style="display: none;">
           <a href="/" class="ls__logo">
             <svg class="icon"><use xlink:href="#logo" /></svg>
           </a>
@@ -23,6 +22,8 @@
             <div class="ls__scroll">Scroll</div>
           </div>
         </div>
+        
+        {{ partial "nav.html" . }}
 
         <div id="xhr">
           {{ block "main" . }}{{ end }}

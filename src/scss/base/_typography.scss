@@ -16,42 +16,7 @@ h6 {
   padding: 0;
   margin: 0;
 
-  font-family: font-family(dw);
-  font-weight: font-weight(medium);
-  font-style: font-style(normal);
-  text-transform: uppercase;
-}
-
-h1,
-.h1 {
-  font-size: vw(92);
-  line-height: em(110, 92);
-
-  @include breakpoint(480) {
-    font-size: 24px;
-  }
-
-  @include breakpoint(361) {
-    font-size: 23px;
-  }
-}
-
-h2 {
-  font-size: vw(40);
-  // line-height: em(82, 40);
-
-  @include breakpoint(767) {
-    font-size: em(21);
-  }
-}
-
-p {
-  font-size: vw(22);
-  line-height: em(32, 22);
-  margin-bottom: em(32, 22);
-
-  @include breakpoint(767) {
-    font-size: em(16);
-    line-height: em(22), 16;
-  }
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-style: normal;
 }

@@ -1,6 +1,9 @@
 .container {
-  max-width: vw(1620);
-  margin: 0 auto;
+  padding-inline: 2em;
+
+  @include breakpoint(767) {
+    padding-inline: 1.25em;
+  }
 }
 
 .row {

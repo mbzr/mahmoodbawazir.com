@@ -75,11 +75,13 @@ img {
 }
 
 html {
-  background-color: $brand-bg;
+  background-color: #000;
   // background-image: url('/images/noise.png');
   color: $brand-color;
-  font-size: $font-size-base;
-  font-family: font-family(roboto);
+  font-size: max(16px, 1.25vw);
+  font-weight: 500;
+  // font-family: font-family(roboto);
+  font-family: 'Inter', sans-serif;
   line-height: normal;
 
   -webkit-text-size-adjust: none;
