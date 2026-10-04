@@ -5,9 +5,9 @@
     </div>
 
     <div class="work-list">
-      {{ range $i, $p := partial "project-list.html" . }}
+      {{ range partial "project-list.html" . }}
         {{ $card := .Params.card }}
-        <div class="work-item{{ if eq $i 0 }} work-item--featured{{ end }}">
+        <div class="work-item">
           <a href="{{ .RelPermalink }}" class="work-item-link">
             <div class="work-item-image">
               <div class="work-item-overlay"></div>

@@ -2,7 +2,7 @@
 title: 'Bayzat'
 description: 'Front-end rebuild of bayzat.com in GatsbyJS during a complete rebrand, with pages generated from an API and Framer Motion interfaces.'
 project: true
-weight: 3
+weight: 4
 years: '2020'
 role: 'Senior Front-End Developer'
 built: 'I joined Bayzat in the middle of a complete rebrand and led the front-end rebuild of bayzat.com in GatsbyJS, with pages generated from an API and animated interfaces built with Framer Motion. I also handled SEO, performance testing, and cross-browser testing.'
@@ -12,35 +12,8 @@ links:
     url: 'https://bayzat.com/'
 card:
   subtitle: 'Website rebuild for a rebrand · GatsbyJS'
-  image: '/media/work/bayzat/bayzat-2020-home-card.webp'
-  width: 1320
-  height: 761
-  alt: 'Bayzat homepage as rebuilt in 2020, with the headline "Changing the way work works" on a purple background'
-shots:
-  - single: 'media/1.jpg'
-    alt: 'Bayzat homepage with the "Changing the way work works" headline, a sign-up form, and a portrait cropped into an angular purple shape'
-    caption: 'Archived version, 2020'
-  - single: 'media/2.jpg'
-    alt: 'Bayzat work life platform page, with tabs for HR software, insurance and payroll beside a product dashboard card'
-    caption: 'Archived version, 2020'
-  - video: 'media/3.mp4'
-    width: 1275
-    height: 720
-    caption: 'Animated page transition, 2020'
-  - video: 'media/4.mp4'
-    width: 1408
-    height: 720
-    caption: 'Animated interface built with Framer Motion, 2020'
-  - single: 'media/5.jpg'
-    alt: 'Bayzat case studies index, a grid of six customer stories with angular cropped portraits'
-    caption: 'Archived version, 2020'
-  - single: 'media/6.jpg'
-    alt: 'Bayzat single case study page for Fuchsia Restaurant, mixing long-form text with photography'
-    caption: 'Archived version, 2020'
-  - single: 'media/7.jpg'
-    alt: 'Lower half of a Bayzat case study, with pull quotes and a "More stories" carousel'
-    caption: 'Archived version, 2020'
-  - single: 'media/8.jpg'
-    alt: 'Bayzat HR software landing page on a dark background, with product screenshots and a four-column feature overview'
-    caption: 'Archived version, 2020'
+  image: '/media/work/bayzat.webp'
+  width: 1600
+  height: 922
+  alt: 'Bayzat logo on a plain background in the brand purple'
 ---
