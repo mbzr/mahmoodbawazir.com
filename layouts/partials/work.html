@@ -1,59 +1,27 @@
 <section class="work bg-color-dark" id="work">
   <div class="container">
     <div class="work-header">
-      <h2 class="section-heading"><span class="txt-up-wrap"><span class="txt-up">Featured Work</span></span></h2>
-      <h3 class="section-subheading"><span class="txt-up-wrap"><span class="txt-up">Showcasing some of my latest projects.</span></span></h3>
+      <h2 class="section-heading"><span class="txt-up-wrap"><span class="txt-up">Selected work</span></span></h2>
     </div>
 
     <div class="work-list">
-      <div class="work-item">
-        <a href="https://sixflagsqiddiyacity.com/" class="work-item-link" target="_blank">
-          <div class="work-item-image">
-            <div class="work-item-overlay"></div>
-            <img src="/media/images/sixflags.png" alt="Six Flags" class="work-item-img">
-          </div>
-          <div class="work-item-content">
-            <h4 class="work-item-title text-style-body"><span class="txt-up-wrap"><span class="txt-up">Six Flags</span></span></h4>
-            <p class="work-item-description text-style-body"><span class="txt-up-wrap"><span class="txt-up">Unlock the thrill at Qiddiya City.</span></span></p>
-          </div>
-        </a>
-      </div>
-      <div class="work-item">
-        <a href="https://aquarabiaqiddiyacity.com/" class="work-item-link" target="_blank">
-          <div class="work-item-image">
-            <div class="work-item-overlay"></div>
-            <img src="/media/images/aqa.png" alt="Aquarabia" class="work-item-img">
-          </div>
-          <div class="work-item-content">
-            <h4 class="work-item-title text-style-body"><span class="txt-up-wrap"><span class="txt-up">Aquarabia</span></span></h4>
-            <p class="work-item-description text-style-body"><span class="txt-up-wrap"><span class="txt-up">The region’s largest water theme park.</span></span></p>
-          </div>
-        </a>
-      </div>
-      <div class="work-item">
-        <a href="https://puffy.com/" class="work-item-link" target="_blank">
-          <div class="work-item-image">
-            <div class="work-item-overlay"></div>
-            <img src="/media/images/puffy.png" alt="Puffy" class="work-item-img">
-          </div>
-          <div class="work-item-content">
-            <h4 class="work-item-title text-style-body"><span class="txt-up-wrap"><span class="txt-up">Puffy</span></span></h4>
-            <p class="work-item-description text-style-body"><span class="txt-up-wrap"><span class="txt-up">Award-winning luxury mattresses.</span></span></p>
-          </div>
-        </a>
-      </div>
-      <div class="work-item">
-        <a href="https://bayzat.com/" class="work-item-link" target="_blank">
-          <div class="work-item-image">
-            <div class="work-item-overlay"></div>
-            <img src="/media/images/bayzat.png" alt="Bayzat" class="work-item-img">
-          </div>
-          <div class="work-item-content">
-            <h4 class="work-item-title text-style-body"><span class="txt-up-wrap"><span class="txt-up">Bayzat</span></span></h4>
-            <p class="work-item-description text-style-body"><span class="txt-up-wrap"><span class="txt-up">HR, payroll, and benefits for the GCC.</span></span></p>
-          </div>
-        </a>
-      </div>
+      {{ range $i, $p := partial "project-list.html" . }}
+        {{ $card := .Params.card }}
+        <div class="work-item{{ if eq $i 0 }} work-item--featured{{ end }}">
+          <a href="{{ .RelPermalink }}" class="work-item-link">
+            <div class="work-item-image">
+              <div class="work-item-overlay"></div>
+              <img src="{{ $card.image | relURL }}" alt="{{ $card.alt }}"
+                   width="{{ $card.width }}" height="{{ $card.height }}"
+                   class="work-item-img" loading="lazy" decoding="async">
+            </div>
+            <div class="work-item-content">
+              <h3 class="work-item-title text-style-body"><span class="txt-up-wrap"><span class="txt-up">{{ .Title }}</span></span></h3>
+              <p class="work-item-description text-style-body"><span class="txt-up-wrap"><span class="txt-up">{{ $card.subtitle }}</span></span></p>
+            </div>
+          </a>
+        </div>
+      {{ end }}
     </div>
   </div>
 </section>

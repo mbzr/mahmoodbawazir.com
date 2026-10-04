@@ -1,0 +1,6 @@
+{{/*
+  The ordered list of internal case-study pages, shared by the homepage work
+  section and the prev/next navigation on each project page. Order comes from
+  the `weight` front matter key.
+*/}}
+{{ return (where .Site.RegularPages "Params.project" true).ByWeight }}

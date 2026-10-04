@@ -1,100 +1,135 @@
 {{ define "main" }}
 <div id="case">
-  <section class="case-banner" id="case-banner">
-    <div class="container">
-      {{ $title := split .Title " " }}
-      
-      <div class="case-banner__row">
-        <div class="case-banner__col">
-          <div class="case-banner__title-wrap">
-            <h1 class="case-banner__title">
-              {{ range $val := $title }}
-                <span>
-                  {{ $val }}
-                </span>
-              {{ end }}
-            </h1>
-          </div>
+  <section class="case-intro" id="case-intro">
+    <div class="case-container">
+      <p class="case-eyebrow">{{ .Params.years }}{{ with .Params.via }} · Via {{ . }}{{ end }}</p>
+      <h1 class="case-title">{{ .Title }}</h1>
+
+      <div class="case-details">
+        <div class="case-block">
+          <h2 class="case-block-title">Role</h2>
+          <p class="case-role">{{ .Params.role }}</p>
         </div>
-      </div>
-      <div class="case-banner__row">
-        <div class="case-banner__col">
-          <div class="case-banner__year-wrap">
-            <div class="case-banner__year">
-              {{ .Params.year }}
-            </div>
-          </div>
-          <div class="case-banner__link-wrap">
-            <a href="{{ .Params.live }}" target="_blank" class=" link link--primary line-wrap line-wrap--primary no-xhr">Visit site</a>
-          </div>
+
+        <div class="case-block case-block--wide">
+          <h2 class="case-block-title">What I built</h2>
+          <p class="case-built">{{ .Params.built }}</p>
         </div>
-        <div class="case-banner__col">
-          <div class="case-banner__info">
-            
-            <h4 class="case-banner__info-title">Responsibilities</h4>
-            <ul class="case-banner__info-list">
-              {{ range .Params.responsibilities }}
-                <li>{{ . }}</li>
+
+        <div class="case-block case-block--wide">
+          <h2 class="case-block-title">Stack</h2>
+          <ul class="case-tags">
+            {{ range .Params.stack }}
+              <li class="case-tag">{{ . }}</li>
+            {{ end }}
+          </ul>
+        </div>
+
+        {{ with .Params.links }}
+          <div class="case-block case-block--wide">
+            <h2 class="case-block-title">Links</h2>
+            <ul class="case-links">
+              {{ $many := gt (len .) 1 }}
+              {{ range . }}
+                <li>
+                  <a href="{{ .url }}" target="_blank" rel="noopener" class="case-link">
+                    Visit live site{{ if $many }} · {{ .label }}{{ end }} <span aria-hidden="true">↗</span>
+                  </a>
+                </li>
               {{ end }}
             </ul>
           </div>
-        </div>
+        {{ end }}
       </div>
     </div>
   </section>
 
-  <section class="case-media" id="case-media">
-    <div class="case-media__container">
-      {{ range .Params.media }}
-        {{ if (isset . "video") }}
-          <video autoplay muted loop="loop" playsinline src="{{ .src }}" poster="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=" class="{{ .class }}"></video>
-        {{ else }}
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=" data-src="{{ .src }}" alt="{{ .alt }}" class="{{ .class }} lazy">
-        {{ end }}
-      {{ end }}
-    </div>
-  </section>
+  {{ with .Params.shots }}
+    {{/*
+      Paired desktop/mobile captures come from scripts/screenshots.mjs, which
+      always emits them at these sizes. Setting width/height reserves layout
+      space so lazy loading can't shift the page. Keep in sync with the
+      DESKTOP_MAX_WIDTH / MOBILE_MAX_WIDTH constants in that script.
+    */}}
+    {{ $deskW := 1600 }}{{ $deskH := 1000 }}
+    {{ $mobW := 780 }}{{ $mobH := 1688 }}
+    <section class="case-shots" id="case-shots">
+      <div class="case-container">
+        <h2 class="case-block-title">Screenshots</h2>
+        <ul class="case-shot-list">
+          {{ range $shot := . }}
+            <li class="case-shot">
+              {{ if $shot.desktop }}
+                <div class="case-shot-pair">
+                  <figure class="case-shot-figure case-shot-figure--desktop">
+                    <img class="case-shot-media" src="{{ $shot.desktop | relURL }}"
+                         alt="{{ $shot.alt }}"
+                         width="{{ $deskW }}" height="{{ $deskH }}"
+                         loading="lazy" decoding="async">
+                  </figure>
+                  {{ with $shot.mobile }}
+                    <figure class="case-shot-figure case-shot-figure--mobile">
+                      <img class="case-shot-media" src="{{ . | relURL }}"
+                           alt="{{ $shot.altMobile | default $shot.alt }}"
+                           width="{{ $mobW }}" height="{{ $mobH }}"
+                           loading="lazy" decoding="async">
+                    </figure>
+                  {{ end }}
+                </div>
+              {{ else if $shot.single }}
+                {{ with $.Resources.GetMatch $shot.single }}
+                  <img class="case-shot-media" src="{{ .RelPermalink }}"
+                       alt="{{ $shot.alt }}"
+                       width="{{ .Width }}" height="{{ .Height }}"
+                       loading="lazy" decoding="async">
+                {{ end }}
+              {{ else if $shot.video }}
+                {{ with $.Resources.GetMatch $shot.video }}
+                  <video class="case-shot-media" src="{{ .RelPermalink }}"
+                         width="{{ $shot.width }}" height="{{ $shot.height }}"
+                         autoplay muted loop playsinline
+                         {{ with $shot.caption }}aria-label="{{ . }}"{{ end }}></video>
+                {{ end }}
+              {{ end }}
+              {{ with $shot.caption }}<p class="case-shot-caption">{{ . }}</p>{{ end }}
+            </li>
+          {{ end }}
+        </ul>
+      </div>
+    </section>
+  {{ end }}
 
-  <section class="case-next" id="case-next">
-    {{ $current := . }}
-    {{ $projects := slice }}
-    {{ range ($.Site.Pages.ByParam "year").Reverse }}
-      {{ if isset .Params "year" }}
-        {{ $projects = $projects | append . }}
-      {{ end }}
-    {{ end }}
-    {{ $idx := -1 }}
-    {{ range $i, $p := $projects }}
-      {{ if eq $p.File.UniqueID $current.File.UniqueID }}
-        {{ $idx = $i }}
-      {{ end }}
-    {{ end }}
-    {{ $prevPage := false }}
-    {{ $nextPage := false }}
-    {{ if ge $idx 0 }}
-      {{ if gt $idx 0 }}
-        {{ $prevPage = index $projects (sub $idx 1) }}
-      {{ end }}
-      {{ if lt $idx (sub (len $projects) 1) }}
-        {{ $nextPage = index $projects (add $idx 1) }}
-      {{ end }}
-    {{ end }}
-    <div class="case-next__container">
-      <div class="case-next__title-wrap">
-        {{ with $prevPage }}
-          <h2 class="case-next__title">
-            <a href="{{ if isset .Params "external" }}{{ .Params.external }}{{ else }}{{ .RelPermalink }}{{ end }}"{{ if isset .Params "external" }} class="no-xhr"{{ end }}>Prev</a>
-          </h2>
+  {{ $projects := partial "project-list.html" . }}
+  {{ $idx := -1 }}
+  {{ range $i, $p := $projects }}
+    {{ if eq $p.RelPermalink $.RelPermalink }}{{ $idx = $i }}{{ end }}
+  {{ end }}
+  {{ $prev := false }}
+  {{ $next := false }}
+  {{ if ge $idx 0 }}
+    {{ if gt $idx 0 }}{{ $prev = index $projects (sub $idx 1) }}{{ end }}
+    {{ if lt $idx (sub (len $projects) 1) }}{{ $next = index $projects (add $idx 1) }}{{ end }}
+  {{ end }}
+
+  <nav class="case-nav" id="case-nav" aria-label="Other projects">
+    <div class="case-container case-nav-inner">
+      <div class="case-nav-col">
+        {{ with $prev }}
+          <a href="{{ .RelPermalink }}" class="case-nav-link">
+            <span class="case-nav-label">Prev</span>
+            <span class="case-nav-title">{{ .Title }}</span>
+          </a>
         {{ end }}
       </div>
-      <div class="case-next__title-wrap">
-        {{ with $nextPage }}
-          <h2 class="case-next__title">
-            <a href="{{ if isset .Params "external" }}{{ .Params.external }}{{ else }}{{ .RelPermalink }}{{ end }}"{{ if isset .Params "external" }} class="no-xhr"{{ end }}>Next</a>
-          </h2>
+      <div class="case-nav-col case-nav-col--next">
+        {{ with $next }}
+          <a href="{{ .RelPermalink }}" class="case-nav-link">
+            <span class="case-nav-label">Next</span>
+            <span class="case-nav-title">{{ .Title }}</span>
+          </a>
         {{ end }}
       </div>
     </div>
-  </section>
+  </nav>
 </div>
 {{ end }}

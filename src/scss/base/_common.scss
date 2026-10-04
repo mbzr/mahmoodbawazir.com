@@ -434,6 +434,15 @@ body {
   display: block;
 }
 
+/* The most recent project leads the grid at full width */
+.work-item--featured {
+  grid-column: 1 / -1;
+}
+
+.work-item--featured .work-item-image {
+  aspect-ratio: 2.2;
+}
+
 .work-item-image {
   aspect-ratio: 1.735;
   border-radius: .5em;
@@ -487,7 +496,8 @@ body {
     grid-row-gap: 2em;
   }
 
-  .work-item-image {
+  .work-item-image,
+  .work-item--featured .work-item-image {
     aspect-ratio: 1.5;
   }
 

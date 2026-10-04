@@ -101,7 +101,6 @@ class Fx {
   work = () => {
     const header = M.G.class('work-header')[0]
     const heading = M.G.class('txt-up', M.G.class('section-heading', header)[0])
-    const subheading = M.G.class('txt-up', M.G.class('section-subheading', header)[0])
 
     this.play(header, (tl) => {
       tl.add({
@@ -110,15 +109,6 @@ class Fx {
         easing,
         duration,
       })
-      tl.add(
-        {
-          targets: subheading,
-          translateY: ['101%', 0],
-          easing,
-          duration,
-        },
-        '-=1600'
-      )
     })
 
     const items = M.G.class('work-item')
