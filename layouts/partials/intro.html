@@ -4,14 +4,23 @@
 
     <div class="layout">
       <div class="intro-lead-wrap">
-        <p class="text-style-heading-s intro__lead">Senior Front-End Developer engineering fast, responsive, and scalable web experiences for global brands.</p>
+        <p class="text-style-heading-s intro__lead">Senior front-end developer. I build websites and web apps for global brands with TypeScript, React/Next.js, and Svelte 5.</p>
       </div>
       <div class="intro-spacer"></div>
 
       <div class="intro-title-wrap">
-        <h1 class="text-style-heading-m intro__title"><span class="txt-up-wrap"><span class="txt-up">Mahmood</span></span><span class="txt-up-wrap"><span class="txt-up">Bawazir</span></span></h1>
+        <h1 class="text-style-heading-m intro__title"><span class="h-sr-only">Mahmood Bawazir</span><span aria-hidden="true" class="txt-up-wrap"><span class="txt-up">Mahmood</span></span><span aria-hidden="true" class="txt-up-wrap"><span class="txt-up">Bawazir</span></span></h1>
       </div>
-      
+
+      <div class="intro-cta-wrap">
+        <p class="availability"><span class="availability-dot" aria-hidden="true"></span>{{ .Site.Params.availability }}</p>
+        <div class="intro-actions">
+          <a href="mailto:{{ .Site.Params.email }}" class="btn btn--solid">Email me</a>
+          <a href="{{ .Site.Params.cv }}" target="_blank" rel="noopener" class="btn btn--outline no-xhr">Download CV</a>
+          <a href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener" class="btn btn--outline">LinkedIn</a>
+        </div>
+      </div>
+
       <div class="link-block-wrapper">
         <a href="#work" class="link-block">Scroll to explore ↓</a>
       </div>

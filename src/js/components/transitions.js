@@ -17,6 +17,7 @@ export default new (class Transitions {
         lead = M.G.class('intro__lead')[0],
         leadTxt = splitLines(lead),
         titleTxt = M.G.class('txt-up', M.G.class('intro__title')[0]),
+        cta = M.G.class('intro-cta-wrap')[0],
         scrollTxt = M.G.class('link-block')[0],
         duration = 2000,
         easing = 'easeOutExpo',
@@ -84,10 +85,12 @@ export default new (class Transitions {
 
       this.introTL.add(
         {
-          targets: scrollTxt,
+          targets: [cta, scrollTxt].filter(Boolean),
           opacity: [0, 1],
+          translateY: [16, 0],
           easing,
           duration,
+          delay: anime.stagger(120),
         },
         contentAt
       )

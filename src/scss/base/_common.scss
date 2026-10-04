@@ -155,6 +155,100 @@ body {
   }
 }
 
+/*
+  Availability line — copy lives in config.toml as params.availability
+*/
+
+.availability {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  color: $brand-muted;
+  font-size: 1em;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+}
+
+.availability-dot {
+  flex: 0 0 auto;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background-color: $brand-available;
+  box-shadow: 0 0 0 0.25em rgba(21, 128, 61, 0.15);
+  transform: translateY(-0.05em);
+}
+
+.bg-color-dark .availability {
+  color: #a39cab;
+}
+
+/*
+  Buttons
+*/
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75em 1.25em;
+  border: 1px solid transparent;
+  border-radius: 0.5em;
+  font-size: 1em;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn--solid {
+  background-color: $brand-color;
+  border-color: $brand-color;
+  color: #fcfcfc;
+
+  &:hover {
+    background-color: $brand-black;
+    border-color: $brand-black;
+  }
+}
+
+.btn--outline {
+  background-color: transparent;
+  border-color: rgba(26, 26, 26, 0.25);
+  color: $brand-color;
+
+  &:hover {
+    border-color: $brand-color;
+  }
+}
+
+.btn:focus-visible {
+  outline: 2px solid $brand-color;
+  outline-offset: 2px;
+}
+
+.bg-color-dark {
+  .btn--solid {
+    background-color: #fcfcfc;
+    border-color: #fcfcfc;
+    color: $brand-color;
+  }
+
+  .btn--outline {
+    border-color: rgba(252, 252, 252, 0.3);
+    color: #fcfcfc;
+
+    &:hover {
+      border-color: #fcfcfc;
+    }
+  }
+
+  .btn:focus-visible {
+    outline-color: #fcfcfc;
+  }
+}
+
 .link {
   font-size: vw(22);
   font-weight: font-weight(bold);
