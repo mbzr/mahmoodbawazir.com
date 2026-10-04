@@ -4,28 +4,35 @@
       <h2 class="about-heading"><span class="txt-up-wrap"><span class="txt-up">[About]</span></span></h2>
       <div class="about-intro-content">
         <div class="text-indent"></div>
-        <h3 class="about-subheading">Senior Front-End Developer with 9+ years of experience delivering fast, responsive, and scalable web experiences. I specialize in modern frameworks and enterprise architectures, collaborating with distributed teams across the MENA, Europe, and LATAM regions.</h3>
+        <p class="about-subheading">Senior front-end developer with 9+ years of experience building websites and web apps for global brands. I've worked on enterprise Adobe Experience Manager projects and headless Shopify stores, with distributed teams across MENA, Europe, and LATAM. Before that, I spent three years at TenTwenty, a Dubai digital agency, building client websites.</p>
       </div>
     </div>
     <div class="about-list">
       <div class="about-item">
         <span class="about-item-line-wrap"><span class="about-item-line"></span></span>
         <div class="about-item-number"><span class="txt-up-wrap"><span class="txt-up">01</span></span></div>
-        <h4 class="about-item-title"><span class="txt-up-wrap"><span class="txt-up">Performance</span></span></h4>
-        <p class="about-item-desc"><span class="txt-up-wrap"><span class="txt-up">Each site is mobile-responsive, SEO-friendly, and optimized for performance.</span></span></p>
+        <h3 class="about-item-title"><span class="txt-up-wrap"><span class="txt-up">Complex user flows</span></span></h3>
+        <p class="about-item-desc"><span class="txt-up-wrap"><span class="txt-up">Booking, cart, checkout, and registration flows, with real state management and validation.</span></span></p>
       </div>
       <div class="about-item">
         <span class="about-item-line-wrap"><span class="about-item-line"></span></span>
         <div class="about-item-number"><span class="txt-up-wrap"><span class="txt-up">02</span></span></div>
-        <h4 class="about-item-title"><span class="txt-up-wrap"><span class="txt-up">Interactions & Animations</span></span></h4>
-        <p class="about-item-desc"><span class="txt-up-wrap"><span class="txt-up">I create websites with immersive animations, engaging interactions, and clean, custom designs.</span></span></p>
+        <h3 class="about-item-title"><span class="txt-up-wrap"><span class="txt-up">Bilingual sites</span></span></h3>
+        <p class="about-item-desc"><span class="txt-up-wrap"><span class="txt-up">English and Arabic interfaces that switch cleanly between LTR and RTL.</span></span></p>
       </div>
       <div class="about-item">
         <span class="about-item-line-wrap"><span class="about-item-line"></span></span>
         <div class="about-item-number"><span class="txt-up-wrap"><span class="txt-up">03</span></span></div>
-        <h4 class="about-item-title"><span class="txt-up-wrap"><span class="txt-up">CMS & Integrations</span></span></h4>
-        <p class="about-item-desc"><span class="txt-up-wrap"><span class="txt-up">I handle CMS setups, E-commerce solutions, and third-party integrations.</span></span></p>
+        <h3 class="about-item-title"><span class="txt-up-wrap"><span class="txt-up">Polished motion</span></span></h3>
+        <p class="about-item-desc"><span class="txt-up-wrap"><span class="txt-up">Animated interfaces with GSAP and Framer Motion that don't slow the page down.</span></span></p>
       </div>
+    </div>
+    <div class="about-stack">
+      <ul class="tag-list" aria-label="Tools and technologies I work with">
+        {{ range (slice "TypeScript" "React" "Next.js" "Svelte 5" "Tailwind CSS" "Adobe Experience Manager" "Shopify" "GraphQL" "GSAP" "Framer Motion" "Optimizely" "GitHub Actions") }}
+          <li class="tag">{{ . }}</li>
+        {{ end }}
+      </ul>
     </div>
   </div>
 </section>

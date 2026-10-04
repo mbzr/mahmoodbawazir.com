@@ -184,6 +184,32 @@ body {
 }
 
 /*
+  Tag pills — the About stack row and the Stack block on project pages
+*/
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.4em 0.85em;
+  border: 1px solid rgba(26, 26, 26, 0.18);
+  border-radius: 2em;
+  font-size: 1em;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: $brand-color;
+}
+
+.bg-color-dark .tag {
+  border-color: rgba(252, 252, 252, 0.25);
+  color: #fcfcfc;
+}
+
+/*
   Buttons
 */
 

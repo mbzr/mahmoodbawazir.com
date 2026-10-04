@@ -96,6 +96,19 @@ class Fx {
         )
       })
     }
+
+    const stack = M.G.class('about-stack')[0]
+    if (stack) {
+      this.play(stack, (tl) => {
+        tl.add({
+          targets: stack,
+          translateY: [16, 0],
+          opacity: [0, 1],
+          easing,
+          duration,
+        })
+      })
+    }
   }
 
   work = () => {

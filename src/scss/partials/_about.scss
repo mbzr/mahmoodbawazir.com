@@ -93,6 +93,13 @@
   color: #6b6375;
 }
 
+.about-stack {
+  margin-top: 3em;
+  padding-top: 3em;
+  border-top: 1px solid #909090;
+  opacity: 0;
+}
+
 
 /* Testimonials */
 .testimonials-section {
@@ -468,6 +475,11 @@
 
   .about-list {
     row-gap: 2em;
+  }
+
+  .about-stack {
+    margin-top: 2em;
+    padding-top: 2em;
   }
 
   .about-item {
