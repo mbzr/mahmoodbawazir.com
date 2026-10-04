@@ -1,23 +1,37 @@
 <head>
-  <meta name="generator" content="Hugo 0.76.5">
+  {{ hugo.Generator }}
 	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5">
-  <title>{{ .Site.Title }} — {{ .Title }}</title>  
+
+  {{ $title := "" }}
+  {{ if .IsHome }}
+    {{ $title = printf "%s — %s" .Site.Title .Site.Params.jobTitle }}
+  {{ else }}
+    {{ $title = printf "%s — %s" .Title .Site.Title }}
+  {{ end }}
+  {{ $description := .Params.description | default .Site.Params.description }}
+  {{ $ogImage := absURL "media/images/open-graph.jpg" }}
+
+  <title>{{ $title }}</title>
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="robots" content="all">
   <meta name="language" content="{{ .Site.LanguageCode }}">
-  <link rel="canonical" href="{{ .Site.BaseURL }}">
-  <meta name="description" content="{{ $.Site.Params.description }}">
-  <meta name="keywords" content="{{ $.Site.Params.Keywords }}">
+  <link rel="canonical" href="{{ .Permalink }}">
+  <meta name="description" content="{{ $description }}">
   <link href="https://github.com/mbzr" rel="author">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="{{ .Site.BaseURL }}">
-  <meta name="twitter:title" property="og:title" content="{{ .Title }}">
-  <meta name="twitter:image" content="{{ .Site.BaseURL }}/media/images/open-graph.jpg">
-  <meta property="og:url" content="{{ .Site.BaseURL }}">
-  <meta property="og:title" content="{{ .Title }}">
+  <meta name="twitter:url" content="{{ .Permalink }}">
+  <meta name="twitter:title" content="{{ $title }}">
+  <meta name="twitter:description" content="{{ $description }}">
+  <meta name="twitter:image" content="{{ $ogImage }}">
+  <meta property="og:site_name" content="{{ .Site.Title }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:title" content="{{ $title }}">
+  <meta property="og:description" content="{{ $description }}">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="{{ .Site.BaseURL }}/media/images/open-graph.jpg">
+  <meta property="og:image" content="{{ $ogImage }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 	<link rel="apple-touch-icon" sizes="180x180" href="/fav/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/fav/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/fav/favicon-16x16.png">
@@ -33,4 +47,6 @@
   {{ with $stylesheet }}
     <link href="{{ relURL . }}" rel="stylesheet" type="text/css">
   {{ end }}
+
+  {{ if .IsHome }}{{ partial "schema.html" . }}{{ end }}
 </head>

@@ -1,0 +1,10 @@
+{{ $person := dict
+  "@context" "https://schema.org"
+  "@type" "Person"
+  "name" .Site.Params.author
+  "jobTitle" .Site.Params.jobTitle
+  "url" .Permalink
+  "email" (printf "mailto:%s" .Site.Params.email)
+  "sameAs" (slice .Site.Params.linkedin)
+}}
+<script type="application/ld+json">{{ $person | jsonify | safeJS }}</script>

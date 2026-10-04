@@ -1,6 +1,7 @@
-baseURL = "https://mbzr.dev/"
+baseURL = "https://mahmoodbawazir.com/"
 languageCode = "en-us"
 title = "Mahmood Bawazir"
+enableRobotsTXT = true
 
 # RSS, categories and tags disabled for an easy start
 # See configuration options for more details: 
@@ -9,7 +10,13 @@ disableKinds = ["RSS", "taxonomy"]
 
 [params]
   author = "Mahmood Bawazir"
-  description = "Portfolio of Mahmood Bawazir, a Front-End Developer based in Dubai"
-  keywords = "freelancer, front-end web developer, HTML, CSS, SVG, JS, React, Next.js, GatsbyJS, ES6, UI, UX, Dubai"
+  jobTitle = "Senior Front-End Developer"
+  description = "Senior front-end developer with 9+ years building websites and web apps for global brands. TypeScript, React/Next.js, Svelte 5. Available for remote work."
+  availability = "Available now for contract or full-time roles · Remote · GMT+4"
+  email = "hello@mahmoodbawazir.com"
+  linkedin = "https://www.linkedin.com/in/mbzr"
   cv = "/media/pdf/Mahmood_Bawazir_CV.pdf"
+  # TODO: paste your free Cal.com link here to show the "Book a 15-min call"
+  # button in the hero and footer. Leave empty to hide the button entirely.
+  bookingUrl = ""
   ThemeColor = "#ffffff"
