@@ -58,9 +58,19 @@
   {{ end }}
   {{ $prev := false }}
   {{ $next := false }}
-  {{ if ge $idx 0 }}
-    {{ if gt $idx 0 }}{{ $prev = index $projects (sub $idx 1) }}{{ end }}
-    {{ if lt $idx (sub (len $projects) 1) }}{{ $next = index $projects (add $idx 1) }}{{ end }}
+  {{ $count := len $projects }}
+  {{ if and (ge $idx 0) (gt $count 1) }}
+    {{ $last := sub $count 1 }}
+    {{ if eq $idx 0 }}
+      {{ $prev = index $projects $last }}
+    {{ else }}
+      {{ $prev = index $projects (sub $idx 1) }}
+    {{ end }}
+    {{ if eq $idx $last }}
+      {{ $next = index $projects 0 }}
+    {{ else }}
+      {{ $next = index $projects (add $idx 1) }}
+    {{ end }}
   {{ end }}
 
   <nav class="case-nav" id="case-nav" aria-label="Other projects">
