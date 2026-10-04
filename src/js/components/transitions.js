@@ -9,6 +9,16 @@ const EASING = 'easeOutExpo'
 const SPLASH_DURATION = 1500
 /* On a cold load the content follows while the sheet is still settling. */
 const CONTENT_AT = SPLASH_DURATION - 400
+/* Gap between one piece of the hero joining the entrance and the next. */
+const STEP = 140
+/*
+  easeOutExpo covers nearly all of its distance in the first third, so the
+  entrance reads as over — and the page is handed back to the scroller — well
+  before the last tween formally ends.
+*/
+const SETTLE = 700
+/* Webfonts may never report ready; the page must never stay locked. */
+const SETTLE_CAP = 6000
 
 export default new (class Transitions {
   /**
@@ -22,8 +32,17 @@ export default new (class Transitions {
     this.m = MBZ
     this.isFirstLoad = isFirstLoad
     this.contentAt = isFirstLoad ? CONTENT_AT : 0
+    this.settled = new Promise((resolve) => (this.settle = resolve))
+    setTimeout(this.settle, SETTLE_CAP)
     this.m.page.is.home ? this.homeIntro() : this.caseIntro()
   }
+
+  /**
+   * Resolves `settled` once the piece that starts at `lastAt` has landed.
+   * Loader holds the scroller until then, so nothing can be scrolled out
+   * from under the entrance while it plays.
+   */
+  settleAfter = (lastAt) => setTimeout(this.settle, lastAt + SETTLE)
 
   /** Waits for webfonts, since splitLines measures where the lines break. */
   whenReady = (play) => {
@@ -79,7 +98,7 @@ export default new (class Transitions {
         lead = M.G.class('intro__lead')[0],
         leadTxt = splitLines(lead),
         titleTxt = M.G.class('txt-up', M.G.class('intro__title')[0]),
-        cta = M.G.class('intro-cta-wrap')[0],
+        availability = M.G.qs('.intro-meta .availability'),
         scrollTxt = M.G.class('link-block')[0],
         at = this.contentAt
 
@@ -108,19 +127,34 @@ export default new (class Transitions {
         at
       )
 
+      /*
+        The lead and the name arrive together, then the availability line and
+        the scroll cue follow a step apart.
+      */
       this.introTL.add(
         {
-          targets: [cta, scrollTxt].filter(Boolean),
+          targets: availability,
           opacity: [0, 1],
           translateY: [16, 0],
           easing: EASING,
           duration: DURATION,
-          delay: anime.stagger(120),
         },
-        at
+        at + STEP
+      )
+
+      this.introTL.add(
+        {
+          targets: scrollTxt,
+          opacity: [0, 1],
+          translateY: [16, 0],
+          easing: EASING,
+          duration: DURATION,
+        },
+        at + STEP * 2
       )
 
       this.introTL.play()
+      this.settleAfter(at + STEP * 2)
     })
   }
 
@@ -143,6 +177,10 @@ export default new (class Transitions {
         if (content) content.play()
       }
       at ? setTimeout(start, at) : start()
+
+      /* The eyebrow and title are the first screen; the rows cascading in
+         behind them are free to keep moving once scrolling is live. */
+      this.settleAfter(at)
     })
   }
 })()

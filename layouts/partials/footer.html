@@ -18,7 +18,7 @@
         <ul class="footer-list">
           <li><span class="txt-up-wrap"><span class="txt-up"><a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a></span></span></li>
           {{ with .Site.Params.bookingUrl }}
-            <li><span class="txt-up-wrap"><span class="txt-up"><a href="{{ . }}" target="_blank" rel="noopener">Book a 15-min call</a></span></span></li>
+            <li><span class="txt-up-wrap"><span class="txt-up"><a href="{{ . }}" target="_blank" rel="noopener">Book a 15-min call {{ partial "icon" "arrow-up-right" }}</a></span></span></li>
           {{ end }}
         </ul>
       </div>
@@ -26,12 +26,14 @@
       <div class="footer-col footer-col-socials">
         <h3 class="footer-col-title"><span class="txt-up-wrap"><span class="txt-up">Socials</span></span></h3>
         <ul class="footer-list">
-          <li><span class="txt-up-wrap"><span class="txt-up"><a href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener">LinkedIn</a></span></span></li>
+          <li><span class="txt-up-wrap"><span class="txt-up"><a href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener">LinkedIn {{ partial "icon" "arrow-up-right" }}</a></span></span></li>
+          {{/* no-xhr: same-origin PDF, so the router would load it as a page. */}}
+          <li><span class="txt-up-wrap"><span class="txt-up"><a href="{{ .Site.Params.cv }}" target="_blank" rel="noopener" class="no-xhr">CV {{ partial "icon" "arrow-up-right" }}</a></span></span></li>
         </ul>
       </div>
 
       <div class="footer-col footer-col-backtop">
-        <span class="txt-up-wrap"><span class="txt-up"><a href="#top" class="footer-backtop" data-back-to-top>Back to top ↑</a></span></span>
+        <span class="txt-up-wrap"><span class="txt-up"><a href="#top" class="footer-backtop" data-back-to-top>Back to top {{ partial "icon" "arrow-up" }}</a></span></span>
       </div>
 
       <div class="footer-col footer-col-copyright">

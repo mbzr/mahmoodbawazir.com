@@ -177,12 +177,47 @@ body {
 
 .availability-dot {
   flex: 0 0 auto;
+  position: relative;
   width: 0.5em;
   height: 0.5em;
   border-radius: 50%;
   background-color: $brand-available;
   box-shadow: 0 0 0 0.25em rgba(21, 128, 61, 0.15);
   transform: translateY(-0.05em);
+
+  /*
+    A ring pulsing out of the dot, so "available now" reads as a live signal
+    rather than a printed label. It is a pseudo-element because the dot's own
+    transform is doing vertical alignment against the text baseline.
+  */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid $brand-available;
+    animation: availability-pulse 2.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+}
+
+@keyframes availability-pulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  /* Holds still for the back half of the cycle, so the pulse reads as an
+     occasional heartbeat rather than a continuous throb. */
+  60%,
+  100% {
+    opacity: 0;
+    transform: scale(3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .availability-dot::after {
+    animation: none;
+  }
 }
 
 .bg-color-dark .availability {
@@ -342,6 +377,13 @@ body {
 
 .nav.is-light {
   color: #fcfcfc;
+  /*
+    Only once the nav has turned light, over a dark section. Difference of
+    black on the cream page is white, so the same blend at the top of the
+    page hides the wordmark. Over a photograph it flips the white type to
+    whatever reads against that image.
+  */
+  mix-blend-mode: difference;
 }
 
 .nav-spacer {
@@ -370,9 +412,12 @@ body {
   gap: 1.5em;
 }
 
-.nav-contact {
+.nav-end {
   grid-column: 11 / 13;
   justify-self: end;
+  display: flex;
+  align-items: baseline;
+  gap: 1.5em;
 }
 
 .nav a {
@@ -403,8 +448,9 @@ body {
     display: none;
   }
 
-  .nav-contact {
+  .nav-end {
     grid-column: 2;
+    gap: 1em;
   }
 }
 
@@ -462,6 +508,43 @@ body {
   flex-flow: column;
   width: 100%;
   display: flex;
+}
+
+.work-item--feature {
+  grid-column: 1 / -1;
+}
+
+/* Full width at the shared card ratio made this twice as tall as the cards
+   under it. A wider ratio brings it back to about their height. Phones keep
+   the taller ratio so the two logos still have room. */
+@include min-breakpoint(768) {
+  .work-item--feature .work-item-image {
+    aspect-ratio: 3.4;
+  }
+}
+
+.work-item-image--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* The photo is taken out of flow so its intrinsic height cannot stretch the
+   card past the shared aspect ratio. Overflow stays on the pane so the hover
+   scale does not spill across the seam. */
+.work-item-pane {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.work-item-pane .work-item-img {
+  position: absolute;
+  inset: 0;
+}
+
+.work-item--feature .work-item-description {
+  white-space: normal;
+  max-width: 46em;
 }
 
 .work-item-link {

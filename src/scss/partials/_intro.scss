@@ -1,10 +1,24 @@
 .intro {
   overflow: hidden;
+  display: flex;
+
+  /*
+    The hero is one screen. The scroll cue at its foot is the only thing
+    telling you there is more below, so nothing in here may fall past the
+    fold — hence this, and the viewport-height terms on the rhythm and the
+    display type further down. The nav sits above in flow, so subtract it;
+    --nav-h is measured in Listeners. Phones stack the hero and lay it out
+    with space-between, where filling the screen only pulls the rows apart.
+  */
+  @include min-breakpoint(768) {
+    min-height: calc(100vh - var(--nav-h, 3.5em));
+    min-height: calc(100svh - var(--nav-h, 3.5em));
+  }
 
   .container {
     display: flex;
     align-items: center;
-    height: 100%;
+    width: 100%;
   }
 
   &__content {
@@ -33,7 +47,7 @@
   column-gap: 1.25em;
   row-gap: 1em;
   width: 100%;
-  padding-block: 4em;
+  padding-block: clamp(1.5em, 4vh, 4em);
 }
 
 .intro-lead-wrap {
@@ -42,26 +56,43 @@
 
 .intro-spacer {
   grid-column: 1 / -1;
-  height: 6em;
+  height: clamp(1.5em, 6vh, 6em);
 }
 
 .intro-title-wrap {
   grid-column: 1 / 9;
 }
 
-.intro-cta-wrap {
-  grid-column: 1 / 9;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25em;
-  margin-top: 1.5em;
-  opacity: 0;
+/* Sits under the tagline, sharing its column and left edge. */
+.intro-meta {
+  margin-top: 1.75em;
+
+  .availability {
+    opacity: 0;
+  }
 }
 
-.intro-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75em;
+.intro-availability {
+  /*
+    The footer's small text is 1.125em, which is about half the 1.875em
+    tagline. $brand-muted is #6b6375, about 5.6:1 on the #fcfcfc page, so it
+    stays AA while reading quieter than the tagline.
+  */
+  font-size: 1.125em;
+  color: $brand-muted;
+}
+
+/* The shared dot carries a halo and a pulse for the footer. The hero wants
+   a plain mark. */
+.intro-availability .availability-dot {
+  width: 8px;
+  height: 8px;
+  box-shadow: none;
+
+  &::after {
+    content: none;
+    animation: none;
+  }
 }
 
 .link-block-wrapper {
@@ -71,10 +102,12 @@
 
 .text-style-heading-m {
   letter-spacing: -.04em;
-  /* 10.3em is the intended size and wins at >=1268px wide. Below that the root
-     font size stops scaling with the viewport, so the name outgrew its grid
-     column and was clipped — most visibly on a phone held sideways. */
-  font-size: min(10.3em, 13vw);
+  /* 10.3em is the intended size. Below ~1268px wide the root font size stops
+     scaling with the viewport, so the name outgrew its grid column and was
+     clipped — most visibly on a phone held sideways; 13vw covers that. 22vh
+     is the same guard vertically: two lines of the name may not eat the
+     screen the rest of the hero has to share. */
+  font-size: min(10.3em, 13vw, 22vh);
   font-weight: 600;
   line-height: .95;
 }
@@ -128,7 +161,6 @@
 
   .intro-lead-wrap,
   .intro-title-wrap,
-  .intro-cta-wrap,
   .link-block-wrapper {
     grid-column: 1;
     place-self: start;
@@ -138,13 +170,8 @@
     order: 1;
   }
 
-  .intro-cta-wrap {
-    order: 2;
-    margin-top: 1.75em;
-  }
-
   .link-block-wrapper {
-    order: 3;
+    order: 2;
     margin-top: 2em;
     margin-bottom: 3em;
   }
@@ -154,14 +181,9 @@
   }
 
   .intro-title-wrap {
-    order: 4;
+    order: 3;
     width: 100%;
     overflow: hidden;
-  }
-
-  .intro-actions .btn {
-    font-size: 0.9375em;
-    padding: 0.7em 1em;
   }
 
   .text-style-heading-s {
@@ -170,5 +192,25 @@
 
   .text-style-heading-m {
     font-size: 18vw;
+  }
+}
+
+/*
+  A short desktop viewport — a window that is not full height, or a small
+  laptop — still can't fit the hero on the viewport-height terms alone: the
+  lead wraps to a fourth line just as there is least room for it. Tighten the
+  type and the rhythm here rather than let the scroll cue drop off screen.
+*/
+@media (min-width: 768px) and (max-height: 700px) {
+  .text-style-heading-m {
+    font-size: min(10.3em, 13vw, 18vh);
+  }
+
+  .text-style-heading-s {
+    font-size: 1.5em;
+  }
+
+  .intro-meta {
+    margin-top: 1em;
   }
 }

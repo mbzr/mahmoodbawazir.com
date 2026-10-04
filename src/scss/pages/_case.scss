@@ -1,4 +1,7 @@
 .case-container {
+  /* border-box so the 100% width includes the padding. Without it the
+     padding hangs past the viewport and clips the right-hand project link. */
+  box-sizing: border-box;
   width: 100%;
   max-width: 82.5em;
   margin: 0 auto;
@@ -27,6 +30,19 @@
   letter-spacing: -0.045em;
   font-weight: 600;
   margin-bottom: 1em;
+}
+
+.case-title:has(+ .case-subtitle) {
+  margin-bottom: 0;
+}
+
+.case-subtitle {
+  margin-top: 0.45em;
+  margin-bottom: 1.5em;
+  color: $brand-muted;
+  font-size: 1.5em;
+  line-height: 134%;
+  letter-spacing: -0.025em;
 }
 
 /*
@@ -128,16 +144,6 @@
   letter-spacing: -0.025em;
 }
 
-.case-link-arrow {
-  display: inline-block;
-  font-size: 0.7em;
-  transition: transform 0.2s ease;
-}
-
-.case-link:hover .case-link-arrow {
-  transform: translate(0.15em, -0.15em);
-}
-
 /*
   Prev / Next — internal project pages only
 */
@@ -205,6 +211,7 @@
     padding-block: 1.5em;
   }
 
+  .case-subtitle,
   .case-role,
   .case-built,
   .case-link {

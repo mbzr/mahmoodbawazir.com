@@ -193,16 +193,6 @@
   transition: opacity 0.2s ease;
 }
 
-.testimonial-author-name span {
-  display: inline-block;
-  transition: transform 0.2s ease;
-  font-size: .75em;
-}
-
-.testimonial-author-name:hover span {
-  transform: translate(0.15em, -0.15em);
-}
-
 .testimonial-author-role {
   color: #6b6375;
   font-size: 1.125em;
@@ -231,6 +221,13 @@
   transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
 }
 
+/* The glyphs these replaced read larger than their font size. */
+.testimonials-btn .icon {
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: 0;
+}
+
 .testimonials-btn:hover {
   background-color: #2b2b2b;
   border-color: #3d3d3d;
@@ -252,8 +249,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .testimonials-track,
-  .testimonial,
-  .testimonial-author-name span {
+  .testimonial {
     transition: none;
   }
 }
@@ -287,6 +283,9 @@
 .footer-availability {
   margin-top: 1.25em;
   opacity: 0;
+  /* Body colour, matching the column headings below — the muted grey this
+     line inherits from .availability was too light to read here. */
+  color: #000000;
 }
 
 .footer-cta-heading .txt-up {
@@ -382,7 +381,8 @@
 }
 
 .footer-list a {
-  color: #6b6375;
+  /* Same body colour as the column headings above them. */
+  color: #000000;
   font-size: 1.125em;
   line-height: 116%;
   letter-spacing: -0.02em;
@@ -390,8 +390,10 @@
   transition: color 0.2s ease;
 }
 
+/* Now that the resting state is black, hover dims instead of darkening —
+   the same direction as the project page's prev/next links. */
 .footer-list a:hover {
-  color: #000000;
+  color: $brand-muted;
 }
 
 .footer-col-backtop,

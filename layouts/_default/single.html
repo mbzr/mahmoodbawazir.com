@@ -4,6 +4,9 @@
     <div class="case-container">
       <p class="case-eyebrow"><span class="txt-up-wrap"><span class="txt-up">{{ .Params.years }}{{ with .Params.via }} · Via {{ . }}{{ end }}</span></span></p>
       <h1 class="case-title">{{ .Title }}</h1>
+      {{ with .Params.subtitle }}
+        <p class="case-subtitle"><span class="txt-up-wrap"><span class="txt-up">{{ . }}</span></span></p>
+      {{ end }}
 
       <div class="case-details">
         <div class="case-block">
@@ -37,7 +40,7 @@
               {{ range . }}
                 <li>
                   <a href="{{ .url }}" target="_blank" rel="noopener" class="case-link">
-                    <span class="txt-up-wrap"><span class="txt-up">Visit live site{{ if $many }} · {{ .label }}{{ end }} <span class="case-link-arrow" aria-hidden="true">↗</span></span></span>
+                    <span class="txt-up-wrap"><span class="txt-up">{{ if $many }}{{ .label }}{{ else }}Visit live site{{ end }} {{ partial "icon" "arrow-up-right" }}</span></span>
                   </a>
                 </li>
               {{ end }}

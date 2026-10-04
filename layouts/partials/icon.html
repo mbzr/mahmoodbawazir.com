@@ -1,0 +1,9 @@
+{{- /*
+  One reference into the sprite in icons.html. Pass the symbol id:
+
+    {{ partial "icon" "arrow-up-right" }}
+
+  Always decorative — every caller puts the meaning in the link text or an
+  aria-label — so it is hidden from assistive tech and from tab focus.
+*/ -}}
+<svg class="icon icon--{{ . }}" aria-hidden="true" focusable="false"><use xlink:href="#{{ . }}" /></svg>

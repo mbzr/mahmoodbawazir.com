@@ -7,13 +7,23 @@
     <div class="work-list">
       {{ range partial "project-list.html" . }}
         {{ $card := .Params.card }}
-        <div class="work-item">
+        <div class="work-item{{ if $card.feature }} work-item--feature{{ end }}">
           <a href="{{ .RelPermalink }}" class="work-item-link">
-            <div class="work-item-image">
+            <div class="work-item-image{{ if $card.images }} work-item-image--split{{ end }}">
               <div class="work-item-overlay"></div>
-              <img src="{{ $card.image | relURL }}" alt="{{ $card.alt }}"
-                   width="{{ $card.width }}" height="{{ $card.height }}"
-                   class="work-item-img" loading="lazy" decoding="async">
+              {{ if $card.images }}
+                {{ range $card.images }}
+                  <span class="work-item-pane">
+                    <img src="{{ .image | relURL }}" alt="{{ .alt }}"
+                         width="{{ .width }}" height="{{ .height }}"
+                         class="work-item-img" loading="lazy" decoding="async">
+                  </span>
+                {{ end }}
+              {{ else }}
+                <img src="{{ $card.image | relURL }}" alt="{{ $card.alt }}"
+                     width="{{ $card.width }}" height="{{ $card.height }}"
+                     class="work-item-img" loading="lazy" decoding="async">
+              {{ end }}
             </div>
             <div class="work-item-content">
               <h3 class="work-item-title text-style-body"><span class="txt-up-wrap"><span class="txt-up">{{ .Title }}</span></span></h3>

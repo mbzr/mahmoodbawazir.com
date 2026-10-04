@@ -40,48 +40,8 @@ class Loader {
       '-=2400'
     )
 
-    this.imgArr = [
-      '/media/bayzat/hover.png',
-      '/media/dxblive/hover.png',
-      '/media/rivoli/hover.png',
-      '/media/ddw/hover.png',
-      '/media/mtli/hover.png',
-    ]
     this.m.listeners = new Listeners()
     this.loading()
-  }
-
-  loadImgs = (imgArr, cb) => {
-    function load(imgToLoad, loadedCb) {
-      let img = new Image()
-      return (
-        (img.onload = function (t) {
-          loadedCb()
-        }),
-        (img.crossOrigin = 'anonymous'),
-        (img.src = imgToLoad),
-        img
-      )
-    }
-
-    !(function (imgArr) {
-      let imgsLoaded = [],
-        imgArrL = imgArr.length
-
-      function decrementL() {
-        0 == --imgArrL && cb(imgsLoaded)
-      }
-
-      if (0 === imgArrL) {
-        cb()
-      } else {
-        for (let i = 0; i < imgArrL; ++i) {
-          let loadedImg = load(imgArr[i], decrementL)
-
-          imgsLoaded.push(loadedImg)
-        }
-      }
-    })(imgArr)
   }
 
   loading = () => {
@@ -107,7 +67,13 @@ class Loader {
 
   hideCb = () => {
     this.m.listeners.init()
-    this.m.listeners.on()
+    /*
+      Everything but the scroller starts now. The entrance owns the first
+      screen, so scrolling only joins once it has landed — otherwise a flick
+      of the wheel pulls the page away mid-reveal.
+    */
+    this.m.listeners.on({ scroll: false })
+    Transitions.settled.then(() => this.m.listeners.scroll.on({ reset: true }))
     this.m.outroIsOn = true
   }
 }

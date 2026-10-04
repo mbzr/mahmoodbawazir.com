@@ -7,8 +7,17 @@ const duration = 1800
 const easing = 'easeOutExpo'
 /* Matches the homepage hero so both entrances move at the same speed. */
 const INTRO_DURATION = 2000
-/* Gap between one project-page row joining the entrance and the next. */
-const ROW_STEP = 120
+/* Gap between one project-page row joining the entrance and the next. The
+   homepage hero steps by the same amount, so both entrances share a pulse. */
+const ROW_STEP = 140
+/*
+  Revealed on its own, a row reads as the rule wiping in with the copy
+  following a moment behind. Rows that arrive as part of the entrance skip
+  that gap and move on a single beat instead: holding the copy back left a
+  hole in the middle of the entrance while the labels had already landed,
+  which is what put the whole thing out of rhythm.
+*/
+const COPY_GAP = 400
 
 class Fx {
   constructor() {
@@ -177,6 +186,7 @@ class Fx {
     const intro = anime.timeline({ autoplay: false })
     const eyebrow = M.G.class('case-eyebrow', root)[0]
     const title = M.G.class('case-title', root)[0]
+    const subtitle = M.G.class('case-subtitle', root)[0]
 
     /*
       Like the homepage hero, the whole first screen arrives together rather
@@ -208,13 +218,25 @@ class Fx {
       )
     }
 
+    if (subtitle) {
+      intro.add(
+        {
+          targets: M.G.class('txt-up', subtitle),
+          translateY: ['101%', 0],
+          easing,
+          duration: INTRO_DURATION,
+        },
+        0
+      )
+    }
+
     const onScreen = (el) =>
       el.getBoundingClientRect().top < window.innerHeight * 0.85
 
     let cascade = ROW_STEP
     const queue = (el, build, offset) => {
       if (onScreen(el)) {
-        build(intro, cascade)
+        build(intro, cascade, 0)
         cascade += ROW_STEP
       } else {
         this.play(el, (tl) => build(tl, 0), offset)
@@ -241,7 +263,7 @@ class Fx {
    * intro timeline, and anime resolves a relative offset against the end of
    * the whole timeline — which would push each row further out of step.
    */
-  caseRow = (row) => (tl, at = 0) => {
+  caseRow = (row) => (tl, at = 0, copyGap = COPY_GAP) => {
     const line = M.G.class('case-block-line', row)
     const labelEl = M.G.class('case-block-title', row)[0]
     const label = labelEl ? M.G.class('txt-up', labelEl) : []
@@ -249,7 +271,7 @@ class Fx {
     const bodyLines = body ? splitLines(body) : []
     const links = M.G.qsa('.case-link .txt-up, .case-nav-link .txt-up', row)
     const fade = M.G.class('case-fade', row)
-    const copyAt = at + 400
+    const copyAt = at + copyGap
 
     tl.add(
       { targets: line, translateX: ['-100%', 0], duration: 2000, easing },
@@ -306,11 +328,25 @@ class Fx {
 
   testimonials = () => {
     const heading = M.G.class('txt-up', M.G.class('testimonials-heading')[0])
-    const quote = M.G.class('testimonial-quote')[0]
-    if (quote) quote.style.textWrap = 'unset'
-    const quoteLines = splitLines(quote)
+
+    /*
+      Every slide is split, not only the one on screen: .testimonial-quote
+      starts hidden and it is splitLines' .is-split class that brings it back,
+      so an unsplit quote stays invisible once the slider reaches it.
+    */
+    const lines = [...M.G.class('testimonial-quote')].map((quote) => {
+      quote.style.textWrap = 'unset'
+      return splitLines(quote)
+    })
+    const [active = [], ...queued] = lines
+    const waiting = queued.flat()
+
     const author = M.G.class('testimonial-author--fx')[0]
     const controls = M.G.class('testimonials-controls')[0]
+    /* Absolute, so revealing the waiting slides cannot shift what follows:
+       anime resolves a relative offset against the end of the whole
+       timeline, which the extra lines would push out. */
+    const quoteAt = duration - 1600
 
     this.play(M.G.id('testimonials'), (tl) => {
       tl.add({
@@ -321,14 +357,27 @@ class Fx {
       })
       tl.add(
         {
-          targets: quoteLines,
+          targets: active,
           translateY: ['101%', 0],
           easing,
           duration,
           delay: (_, i) => i * 80,
         },
-        '-=1600'
+        quoteAt
       )
+      /* The slides queued off to the right only need to be in place by the
+         time they are asked for; the track's CSS transition moves them. */
+      if (waiting.length) {
+        tl.add(
+          {
+            targets: waiting,
+            translateY: ['101%', 0],
+            easing,
+            duration,
+          },
+          quoteAt
+        )
+      }
       tl.add(
         {
           targets: [author, controls].filter(Boolean),

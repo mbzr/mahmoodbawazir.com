@@ -1,0 +1,66 @@
+/*
+  Inline icons, pulled from the sprite in icons.html by the "icon" partial.
+
+  These replaced the ↗ ↓ ↑ ← → characters the links used to carry. As text,
+  an arrow is at the mercy of whichever font answers for it: the glyphs land
+  at different sizes and baselines from the surrounding word, and the global
+  `span { display: block }` reset in _base.scss kept knocking the wrapper
+  onto a line of its own. Drawn as strokes instead, they take the link's
+  colour from currentColor and scale with its font size.
+*/
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* Settles a square box onto a text baseline. */
+  vertical-align: -0.08em;
+}
+
+/* An external-link mark reads as a superscript on the end of a word, so it
+   sits a touch under the cap height rather than matching the full line. */
+.icon--arrow-up-right {
+  width: 0.78em;
+  height: 0.78em;
+  vertical-align: 0.02em;
+}
+
+/*
+  Links whose arrow pushes off in the direction it points when hovered. The
+  hover rules used to hang off the wrapper spans these icons replaced.
+*/
+.case-link .icon,
+.testimonial-author-name .icon,
+.footer-list .icon {
+  transition: transform 0.2s ease;
+}
+
+.case-link:hover .icon,
+.testimonial-author-name:hover .icon,
+.footer-list a:hover .icon {
+  transform: translate(0.15em, -0.15em);
+}
+
+.link-block .icon,
+.footer-backtop .icon {
+  transition: transform 0.2s ease;
+}
+
+.link-block:hover .icon {
+  transform: translateY(0.15em);
+}
+
+.footer-backtop:hover .icon {
+  transform: translateY(-0.15em);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon {
+    transition: none;
+  }
+}

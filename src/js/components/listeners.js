@@ -1,6 +1,5 @@
 import M from '@utils'
 import SmoothScroll from './scroll'
-import Canvas from './canvas'
 import LazyLoader from './lazy-loader'
 import Fx from './fx'
 import Testimonials from './testimonials'
@@ -8,11 +7,9 @@ import Testimonials from './testimonials'
 export default class Listeners {
   constructor() {
     this.m = MBZ
-    this.isDesktop = this.m.device === 'desktop'
     this.nav = document.querySelector('.nav')
     this.prevY = 0
 
-    this.canvas = new Canvas()
     this.fx = new Fx()
     this.testimonials = new Testimonials()
     this.scroll = new SmoothScroll({
@@ -28,8 +25,6 @@ export default class Listeners {
   }
 
   init = () => {
-    this.canvasOn =
-      this.m.page.is.home || (this.m.page.is.case && this.m.path.new === '/')
     this.prevY = 0
     if (this.nav && !this.m.page.is.home) {
       this.nav.classList.add('is-visible', 'is-ready')
@@ -42,17 +37,25 @@ export default class Listeners {
   }
 
   resize = () => {
+    this.setNavHeight()
     this.scroll.resize()
     this.testimonials.resize()
     this.updateNavTheme()
-
-    if (this.isDesktop) {
-      this.canvasOn && this.canvas.resize()
-    }
   }
 
   onScroll = (y) => {
     this.updateNav(y)
+  }
+
+  /*
+    The hero sizes itself to one screen minus the nav, which sits above it in
+    flow. Measured rather than hard-coded because the nav's height follows
+    the root font size, which scales with the viewport.
+  */
+  setNavHeight = () => {
+    if (!this.nav) return
+    const h = this.nav.offsetHeight
+    document.documentElement.style.setProperty('--nav-h', `${h}px`)
   }
 
   updateNav = (y) => {
@@ -82,20 +85,16 @@ export default class Listeners {
     this.nav.classList.toggle('is-light', dark)
   }
 
-  on = () => {
-    this.scroll.on({
-      reset: true,
-    })
-    if (this.isDesktop) {
-      this.canvasOn && this.canvas.on()
+  on = ({ scroll = true } = {}) => {
+    if (scroll) {
+      this.scroll.on({
+        reset: true,
+      })
     }
     LazyLoader.run()
   }
 
   off = () => {
     this.scroll.off()
-    if (this.isDesktop) {
-      this.m.page.is.home && this.canvas.off()
-    }
   }
 }

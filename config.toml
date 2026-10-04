@@ -12,11 +12,11 @@ disableKinds = ["RSS", "taxonomy"]
   author = "Mahmood Bawazir"
   jobTitle = "Senior Front-End Developer"
   description = "Senior front-end developer with 9+ years building websites and web apps for global brands. TypeScript, React/Next.js, Svelte 5. Available for remote work."
-  availability = "Available now for contract or full-time roles · Remote · GMT+4"
+  availability = "Available now for contract or full-time roles"
   email = "hello@mahmoodbawazir.com"
   linkedin = "https://www.linkedin.com/in/mbzr"
   cv = "/media/pdf/Mahmood_Bawazir_CV.pdf"
   # TODO: paste your free Cal.com link here to show the "Book a 15-min call"
   # button in the hero and footer. Leave empty to hide the button entirely.
-  bookingUrl = ""
+  bookingUrl = "https://cal.com/mahmood-bawazir/intro-call"
   ThemeColor = "#ffffff"

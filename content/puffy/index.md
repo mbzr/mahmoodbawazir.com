@@ -2,7 +2,7 @@
 title: 'Puffy'
 description: "Headless Shopify storefront in Next.js, with a component library, Optimizely A/B testing and internal admin tooling."
 project: true
-weight: 3
+weight: 2
 years: '2021–2025'
 role: 'Senior Front-End Developer'
 built: "I built Puffy's headless Shopify storefront with Next.js, along with a reusable component library and an Optimizely A/B testing setup for checkout and product pages. I also built internal admin tools on the Shopify Admin and Klaviyo APIs to automate order fulfillment and marketing data sync, and set up CI/CD with GitHub Actions and Jenkins."
@@ -25,5 +25,5 @@ card:
   image: '/media/work/puffy.webp'
   width: 1600
   height: 922
-  alt: 'Puffy logo over a photograph of a made-up bed with a Puffy mattress in a softly lit bedroom'
+  alt: 'Puffy'
 ---

@@ -2,7 +2,7 @@
 title: 'Bayzat'
 description: 'Front-end rebuild of bayzat.com in GatsbyJS during a complete rebrand, with pages generated from an API and Framer Motion interfaces.'
 project: true
-weight: 4
+weight: 3
 years: '2020'
 role: 'Senior Front-End Developer'
 built: 'I joined Bayzat in the middle of a complete rebrand and led the front-end rebuild of bayzat.com in GatsbyJS, with pages generated from an API and animated interfaces built with Framer Motion. I also handled SEO, performance testing, and cross-browser testing.'
@@ -15,5 +15,5 @@ card:
   image: '/media/work/bayzat.webp'
   width: 1600
   height: 922
-  alt: 'Bayzat logo on a plain background in the brand purple'
+  alt: 'Bayzat'
 ---
