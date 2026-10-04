@@ -4,6 +4,7 @@ data/**/manifest.*
 dist/
 resources/
 public
+scripts/.screenshots-raw/
 
 # OS generated files #
 ######################

@@ -12,17 +12,17 @@ links:
     url: 'https://bayzat.com/'
 card:
   subtitle: 'Website rebuild for a rebrand · GatsbyJS'
-  image: '/media/images/bayzat.png'
-  width: 1600
-  height: 922
-  alt: 'Bayzat homepage as rebuilt in 2020'
+  image: '/media/work/bayzat/bayzat-2020-home-card.webp'
+  width: 1320
+  height: 761
+  alt: 'Bayzat homepage as rebuilt in 2020, with the headline "Changing the way work works" on a purple background'
 shots:
   - single: 'media/1.jpg'
     alt: 'Bayzat homepage with the "Changing the way work works" headline, a sign-up form, and a portrait cropped into an angular purple shape'
-    caption: 'Site as built in 2020'
+    caption: 'Archived version, 2020'
   - single: 'media/2.jpg'
     alt: 'Bayzat work life platform page, with tabs for HR software, insurance and payroll beside a product dashboard card'
-    caption: 'Site as built in 2020'
+    caption: 'Archived version, 2020'
   - video: 'media/3.mp4'
     width: 1275
     height: 720
@@ -33,14 +33,14 @@ shots:
     caption: 'Animated interface built with Framer Motion, 2020'
   - single: 'media/5.jpg'
     alt: 'Bayzat case studies index, a grid of six customer stories with angular cropped portraits'
-    caption: 'Site as built in 2020'
+    caption: 'Archived version, 2020'
   - single: 'media/6.jpg'
     alt: 'Bayzat single case study page for Fuchsia Restaurant, mixing long-form text with photography'
-    caption: 'Site as built in 2020'
+    caption: 'Archived version, 2020'
   - single: 'media/7.jpg'
     alt: 'Lower half of a Bayzat case study, with pull quotes and a "More stories" carousel'
-    caption: 'Site as built in 2020'
+    caption: 'Archived version, 2020'
   - single: 'media/8.jpg'
     alt: 'Bayzat HR software landing page on a dark background, with product screenshots and a four-column feature overview'
-    caption: 'Site as built in 2020'
+    caption: 'Archived version, 2020'
 ---

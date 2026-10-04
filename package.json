@@ -14,7 +14,8 @@
     "build:preview": "npm run build:webpack && npm run build:hugo:preview",
     "build:hugo": "hugo -d dist --gc --minify",
     "build:hugo:preview": "npm run build:hugo -- -D -F",
-    "build:webpack": "cross-env NODE_ENV=production webpack"
+    "build:webpack": "cross-env NODE_ENV=production webpack",
+    "screenshots": "node scripts/screenshots.mjs"
   },
   "repository": {
     "type": "git",
@@ -45,10 +46,12 @@
     "html-webpack-plugin": "^5.6.0",
     "image-webpack-loader": "^8.1.0",
     "mini-css-extract-plugin": "^2.9.0",
+    "playwright": "^1.63.0",
     "postcss": "^8.4.40",
     "rimraf": "^6.0.1",
     "sass": "^1.77.8",
     "sass-loader": "^16.0.0",
+    "sharp": "^0.35.5",
     "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^5.3.10",
     "uglify-js": "^3.19.1",

@@ -22,18 +22,22 @@ links:
     url: 'https://puffy.com/'
 card:
   subtitle: 'Headless Shopify e-commerce · Next.js'
-  image: '/media/images/puffy.png'
+  image: '/media/work/puffy/puffy-home-desktop.webp'
   width: 1600
-  height: 922
-  alt: 'Puffy storefront homepage'
+  height: 1000
+  alt: 'Puffy storefront homepage, with an award-winning mattress hero above a row of mattress comparison cards'
 shots:
-  - single: 'media/1.png'
-    alt: 'Puffy storefront homepage, with a full-width mattress photograph, award badges and a countdown sale banner'
-    caption: 'Live site, captured 2024'
-  - single: 'media/2.png'
-    alt: 'Puffy LUX mattress product page, showing the size selector, price, and add-to-cart panel'
-    caption: 'Live site, captured 2024'
+  - desktop: '/media/work/puffy/puffy-home-desktop.webp'
+    mobile: '/media/work/puffy/puffy-home-mobile.webp'
+    alt: 'Puffy storefront homepage, with a mattress hero, press award badges and a "Which mattress is right for you?" comparison row'
+    altMobile: 'Puffy storefront homepage on a phone, with the comparison cards stacked into a single column'
+    caption: 'Live site, captured 2026'
+  - desktop: '/media/work/puffy/puffy-product-desktop.webp'
+    mobile: '/media/work/puffy/puffy-product-mobile.webp'
+    alt: 'Puffy Cloud mattress product page, with a thumbnail rail, upgrade options and a size selector'
+    altMobile: 'Puffy Cloud mattress product page on a phone'
+    caption: 'Live site, captured 2026'
   - single: 'media/3.png'
     alt: 'Puffy support contact page, with a message form beside a mattress photograph'
-    caption: 'Live site, captured 2024'
+    caption: 'Archived version, 2024'
 ---
