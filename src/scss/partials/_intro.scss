@@ -71,7 +71,10 @@
 
 .text-style-heading-m {
   letter-spacing: -.04em;
-  font-size: 10.3em;
+  /* 10.3em is the intended size and wins at >=1268px wide. Below that the root
+     font size stops scaling with the viewport, so the name outgrew its grid
+     column and was clipped — most visibly on a phone held sideways. */
+  font-size: min(10.3em, 13vw);
   font-weight: 600;
   line-height: .95;
 }

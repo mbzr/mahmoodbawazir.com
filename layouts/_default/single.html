@@ -2,23 +2,26 @@
 <div id="case">
   <section class="case-intro" id="case-intro">
     <div class="case-container">
-      <p class="case-eyebrow">{{ .Params.years }}{{ with .Params.via }} · Via {{ . }}{{ end }}</p>
+      <p class="case-eyebrow"><span class="txt-up-wrap"><span class="txt-up">{{ .Params.years }}{{ with .Params.via }} · Via {{ . }}{{ end }}</span></span></p>
       <h1 class="case-title">{{ .Title }}</h1>
 
       <div class="case-details">
         <div class="case-block">
-          <h2 class="case-block-title">Role</h2>
+          <span class="case-block-line-wrap"><span class="case-block-line"></span></span>
+          <h2 class="case-block-title"><span class="txt-up-wrap"><span class="txt-up">Role</span></span></h2>
           <p class="case-role">{{ .Params.role }}</p>
         </div>
 
         <div class="case-block case-block--wide">
-          <h2 class="case-block-title">What I built</h2>
+          <span class="case-block-line-wrap"><span class="case-block-line"></span></span>
+          <h2 class="case-block-title"><span class="txt-up-wrap"><span class="txt-up">What I built</span></span></h2>
           <p class="case-built">{{ .Params.built }}</p>
         </div>
 
         <div class="case-block case-block--wide">
-          <h2 class="case-block-title">Stack</h2>
-          <ul class="tag-list">
+          <span class="case-block-line-wrap"><span class="case-block-line"></span></span>
+          <h2 class="case-block-title"><span class="txt-up-wrap"><span class="txt-up">Stack</span></span></h2>
+          <ul class="tag-list case-fade">
             {{ range .Params.stack }}
               <li class="tag">{{ . }}</li>
             {{ end }}
@@ -27,13 +30,14 @@
 
         {{ with .Params.links }}
           <div class="case-block case-block--wide">
-            <h2 class="case-block-title">Links</h2>
+            <span class="case-block-line-wrap"><span class="case-block-line"></span></span>
+            <h2 class="case-block-title"><span class="txt-up-wrap"><span class="txt-up">Links</span></span></h2>
             <ul class="case-links">
               {{ $many := gt (len .) 1 }}
               {{ range . }}
                 <li>
                   <a href="{{ .url }}" target="_blank" rel="noopener" class="case-link">
-                    Visit live site{{ if $many }} · {{ .label }}{{ end }} <span aria-hidden="true">↗</span>
+                    <span class="txt-up-wrap"><span class="txt-up">Visit live site{{ if $many }} · {{ .label }}{{ end }} <span class="case-link-arrow" aria-hidden="true">↗</span></span></span>
                   </a>
                 </li>
               {{ end }}
@@ -43,61 +47,6 @@
       </div>
     </div>
   </section>
-
-  {{ with .Params.shots }}
-    {{/*
-      Paired desktop/mobile captures come from scripts/screenshots.mjs, which
-      always emits them at these sizes. Setting width/height reserves layout
-      space so lazy loading can't shift the page. Keep in sync with the
-      DESKTOP_MAX_WIDTH / MOBILE_MAX_WIDTH constants in that script.
-    */}}
-    {{ $deskW := 1600 }}{{ $deskH := 1000 }}
-    {{ $mobW := 780 }}{{ $mobH := 1688 }}
-    <section class="case-shots" id="case-shots">
-      <div class="case-container">
-        <h2 class="case-block-title">Screenshots</h2>
-        <ul class="case-shot-list">
-          {{ range $shot := . }}
-            <li class="case-shot">
-              {{ if $shot.desktop }}
-                <div class="case-shot-pair">
-                  <figure class="case-shot-figure case-shot-figure--desktop">
-                    <img class="case-shot-media" src="{{ $shot.desktop | relURL }}"
-                         alt="{{ $shot.alt }}"
-                         width="{{ $deskW }}" height="{{ $deskH }}"
-                         loading="lazy" decoding="async">
-                  </figure>
-                  {{ with $shot.mobile }}
-                    <figure class="case-shot-figure case-shot-figure--mobile">
-                      <img class="case-shot-media" src="{{ . | relURL }}"
-                           alt="{{ $shot.altMobile | default $shot.alt }}"
-                           width="{{ $mobW }}" height="{{ $mobH }}"
-                           loading="lazy" decoding="async">
-                    </figure>
-                  {{ end }}
-                </div>
-              {{ else if $shot.single }}
-                {{ with $.Resources.GetMatch $shot.single }}
-                  <img class="case-shot-media" src="{{ .RelPermalink }}"
-                       alt="{{ $shot.alt }}"
-                       width="{{ .Width }}" height="{{ .Height }}"
-                       loading="lazy" decoding="async">
-                {{ end }}
-              {{ else if $shot.video }}
-                {{ with $.Resources.GetMatch $shot.video }}
-                  <video class="case-shot-media" src="{{ .RelPermalink }}"
-                         width="{{ $shot.width }}" height="{{ $shot.height }}"
-                         autoplay muted loop playsinline
-                         {{ with $shot.caption }}aria-label="{{ . }}"{{ end }}></video>
-                {{ end }}
-              {{ end }}
-              {{ with $shot.caption }}<p class="case-shot-caption">{{ . }}</p>{{ end }}
-            </li>
-          {{ end }}
-        </ul>
-      </div>
-    </section>
-  {{ end }}
 
   {{ $projects := partial "project-list.html" . }}
   {{ $idx := -1 }}
@@ -112,20 +61,21 @@
   {{ end }}
 
   <nav class="case-nav" id="case-nav" aria-label="Other projects">
+    <span class="case-block-line-wrap"><span class="case-block-line"></span></span>
     <div class="case-container case-nav-inner">
       <div class="case-nav-col">
         {{ with $prev }}
           <a href="{{ .RelPermalink }}" class="case-nav-link">
-            <span class="case-nav-label">Prev</span>
-            <span class="case-nav-title">{{ .Title }}</span>
+            <span class="case-nav-label"><span class="txt-up-wrap"><span class="txt-up">Prev</span></span></span>
+            <span class="case-nav-title"><span class="txt-up-wrap"><span class="txt-up">{{ .Title }}</span></span></span>
           </a>
         {{ end }}
       </div>
       <div class="case-nav-col case-nav-col--next">
         {{ with $next }}
           <a href="{{ .RelPermalink }}" class="case-nav-link">
-            <span class="case-nav-label">Next</span>
-            <span class="case-nav-title">{{ .Title }}</span>
+            <span class="case-nav-label"><span class="txt-up-wrap"><span class="txt-up">Next</span></span></span>
+            <span class="case-nav-title"><span class="txt-up-wrap"><span class="txt-up">{{ .Title }}</span></span></span>
           </a>
         {{ end }}
       </div>

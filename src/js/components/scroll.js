@@ -101,18 +101,16 @@ export default class SmoothScroll {
     }
   }
 
-  scrollToHash(hash) {
+  scrollToHash(hash, immediate = false) {
     if (!hash || hash === '#' || hash === '#top') {
-      this.scrollTo(0)
+      this.scrollTo(0, immediate)
       return
     }
 
     const el = document.querySelector(hash)
     if (!el) return
 
-    const nav = document.querySelector('.nav')
-    const offset = nav ? nav.offsetHeight : 0
-    this.scrollTo(el.getBoundingClientRect().top + this.y)
+    this.scrollTo(el.getBoundingClientRect().top + this.y, immediate)
   }
 
   /**
@@ -133,7 +131,14 @@ export default class SmoothScroll {
   _measureTriggers() {
     const winH = window.innerHeight
     for (const t of this.triggers) {
-      t.limit = t.el.getBoundingClientRect().top + this.y - winH * t.offset
+      const line = t.el.getBoundingClientRect().top + this.y - winH * t.offset
+      /*
+        An element close to the bottom of the page can sit past the furthest
+        scrollable position, which would leave its trigger permanently unfired
+        — and anything it reveals permanently invisible. Clamp to the end of
+        the page so reaching the bottom always fires it.
+      */
+      t.limit = Math.min(line, this.max)
     }
   }
 
@@ -162,7 +167,7 @@ export default class SmoothScroll {
 
   _runTriggers() {
     for (const t of this.triggers) {
-      if (!t.done && this.y > t.limit) {
+      if (!t.done && this.y >= t.limit) {
         t.done = true
         t.callback()
       }

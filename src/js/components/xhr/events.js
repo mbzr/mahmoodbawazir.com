@@ -10,10 +10,6 @@ class XhrEvents {
   }
 
   eventDelegation = (event) => {
-    // event.preventDefault()
-    console.log(event)
-    console.log('eventDelegation')
-
     for (
       var win = window,
         target = event.target,
@@ -73,13 +69,20 @@ class XhrEvents {
       event.preventDefault()
 
       if (this.m.outroIsOn) {
+        /*
+          Keep the path free of any hash: it identifies which page we are on,
+          and PathListener compares it against '/' to tell the homepage from a
+          project page. The hash travels separately and is applied once the
+          new page is in place.
+        */
         this.path = {
           old: M.Win.path,
-          new: href.replace(/^.*\/\/[^/]+/, ''),
+          new: url.pathname,
         }
 
         if (this.path.old !== this.path.new) {
           this.m.outroIsOn = false
+          this.m.hash = hash
           this.target = target
           this.xhrReq()
         }
@@ -98,7 +101,11 @@ class XhrEvents {
   }
 
   done = () => {
-    Xhr.controller(this.path.new, this.xhrCallback)
+    Xhr.controller(
+      this.path.new,
+      this.xhrCallback,
+      this.path.new + (this.m.hash || '')
+    )
   }
 
   xhrCallback = (child) => {

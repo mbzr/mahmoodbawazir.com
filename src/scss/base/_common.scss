@@ -1,26 +1,13 @@
 @charset "UTF-8";
 
+/*
+  The "Please turn your device." overlay used to cover the whole screen in
+  landscape on phones and small tablets. It has been removed: the site works
+  in both orientations, and short viewports (sideways phones, short laptop
+  screens) should not be locked out.
+*/
+
 body {
-  &.is-mobile {
-    @media (max-width: 900px) and (max-height: 420px) {
-      .mobile-turn {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-      }
-    }
-
-    @media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape),
-      (min-device-width: 834px) and (max-device-width: 834px) and (orientation: landscape),
-      (min-device-width: 1024px) and (max-device-width: 1024px) and (orientation: landscape) {
-      .mobile-turn {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-      }
-    }
-  }
-
   &.old-browser {
     .update-browser {
       display: block;
@@ -28,7 +15,6 @@ body {
   }
 }
 
-.mobile-turn,
 .update-browser,
 .ej {
   display: none;
@@ -42,7 +28,6 @@ body {
   color: $white;
 }
 
-.mobile-turn,
 .ej {
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -103,6 +88,27 @@ body {
 .txt-up {
   display: block;
   transform: translate3d(0, 101%, 0);
+}
+
+/*
+  These are split into .txt-up lines by splitLines() once webfonts are ready.
+  Until then the unsplit text would be sitting there in full view and would
+  visibly blink out the moment it got wrapped, so it starts hidden and is
+  shown again by the .is-split class that splitLines() adds. The lines
+  themselves stay hidden by the .txt-up transform above.
+*/
+.case-title,
+.case-role,
+.case-built,
+.intro__lead,
+.about-subheading,
+.footer-cta-heading,
+.testimonial-quote {
+  opacity: 0;
+}
+
+.is-split {
+  opacity: 1;
 }
 
 /*
@@ -289,14 +295,19 @@ body {
   }
 }
 
+/*
+  The page background. It animates up over the black html background on entry
+  and fades back out when an XHR navigation leaves, so it has to sit behind
+  the content. Fixed rather than absolute so it is exactly one viewport tall
+  and the slide up reads as a reveal rather than a jump.
+*/
 #page-splash {
   background: #fcfcfc;
   opacity: 0;
   pointer-events: none;
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: -1;
-  pointer-events: none;
 }
 
 .section-header {
@@ -460,15 +471,6 @@ body {
   display: block;
 }
 
-/* The most recent project leads the grid at full width */
-.work-item--featured {
-  grid-column: 1 / -1;
-}
-
-.work-item--featured .work-item-image {
-  aspect-ratio: 2.2;
-}
-
 .work-item-image {
   aspect-ratio: 1.735;
   border-radius: .5em;
@@ -522,8 +524,7 @@ body {
     grid-row-gap: 2em;
   }
 
-  .work-item-image,
-  .work-item--featured .work-item-image {
+  .work-item-image {
     aspect-ratio: 1.5;
   }
 

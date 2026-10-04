@@ -1,7 +1,12 @@
 import M from '@utils'
 
 const Xhr = {
-  controller: (url, cb, o) => {
+  /**
+   * Fetch `url` and hand its #xhr contents to `cb`. `pushUrl` defaults to
+   * `url`, and lets the address bar keep a hash that the request itself
+   * should not carry.
+   */
+  controller: (url, cb, pushUrl) => {
     const request = new XMLHttpRequest()
     request.open('GET', url, true)
 
@@ -25,9 +30,9 @@ const Xhr = {
             key: 'value',
           },
           'title',
-          url
+          pushUrl || url
         )
-        cb(elem, o)
+        cb(elem)
       }
     }
     request.send(null)

@@ -10,6 +10,11 @@ export default function splitLines(el) {
 
   const indent = el.previousElementSibling
   const hasIndent = indent && indent.classList.contains('text-indent')
+  /* Measure the float before hiding it. Reusing its exact pixel width for the
+     first line's indent keeps the two in step; the CSS equivalents resolve
+     their em component against different font sizes and drifted apart enough
+     to clip the first line. */
+  const indentWidth = hasIndent ? indent.offsetWidth : 0
 
   const words = el.textContent.trim().split(/\s+/)
   el.textContent = ''
@@ -48,7 +53,10 @@ export default function splitLines(el) {
   return lines.map((lineWords, i) => {
     const wrap = document.createElement('span')
     wrap.className = 'txt-up-wrap'
-    if (hasIndent && i === 0) wrap.classList.add('txt-up-wrap--indent')
+    if (hasIndent && i === 0) {
+      wrap.classList.add('txt-up-wrap--indent')
+      wrap.style.marginLeft = `${indentWidth}px`
+    }
     const inner = document.createElement('span')
     inner.className = 'txt-up'
     inner.textContent = lineWords.join(' ')

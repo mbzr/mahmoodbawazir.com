@@ -29,6 +29,31 @@
   margin-bottom: 1em;
 }
 
+/*
+  splitLines wraps each line in an overflow-hidden box, which at these tight
+  line heights would shave the descenders off letters like g and y. Padding the
+  inner line gives the clip room to spare, and the negative margin on the
+  wrapper takes that space back out of the layout so line spacing is unchanged.
+  The padding is inside .txt-up on purpose: its 101% offset has to clear the
+  whole box for the text to start fully hidden.
+*/
+
+.case-title .txt-up,
+.case-nav-title .txt-up {
+  padding-bottom: 0.14em;
+}
+
+.case-title .txt-up-wrap,
+.case-nav-title .txt-up-wrap {
+  margin-bottom: -0.14em;
+}
+
+.case-title .txt-up,
+.case-role .txt-up,
+.case-built .txt-up {
+  white-space: nowrap;
+}
+
 .case-details {
   display: grid;
   grid-template-columns: 25% 1fr;
@@ -37,12 +62,38 @@
 }
 
 .case-block {
+  position: relative;
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: 25% 1fr;
   column-gap: 1.25em;
   padding-block: 2em;
+}
+
+/*
+  The top rule of each block is an element rather than a border so it can wipe
+  in from the left, the same way .about-item-line does on the homepage.
+*/
+
+.case-block-line-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  overflow: hidden;
+}
+
+.case-block-line {
+  display: block;
+  height: 100%;
   border-top: 1px solid $brand-border;
+  transform: translate3d(-100%, 0, 0);
+}
+
+/* Revealed by the scroll timeline; see Fx.case in src/js/components/fx.js. */
+.case-fade {
+  opacity: 0;
 }
 
 .case-block-title {
@@ -75,59 +126,16 @@
   font-size: 1.5em;
   line-height: 134%;
   letter-spacing: -0.025em;
-
-  span {
-    display: inline-block;
-    font-size: 0.7em;
-    transition: transform 0.2s ease;
-  }
-
-  &:hover span {
-    transform: translate(0.15em, -0.15em);
-  }
 }
 
-/*
-  Screenshots
-*/
-
-.case-shots {
-  padding-bottom: 6em;
+.case-link-arrow {
+  display: inline-block;
+  font-size: 0.7em;
+  transition: transform 0.2s ease;
 }
 
-.case-shot-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4em;
-  margin-top: 2em;
-}
-
-.case-shot-media {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 0.5em;
-  background-color: #f4f4f4;
-}
-
-.case-shot-pair {
-  display: grid;
-  grid-template-columns: 1fr 0.35fr;
-  align-items: start;
-  gap: 1.25em;
-}
-
-.case-shot-figure {
-  margin: 0;
-  min-width: 0;
-}
-
-.case-shot-caption {
-  color: $brand-muted;
-  font-size: 1em;
-  line-height: 140%;
-  letter-spacing: -0.02em;
-  margin-top: 1em;
+.case-link:hover .case-link-arrow {
+  transform: translate(0.15em, -0.15em);
 }
 
 /*
@@ -135,7 +143,7 @@
 */
 
 .case-nav {
-  border-top: 1px solid $brand-border;
+  position: relative;
   padding-block: 4em;
 }
 
@@ -153,7 +161,12 @@
   text-align: right;
 }
 
+.case-nav-link {
+  display: block;
+}
+
 .case-nav-label {
+  display: block;
   color: $brand-muted;
   font-size: 1em;
   line-height: 140%;
@@ -162,6 +175,7 @@
 }
 
 .case-nav-title {
+  display: block;
   font-size: 2em;
   line-height: 116%;
   letter-spacing: -0.035em;
@@ -195,23 +209,6 @@
   .case-built,
   .case-link {
     font-size: 1.125em;
-  }
-
-  .case-shots {
-    padding-bottom: 3em;
-  }
-
-  .case-shot-list {
-    gap: 2.5em;
-  }
-
-  .case-shot-pair {
-    grid-template-columns: 1fr;
-    gap: 1em;
-  }
-
-  .case-shot-figure--mobile {
-    max-width: 60%;
   }
 
   .case-nav {

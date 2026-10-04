@@ -93,7 +93,8 @@ class Loader {
   intro = () => {
     setTimeout(() => {
       this.rsTl.play()
-      Transitions.run()
+      /* Landing on the site, so play the full reveal. */
+      Transitions.run(true)
     }, 400)
   }
 

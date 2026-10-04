@@ -30,7 +30,6 @@ export default class Listeners {
   init = () => {
     this.canvasOn =
       this.m.page.is.home || (this.m.page.is.case && this.m.path.new === '/')
-    console.log(this.m.page.is.case, this.m.path.new)
     this.prevY = 0
     if (this.nav && !this.m.page.is.home) {
       this.nav.classList.add('is-visible', 'is-ready')

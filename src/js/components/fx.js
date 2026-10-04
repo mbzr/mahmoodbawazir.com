@@ -5,6 +5,10 @@ import splitLines from '@utils/el/split-lines'
 
 const duration = 1800
 const easing = 'easeOutExpo'
+/* Matches the homepage hero so both entrances move at the same speed. */
+const INTRO_DURATION = 2000
+/* Gap between one project-page row joining the entrance and the next. */
+const ROW_STEP = 120
 
 class Fx {
   constructor() {
@@ -14,13 +18,16 @@ class Fx {
   init = (scroll) => {
     this.scroll = scroll
     this.scroll.clearTriggers()
-    if (!this.m.page.is.home) return
 
     const run = () => {
-      this.work()
-      this.about()
-      this.testimonials()
-      this.footer()
+      if (this.m.page.is.home) {
+        this.work()
+        this.about()
+        this.testimonials()
+        this.footer()
+      } else {
+        this.case()
+      }
       this.scroll.resize()
     }
 
@@ -149,6 +156,151 @@ class Fx {
           '-=1200'
         )
       })
+    }
+  }
+
+  /**
+   * Project pages, using the same vocabulary as the homepage: text clips up
+   * out of a hidden wrapper and rules wipe in from the left.
+   *
+   * Rows already on screen at load join one intro timeline so they cascade
+   * out of the title instead of being revealed before it. Everything further
+   * down waits for its own scroll trigger. The intro timeline is left for
+   * Transitions to play once the splash has revealed the page.
+   */
+  case = () => {
+    this.introTL = null
+
+    const root = M.G.id('case')
+    if (!root) return
+
+    const intro = anime.timeline({ autoplay: false })
+    const eyebrow = M.G.class('case-eyebrow', root)[0]
+    const title = M.G.class('case-title', root)[0]
+
+    /*
+      Like the homepage hero, the whole first screen arrives together rather
+      than one piece at a time: eyebrow and title start on the same beat, and
+      each following row joins a step behind.
+    */
+    if (eyebrow) {
+      intro.add(
+        {
+          targets: M.G.class('txt-up', eyebrow),
+          translateY: ['101%', 0],
+          easing,
+          duration: INTRO_DURATION,
+        },
+        0
+      )
+    }
+
+    if (title) {
+      intro.add(
+        {
+          targets: splitLines(title),
+          translateY: ['101%', 0],
+          easing,
+          duration: INTRO_DURATION,
+          delay: (_, i) => i * 100,
+        },
+        0
+      )
+    }
+
+    const onScreen = (el) =>
+      el.getBoundingClientRect().top < window.innerHeight * 0.85
+
+    let cascade = ROW_STEP
+    const queue = (el, build, offset) => {
+      if (onScreen(el)) {
+        build(intro, cascade)
+        cascade += ROW_STEP
+      } else {
+        this.play(el, (tl) => build(tl, 0), offset)
+      }
+    }
+
+    const blocks = M.G.class('case-block', root)
+    for (let i = 0; i < blocks.length; i++) {
+      queue(blocks[i], this.caseRow(blocks[i]))
+    }
+
+    /* Sits at the very end of the page, so reveal it as soon as it peeks in. */
+    const nav = M.G.id('case-nav')
+    if (nav) queue(nav, this.caseRow(nav), 0.95)
+
+    this.introTL = intro
+  }
+
+  /**
+   * One detail row, on the same beat as an About item on the homepage: the
+   * rule wipes in under the label, and the copy follows a moment later.
+   *
+   * Offsets are absolute rather than relative because several rows share the
+   * intro timeline, and anime resolves a relative offset against the end of
+   * the whole timeline — which would push each row further out of step.
+   */
+  caseRow = (row) => (tl, at = 0) => {
+    const line = M.G.class('case-block-line', row)
+    const labelEl = M.G.class('case-block-title', row)[0]
+    const label = labelEl ? M.G.class('txt-up', labelEl) : []
+    const body = M.G.qs('.case-role, .case-built', row)
+    const bodyLines = body ? splitLines(body) : []
+    const links = M.G.qsa('.case-link .txt-up, .case-nav-link .txt-up', row)
+    const fade = M.G.class('case-fade', row)
+    const copyAt = at + 400
+
+    tl.add(
+      { targets: line, translateX: ['-100%', 0], duration: 2000, easing },
+      at
+    )
+
+    if (label.length) {
+      tl.add(
+        { targets: label, translateY: ['101%', 0], duration: 2000, easing },
+        at
+      )
+    }
+
+    if (bodyLines.length) {
+      tl.add(
+        {
+          targets: bodyLines,
+          translateY: ['101%', 0],
+          duration: 2000,
+          easing,
+          delay: (_, i) => i * 100,
+        },
+        copyAt
+      )
+    }
+
+    if (links.length) {
+      tl.add(
+        {
+          targets: links,
+          translateY: ['101%', 0],
+          duration: 2000,
+          easing,
+          delay: anime.stagger(100),
+        },
+        copyAt
+      )
+    }
+
+    if (fade.length) {
+      tl.add(
+        {
+          targets: fade,
+          opacity: [0, 1],
+          translateY: [16, 0],
+          duration: 2000,
+          easing,
+          delay: anime.stagger(40),
+        },
+        copyAt
+      )
     }
   }
 
