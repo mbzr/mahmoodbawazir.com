@@ -253,6 +253,7 @@ class Fx {
   footer = () => {
     const heading = M.G.class('footer-cta-heading')[0]
     const headingLines = splitLines(heading)
+    const availability = M.G.class('footer-availability')[0]
     const ctaLink = M.G.class('txt-up', M.G.class('footer-cta-link')[0])
     const divider = M.G.class('footer-divider-line')[0]
     const cols = M.G.class('footer-columns')[0]
@@ -271,8 +272,9 @@ class Fx {
         })
         tl.add(
           {
-            targets: ctaLink,
+            targets: [availability, ctaLink].filter(Boolean),
             translateY: ['101%', 0],
+            opacity: [0, 1],
             easing,
             duration,
           },

@@ -1,8 +1,11 @@
 <footer class="footer-section" id="footer">
   <div class="container">
     <div class="footer-cta">
-      <h2 class="footer-cta-heading">Let's build something exceptional together.</h2>
-      <a href="mailto:hello@mahmoodbawazir.com" class="footer-cta-link"><span class="txt-up-wrap"><span class="txt-up">Get in touch<span class="line-current-underline"></span></span></span></a>
+      <div class="footer-cta-content">
+        <h2 class="footer-cta-heading">Let's build something exceptional together.</h2>
+        <p class="availability footer-availability"><span class="availability-dot" aria-hidden="true"></span>{{ .Site.Params.availability }}</p>
+      </div>
+      <a href="mailto:{{ .Site.Params.email }}" class="footer-cta-link"><span class="txt-up-wrap"><span class="txt-up">Get in touch<span class="line-current-underline"></span></span></span></a>
     </div>
 
     <div class="footer-divider">
@@ -13,14 +16,17 @@
       <div class="footer-col footer-col-contact">
         <h3 class="footer-col-title"><span class="txt-up-wrap"><span class="txt-up">Contact</span></span></h3>
         <ul class="footer-list">
-          <li><span class="txt-up-wrap"><span class="txt-up"><a href="mailto:hello@mahmoodbawazir.com">hello@mahmoodbawazir.com</a></span></span></li>
+          <li><span class="txt-up-wrap"><span class="txt-up"><a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a></span></span></li>
+          {{ with .Site.Params.bookingUrl }}
+            <li><span class="txt-up-wrap"><span class="txt-up"><a href="{{ . }}" target="_blank" rel="noopener">Book a 15-min call</a></span></span></li>
+          {{ end }}
         </ul>
       </div>
 
       <div class="footer-col footer-col-socials">
         <h3 class="footer-col-title"><span class="txt-up-wrap"><span class="txt-up">Socials</span></span></h3>
         <ul class="footer-list">
-          <li><span class="txt-up-wrap"><span class="txt-up"><a href="https://www.linkedin.com/in/mbzr" target="_blank" rel="noopener">LinkedIn</a></span></span></li>
+          <li><span class="txt-up-wrap"><span class="txt-up"><a href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener">LinkedIn</a></span></span></li>
         </ul>
       </div>
 
