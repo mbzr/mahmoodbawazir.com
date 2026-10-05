@@ -82,7 +82,13 @@ export default class Listeners {
       const rect = el.getBoundingClientRect()
       return rect.top <= probe && rect.bottom > probe
     })
-    this.nav.classList.toggle('is-light', dark)
+    /* The work sheet is cream. While it still covers the probe, the section
+       behind it is dark but the nav is sitting on the sheet. */
+    const covered = [...document.querySelectorAll('.work-splash')].some((el) => {
+      const rect = el.getBoundingClientRect()
+      return rect.top <= probe && rect.bottom > probe
+    })
+    this.nav.classList.toggle('is-light', dark && !covered)
   }
 
   on = ({ scroll = true } = {}) => {

@@ -1,6 +1,7 @@
 import anime from 'animejs/lib/anime.es'
 
 import M from '@utils'
+import Transitions from './transitions'
 import splitLines from '@utils/el/split-lines'
 
 const duration = 1800
@@ -128,26 +129,66 @@ class Fx {
   }
 
   work = () => {
+    const splash = M.G.qs('.work-splash')
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    /*
+      The sheet covers the section and slides up by its own height. It stays
+      in the page, parked above the section. On a phone it starts with the
+      hero type and clears as the last intro line lands, so the two read as
+      one sequence. The visible edge only opens at the end of the slide,
+      which is why this is shorter than the desktop one.
+    */
+    if (splash && !reduce) {
+      const phone = window.matchMedia('(max-width: 767px)').matches
+      const play = () =>
+        anime({
+          targets: splash,
+          opacity: [1, 1],
+          translateY: [0, '-100%'],
+          easing,
+          duration: phone ? 1000 : 1500,
+          complete: () => {
+            if (this.m.listeners) this.m.listeners.updateNavTheme()
+          },
+        })
+      if (phone && Transitions.opening) Transitions.opening.then(play)
+      else play()
+    }
+
     const header = M.G.class('work-header')[0]
     const heading = M.G.class('txt-up', M.G.class('section-heading', header)[0])
+    const phone = window.matchMedia('(max-width: 767px)').matches
 
-    this.play(header, (tl) => {
-      tl.add({
-        targets: heading,
-        translateY: ['101%', 0],
-        easing,
-        duration,
-      })
-    })
+    const onScreen = (el) => {
+      const r = el.getBoundingClientRect()
+      return r.bottom > 0 && r.top < window.innerHeight
+    }
 
-    const items = M.G.class('work-item')
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i]
+    /* The heading starts translated out of its clip. A scroll trigger at 70%
+       of the screen never fires for it on a short phone, where it is already
+       visible at the bottom, so the sheet lifts onto an empty black block. */
+    const revealHeading = () => {
+      const build = (tl) => {
+        tl.add({
+          targets: heading,
+          translateY: ['101%', 0],
+          easing,
+          duration,
+        })
+      }
+      if (phone && onScreen(header)) {
+        const tl = anime.timeline({ autoplay: true })
+        build(tl)
+      } else {
+        this.play(header, build)
+      }
+    }
+
+    const revealItem = (item) => {
       const overlay = M.G.class('work-item-overlay', item)[0]
       const title = M.G.class('txt-up', M.G.class('work-item-title', item)[0])
       const desc = M.G.class('txt-up', M.G.class('work-item-description', item)[0])
-
-      this.play(item, (tl) => {
+      const build = (tl) => {
         tl.add({
           targets: overlay,
           translateY: ['0%', '-100%'],
@@ -164,8 +205,23 @@ class Fx {
           },
           '-=1200'
         )
-      })
+      }
+      if (phone && onScreen(item)) {
+        const tl = anime.timeline({ autoplay: true })
+        build(tl)
+      } else {
+        this.play(item, build)
+      }
     }
+
+    const revealCopy = () => {
+      revealHeading()
+      const items = M.G.class('work-item')
+      for (let i = 0; i < items.length; i++) revealItem(items[i])
+    }
+
+    if (phone && Transitions.opening) Transitions.opening.then(revealCopy)
+    else revealCopy()
   }
 
   /**

@@ -31,9 +31,21 @@ export default new (class Transitions {
   run(isFirstLoad = false) {
     this.m = MBZ
     this.isFirstLoad = isFirstLoad
-    this.contentAt = isFirstLoad ? CONTENT_AT : 0
+    const phone = window.matchMedia('(max-width: 767px)').matches
+    /* On a phone the sheet is in front, so the intro waits until it has
+       risen. On desktop the sheet sits behind and the intro overlaps it. */
+    this.contentAt = isFirstLoad ? (phone ? SPLASH_DURATION : CONTENT_AT) : 0
     this.settled = new Promise((resolve) => (this.settle = resolve))
     setTimeout(this.settle, SETTLE_CAP)
+    /* Resolves when the full-screen sheet has landed and stepped aside.
+       There is no sheet on later navigations, so those resolve immediately. */
+    this.revealed = new Promise((resolve) => (this.revealSplash = resolve))
+    if (!isFirstLoad) this.revealSplash()
+    /* The work sheet starts on this, just before the intro is considered
+       done, rather than after the settle hold. */
+    this.opening = new Promise((resolve) => (this.openWork = resolve))
+    setTimeout(this.openWork, SETTLE_CAP)
+    if (!this.m.page.is.home) this.openWork()
     this.m.page.is.home ? this.homeIntro() : this.caseIntro()
   }
 
@@ -68,16 +80,41 @@ export default new (class Transitions {
       nav.classList.remove('is-visible', 'is-ready', 'is-light')
     }
 
-    tl.add(
-      {
-        targets: M.G.id('page-splash'),
-        opacity: [0, 1],
-        translateY: ['100%', 0],
-        easing: EASING,
-        duration: SPLASH_DURATION,
-      },
-      0
-    )
+    const splash = M.G.id('page-splash')
+    const phone = window.matchMedia('(max-width: 767px)').matches
+
+    if (phone) {
+      tl.add(
+        {
+          targets: splash,
+          translateY: ['100%', '0%'],
+          easing: EASING,
+          duration: SPLASH_DURATION,
+          complete: () => {
+            /* Cover the work section before this sheet steps behind it.
+               Otherwise the black section flashes in under the short hero
+               and sits there for the whole intro. */
+            const work = M.G.qs('.work-splash')
+            if (work) work.style.opacity = '1'
+            if (splash) splash.classList.add('is-settled')
+            this.revealSplash()
+          },
+        },
+        0
+      )
+    } else {
+      tl.add(
+        {
+          targets: splash,
+          opacity: [0, 1],
+          translateY: ['100%', 0],
+          easing: EASING,
+          duration: SPLASH_DURATION,
+          complete: () => this.revealSplash(),
+        },
+        0
+      )
+    }
 
     tl.add(
       {
@@ -155,6 +192,9 @@ export default new (class Transitions {
 
       this.introTL.play()
       this.settleAfter(at + STEP * 2)
+      /* The work sheet is part of this intro. It starts with the name, and
+         its slide is short enough to open the section as the last line lands. */
+      setTimeout(this.openWork, at)
     })
   }
 

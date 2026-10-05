@@ -343,6 +343,25 @@ body {
   position: fixed;
   inset: 0;
   z-index: -1;
+
+  /* Once the phone splash has covered the screen it steps behind the page
+     and stays as the cream background. */
+  &.is-settled {
+    opacity: 1;
+    transform: none;
+    z-index: -1;
+  }
+}
+
+/* On a phone the sheet starts below the screen and rises in front of the
+   page, solid, so the short hero and the work section are both covered.
+   It then steps behind and stays the cream background. */
+@include breakpoint(767) {
+  #page-splash:not(.is-settled) {
+    opacity: 1;
+    z-index: 2;
+    transform: translate3d(0, 100%, 0);
+  }
 }
 
 .section-header {
@@ -427,6 +446,12 @@ body {
   position: relative;
 }
 
+@include breakpoint(1024) {
+  .nav {
+    font-size: 1em;
+  }
+}
+
 @include breakpoint(767) {
   .nav {
     font-size: 1em;
@@ -456,7 +481,23 @@ body {
 
 
 .work {
+  position: relative;
   padding-block: 8.5em;
+  /* The sheet slides up by its own height and stays there, so the section
+     clips it instead of the element being removed. */
+  overflow: hidden;
+}
+
+/* Covers the whole section and later slides up, staying in the page.
+   Opacity stays 0 until the opening sheet has landed, so a phone doesn't
+   show a cream block under a black hero before that sheet rises. */
+.work-splash {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  background: #fcfcfc;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .work-header {
