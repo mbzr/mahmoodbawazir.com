@@ -348,7 +348,9 @@ body {
      and stays as the cream background. */
   &.is-settled {
     opacity: 1;
-    transform: none;
+    /* Beats the splash tween's inline transform, so stepping behind early
+       doesn't leave a gap of the black page at the top. */
+    transform: none !important;
     z-index: -1;
   }
 }

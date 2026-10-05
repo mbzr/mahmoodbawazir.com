@@ -31,10 +31,9 @@ export default new (class Transitions {
   run(isFirstLoad = false) {
     this.m = MBZ
     this.isFirstLoad = isFirstLoad
-    const phone = window.matchMedia('(max-width: 767px)').matches
-    /* On a phone the sheet is in front, so the intro waits until it has
-       risen. On desktop the sheet sits behind and the intro overlaps it. */
-    this.contentAt = isFirstLoad ? (phone ? SPLASH_DURATION : CONTENT_AT) : 0
+    /* Nav, lead, and name share this beat on every screen. On a phone the
+       sheet is in front until then, and steps behind so the type is visible. */
+    this.contentAt = isFirstLoad ? CONTENT_AT : 0
     this.settled = new Promise((resolve) => (this.settle = resolve))
     setTimeout(this.settle, SETTLE_CAP)
     /* Resolves when the full-screen sheet has landed and stepped aside.
@@ -84,21 +83,28 @@ export default new (class Transitions {
     const phone = window.matchMedia('(max-width: 767px)').matches
 
     if (phone) {
+      /* The sheet is visually home well before the tween ends. Step it
+         behind on the same beat the type starts, matching desktop, where
+         the sheet was never covering the intro. */
+      let landed = false
+      const land = () => {
+        if (landed) return
+        landed = true
+        const work = M.G.qs('.work-splash')
+        if (work) work.style.opacity = '1'
+        if (splash) splash.classList.add('is-settled')
+        this.revealSplash()
+      }
       tl.add(
         {
           targets: splash,
           translateY: ['100%', '0%'],
           easing: EASING,
           duration: SPLASH_DURATION,
-          complete: () => {
-            /* Cover the work section before this sheet steps behind it.
-               Otherwise the black section flashes in under the short hero
-               and sits there for the whole intro. */
-            const work = M.G.qs('.work-splash')
-            if (work) work.style.opacity = '1'
-            if (splash) splash.classList.add('is-settled')
-            this.revealSplash()
+          update: (anim) => {
+            if (anim.currentTime >= CONTENT_AT) land()
           },
+          complete: land,
         },
         0
       )
@@ -194,7 +200,7 @@ export default new (class Transitions {
       this.settleAfter(at + STEP * 2)
       /* The work sheet is part of this intro. It starts with the name, and
          its slide is short enough to open the section as the last line lands. */
-      setTimeout(this.openWork, at)
+      setTimeout(this.openWork, at + STEP * 2)
     })
   }
 

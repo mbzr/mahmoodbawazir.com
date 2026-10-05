@@ -148,7 +148,7 @@ class Fx {
           opacity: [1, 1],
           translateY: [0, '-100%'],
           easing,
-          duration: phone ? 1000 : 1500,
+          duration: 1500,
           complete: () => {
             if (this.m.listeners) this.m.listeners.updateNavTheme()
           },
