@@ -107,9 +107,10 @@
   transform: translate3d(-100%, 0, 0);
 }
 
-/* Revealed by the scroll timeline; see Fx.case in src/js/components/fx.js. */
-.case-fade {
+/* Each pill is revealed in turn; see Fx.case in src/js/components/fx.js. */
+.case-fade .tag {
   opacity: 0;
+  transform: translate3d(0, 16px, 0);
 }
 
 .case-block-title {

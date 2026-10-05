@@ -116,13 +116,15 @@ class Fx {
 
     const stack = M.G.class('about-stack')[0]
     if (stack) {
+      const tags = [...M.G.class('tag', stack)]
       this.play(stack, (tl) => {
         tl.add({
-          targets: stack,
+          targets: tags,
           translateY: [16, 0],
           opacity: [0, 1],
           easing,
           duration,
+          delay: (_, i) => i * 80,
         })
       })
     }
@@ -326,7 +328,7 @@ class Fx {
     const body = M.G.qs('.case-role, .case-built', row)
     const bodyLines = body ? splitLines(body) : []
     const links = M.G.qsa('.case-link .txt-up, .case-nav-link .txt-up', row)
-    const fade = M.G.class('case-fade', row)
+    const tags = [...M.G.class('tag', row)]
     const copyAt = at + copyGap
 
     tl.add(
@@ -367,15 +369,15 @@ class Fx {
       )
     }
 
-    if (fade.length) {
+    if (tags.length) {
       tl.add(
         {
-          targets: fade,
+          targets: tags,
           opacity: [0, 1],
           translateY: [16, 0],
           duration: 2000,
           easing,
-          delay: anime.stagger(40),
+          delay: (_, i) => i * 80,
         },
         copyAt
       )

@@ -97,7 +97,12 @@
   margin-top: 3em;
   padding-top: 3em;
   border-top: 1px solid #909090;
-  opacity: 0;
+
+  /* Same sequence as the Stack row on a project page. */
+  .tag {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
 }
 
 
