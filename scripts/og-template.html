@@ -52,9 +52,13 @@
         justify-content: space-between;
       }
 
-      .domain {
+      .availability {
+        display: flex;
+        align-items: center;
+        gap: 16px;
         font-size: 30px;
         letter-spacing: -0.02em;
+        color: #6b6375;
       }
 
       .rule {
@@ -64,10 +68,11 @@
       }
 
       .dot {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
         border-radius: 50%;
-        background-color: #2563eb;
+        background-color: #15803d;
+        flex: 0 0 auto;
       }
     </style>
   </head>
@@ -79,8 +84,7 @@
     <div>
       <div class="rule"></div>
       <div class="foot">
-        <p class="domain">mahmoodbawazir.com</p>
-        <span class="dot"></span>
+        <p class="availability"><span class="dot"></span>Available now for contract or full-time roles</p>
       </div>
     </div>
   </body>

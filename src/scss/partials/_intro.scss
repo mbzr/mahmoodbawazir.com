@@ -65,7 +65,7 @@
 
 /* Sits under the tagline, sharing its column and left edge. */
 .intro-meta {
-  margin-top: 1.75em;
+  margin-top: 1em;
 
   .availability {
     opacity: 0;
@@ -82,17 +82,12 @@
   color: $brand-muted;
 }
 
-/* The shared dot carries a halo and a pulse for the footer. The hero wants
-   a plain mark. */
+/* Same heartbeat as the footer, at the hero's 8px size. The standing halo
+   stays off so the mark doesn't sit heavier than the muted line. */
 .intro-availability .availability-dot {
   width: 8px;
   height: 8px;
   box-shadow: none;
-
-  &::after {
-    content: none;
-    animation: none;
-  }
 }
 
 .link-block-wrapper {
@@ -172,7 +167,7 @@
 
   .link-block-wrapper {
     order: 2;
-    margin-top: 2em;
+    margin-top: 1em;
     margin-bottom: 3em;
   }
 
@@ -184,6 +179,10 @@
     order: 3;
     width: 100%;
     overflow: hidden;
+  }
+
+  .intro-availability {
+    font-size: 1em;
   }
 
   .text-style-heading-s {
