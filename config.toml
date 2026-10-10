@@ -10,8 +10,8 @@ disableKinds = ["RSS", "taxonomy"]
 
 [params]
   author = "Mahmood Bawazir"
-  jobTitle = "Senior Front-End Developer"
-  description = "Senior front-end developer with 9+ years building websites and web apps for global brands. TypeScript, React/Next.js, Svelte 5. Available for remote work."
+  jobTitle = "Senior Frontend Developer"
+  description = "Senior frontend developer with 9+ years building websites and web apps for global brands. TypeScript, React/Next.js, Svelte 5. Available for remote work."
   availability = "Available now for contract or full-time roles"
   email = "hello@mahmoodbawazir.com"
   linkedin = "https://www.linkedin.com/in/mbzr"

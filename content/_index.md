@@ -1,5 +1,5 @@
 ---
-title: 'Front-End Developer'
+title: 'Frontend Developer'
 projects:
   title: 'Projects'
   description: 'Check out my selected projects below.'

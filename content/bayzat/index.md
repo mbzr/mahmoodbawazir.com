@@ -1,11 +1,11 @@
 ---
 title: 'Bayzat'
-description: 'Front-end rebuild of bayzat.com in GatsbyJS during a complete rebrand, with pages generated from an API and Framer Motion interfaces.'
+description: 'Frontend rebuild of bayzat.com in GatsbyJS during a complete rebrand, with pages generated from an API and Framer Motion interfaces.'
 project: true
 weight: 3
 years: '2020'
-role: 'Senior Front-End Developer'
-built: 'I joined Bayzat in the middle of a complete rebrand and led the front-end rebuild of bayzat.com in GatsbyJS, with pages generated from an API and animated interfaces built with Framer Motion. I also handled SEO, performance testing, and cross-browser testing.'
+role: 'Senior Frontend Developer'
+built: 'I joined Bayzat in the middle of a complete rebrand and led the frontend rebuild of bayzat.com in GatsbyJS, with pages generated from an API and animated interfaces built with Framer Motion. I also handled SEO, performance testing, and cross-browser testing.'
 stack: ['React', 'GatsbyJS', 'GraphQL', 'Framer Motion', 'Styled Components']
 links:
   - label: 'Bayzat'
