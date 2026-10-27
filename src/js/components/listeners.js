@@ -14,9 +14,10 @@ export default class Listeners {
     this.testimonials = new Testimonials()
     this.scroll = new SmoothScroll({
       wrapper: '#page',
-      sections: ['#ls', '#xhr'],
       onUpdate: this.onScroll,
     })
+    this.darkEls = []
+    this.splashEls = []
     this.m.scroll = this.scroll
     this.ro = new M.RO({
       cb: this.resize,
@@ -30,6 +31,8 @@ export default class Listeners {
       this.nav.classList.add('is-visible', 'is-ready')
     }
     this.scroll.refresh()
+    this.darkEls = [...document.querySelectorAll('.bg-color-dark')]
+    this.splashEls = [...document.querySelectorAll('.work-splash')]
     this.fx.init(this.scroll)
     this.testimonials.init()
     this.resize()
@@ -78,13 +81,13 @@ export default class Listeners {
   updateNavTheme = () => {
     if (!this.nav) return
     const probe = 24
-    const dark = [...document.querySelectorAll('.bg-color-dark')].some((el) => {
+    const dark = this.darkEls.some((el) => {
       const rect = el.getBoundingClientRect()
       return rect.top <= probe && rect.bottom > probe
     })
     /* The work sheet is cream. While it still covers the probe, the section
        behind it is dark but the nav is sitting on the sheet. */
-    const covered = [...document.querySelectorAll('.work-splash')].some((el) => {
+    const covered = this.splashEls.some((el) => {
       const rect = el.getBoundingClientRect()
       return rect.top <= probe && rect.bottom > probe
     })

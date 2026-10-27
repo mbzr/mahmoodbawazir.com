@@ -82,45 +82,33 @@ export default new (class Transitions {
     const splash = M.G.id('page-splash')
     const phone = window.matchMedia('(max-width: 767px)').matches
 
-    if (phone) {
-      /* The sheet is visually home well before the tween ends. Step it
-         behind on the same beat the type starts, matching desktop, where
-         the sheet was never covering the intro. */
-      let landed = false
-      const land = () => {
-        if (landed) return
-        landed = true
+    let landed = false
+    const land = () => {
+      if (landed) return
+      landed = true
+      if (phone) {
         const work = M.G.qs('.work-splash')
         if (work) work.style.opacity = '1'
-        if (splash) splash.classList.add('is-settled')
-        this.revealSplash()
       }
-      tl.add(
-        {
-          targets: splash,
-          translateY: ['100%', '0%'],
-          easing: EASING,
-          duration: SPLASH_DURATION,
-          update: (anim) => {
-            if (anim.currentTime >= CONTENT_AT) land()
-          },
-          complete: land,
-        },
-        0
-      )
-    } else {
-      tl.add(
-        {
-          targets: splash,
-          opacity: [0, 1],
-          translateY: ['100%', 0],
-          easing: EASING,
-          duration: SPLASH_DURATION,
-          complete: () => this.revealSplash(),
-        },
-        0
-      )
+      if (splash) splash.classList.add('is-settled')
+      this.revealSplash()
     }
+
+    tl.add(
+      {
+        targets: splash,
+        translateY: ['100%', '0%'],
+        easing: EASING,
+        duration: SPLASH_DURATION,
+        update: phone
+          ? (anim) => {
+              if (anim.currentTime >= CONTENT_AT) land()
+            }
+          : undefined,
+        complete: land,
+      },
+      0
+    )
 
     tl.add(
       {

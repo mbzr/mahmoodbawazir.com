@@ -68,6 +68,19 @@ body {
   min-height: 100vh;
 }
 
+/*
+  Each [data-scroll-section] is its own compositor layer, so lerp scrolling
+  does not promote the entire page as one texture. will-change only while
+  the scroller is moving, then dropped so the layers can be released.
+*/
+[data-scroll-section] {
+  position: relative;
+}
+
+.is-scrolling [data-scroll-section] {
+  will-change: transform;
+}
+
 // #_p {
 //   position: absolute;
 //   top: 0;
@@ -339,16 +352,18 @@ body {
 */
 #page-splash {
   background: #fcfcfc;
-  opacity: 0;
+  opacity: 1;
   pointer-events: none;
   position: fixed;
   inset: 0;
   z-index: -1;
+  transform: translate3d(0, 100%, 0);
+  will-change: transform;
 
-  /* Once the phone splash has covered the screen it steps behind the page
+  /* Once the sheet has covered the screen it steps behind the page
      and stays as the cream background. */
   &.is-settled {
-    opacity: 1;
+    will-change: auto;
     /* Beats the splash tween's inline transform, so stepping behind early
        doesn't leave a gap of the black page at the top. */
     transform: none !important;
@@ -497,10 +512,17 @@ body {
 .work-splash {
   position: absolute;
   z-index: 5;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* One screen, not the whole work section — translating a 4000px sheet
+     was what made the opening feel like it was dragging. */
+  height: 100vh;
+  height: 100dvh;
   background: #fcfcfc;
   opacity: 0;
   pointer-events: none;
+  will-change: transform;
 }
 
 .work-header {

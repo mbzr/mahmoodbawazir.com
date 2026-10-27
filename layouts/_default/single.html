@@ -1,6 +1,6 @@
 {{ define "main" }}
 <div id="case">
-  <section class="case-intro" id="case-intro">
+  <section class="case-intro" id="case-intro" data-scroll-section>
     <div class="case-container">
       <p class="case-eyebrow"><span class="txt-up-wrap"><span class="txt-up">{{ .Params.years }}{{ with .Params.via }} · Via {{ . }}{{ end }}</span></span></p>
       <h1 class="case-title">{{ .Title }}</h1>
@@ -73,7 +73,7 @@
     {{ end }}
   {{ end }}
 
-  <nav class="case-nav" id="case-nav" aria-label="Other projects">
+  <nav class="case-nav" id="case-nav" data-scroll-section aria-label="Other projects">
     <span class="case-block-line-wrap"><span class="case-block-line"></span></span>
     <div class="case-container case-nav-inner">
       <div class="case-nav-col">

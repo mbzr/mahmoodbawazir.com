@@ -4,12 +4,16 @@
  * Required CSS: a fixed viewport with overflow hidden; `wrapper` is in-flow
  * content whose height is taller than the window.
  *
+ * Sections: mark page chunks with [data-scroll-section]. Each one is its own
+ * compositor layer, the same pattern locomotive used. Translating one tall
+ * #xhr instead made the splash and lerp hitch. If none are marked, the
+ * wrapper itself moves.
+ *
  *   const scroll = new SmoothScroll({
- *     wrapper: '#page',              // measures scroll distance
- *     sections: ['#sidebar', '#xhr'] // what to translate (defaults to wrapper)
+ *     wrapper: '#page',
  *   })
  *   scroll.refresh()
- *   scroll.on()                      // owns its own rAF
+ *   scroll.on()
  *   scroll.when('#about', () => tl.play())
  *
  * Parallax: mark descendants with data-speed (Y) and/or data-speed-x (X).
@@ -39,9 +43,11 @@ export default class SmoothScroll {
     this.target = 0
     this.max = 0
     this.enabled = false
+    this.moving = false
 
     this.wrapper = null
     this.sections = []
+    this.sectionMetrics = []
     this.parallax = []
     this.triggers = []
 
@@ -56,8 +62,7 @@ export default class SmoothScroll {
 
   refresh() {
     this.wrapper = qs(this.wrapperSel)
-    const sels = this.sectionSels || (this.wrapperSel ? [this.wrapperSel] : [])
-    this.sections = sels.map(qs).filter(Boolean)
+    this.sections = this._collectSections()
     this.parallax = this.wrapper
       ? [...this.wrapper.querySelectorAll('[data-speed], [data-speed-x]')]
       : []
@@ -75,13 +80,14 @@ export default class SmoothScroll {
     if (this.enabled) return
     this.enabled = true
     this._listen(true)
-    this._tick()
+    this._kick()
   }
 
   off() {
     this.enabled = false
     this._listen(false)
-    cancelAnimationFrame(this.raf)
+    this._stop()
+    this._setMoving(false)
   }
 
   resize() {
@@ -89,6 +95,7 @@ export default class SmoothScroll {
     this.max = Math.max(0, this.wrapper.offsetHeight - window.innerHeight)
     this.target = clamp(this.target, 0, this.max)
     this.y = clamp(this.y, 0, this.max)
+    this._measureSections()
     this._measureTriggers()
     this._draw()
   }
@@ -98,7 +105,9 @@ export default class SmoothScroll {
     if (immediate) {
       this.y = this.target
       this._draw()
+      return
     }
+    this._kick()
   }
 
   scrollToHash(hash, immediate = false) {
@@ -128,6 +137,28 @@ export default class SmoothScroll {
     this.triggers = []
   }
 
+  _collectSections() {
+    if (this.sectionSels) {
+      return this.sectionSels.map(qs).filter(Boolean)
+    }
+    const root = qs('#xhr') || this.wrapper
+    if (!root) return []
+    const marked = [...root.querySelectorAll('[data-scroll-section]')]
+    const top = marked.filter(
+      (el) => !el.parentElement.closest('[data-scroll-section]')
+    )
+    return top.length ? top : [root]
+  }
+
+  _measureSections() {
+    this.sectionMetrics = this.sections.map((el) => ({
+      el,
+      top: el.getBoundingClientRect().top + this.y,
+      height: el.offsetHeight,
+      hidden: el.style.visibility === 'hidden',
+    }))
+  }
+
   _measureTriggers() {
     const winH = window.innerHeight
     for (const t of this.triggers) {
@@ -142,24 +173,63 @@ export default class SmoothScroll {
     }
   }
 
+  _kick() {
+    if (!this.enabled || this.raf) return
+    this.raf = requestAnimationFrame(this._tick)
+  }
+
+  _stop() {
+    if (!this.raf) return
+    cancelAnimationFrame(this.raf)
+    this.raf = null
+  }
+
+  _setMoving(on) {
+    if (this.moving === on) return
+    this.moving = on
+    if (this.wrapper) this.wrapper.classList.toggle('is-scrolling', on)
+  }
+
   _tick() {
+    this.raf = null
     if (!this.enabled) return
     const delta = this.target - this.y
     if (Math.abs(delta) >= 0.1) {
+      this._setMoving(true)
       this.y += delta * this.lerp
       this._draw()
-    } else if (this.y !== this.target) {
+      this._kick()
+      return
+    }
+    if (this.y !== this.target) {
       this.y = this.target
       this._draw()
     }
-    this.raf = requestAnimationFrame(this._tick)
+    this._setMoving(false)
   }
 
   _draw() {
     const y = this.y
-    for (const el of this.sections) {
-      el.style.transform = `translate3d(0, ${-y}px, 0)`
+    const winH = window.innerHeight
+    const pad = winH
+    const t = `translate3d(0, ${-y}px, 0)`
+
+    if (this.sectionMetrics.length) {
+      for (const s of this.sectionMetrics) {
+        s.el.style.transform = t
+        const visTop = s.top - y
+        const inView = visTop + s.height > -pad && visTop < winH + pad
+        if (s.hidden === inView) {
+          s.hidden = !inView
+          s.el.style.visibility = inView ? 'visible' : 'hidden'
+        }
+      }
+    } else {
+      for (const el of this.sections) {
+        el.style.transform = t
+      }
     }
+
     this._parallax()
     this._runTriggers()
     if (this.onUpdate) this.onUpdate(y)
@@ -175,6 +245,7 @@ export default class SmoothScroll {
   }
 
   _parallax() {
+    if (!this.parallax.length) return
     const mid = window.innerHeight / 2
     for (const el of this.parallax) {
       const rect = el.getBoundingClientRect()
@@ -209,6 +280,7 @@ export default class SmoothScroll {
     if (e.type === 'wheel') delta *= 0.556
 
     this.target = clamp(this.target - delta, 0, this.max)
+    this._kick()
   }
 
   _onKeyDown(e) {
@@ -222,6 +294,7 @@ export default class SmoothScroll {
 
     e.preventDefault()
     this.target = clamp(this.target + step, 0, this.max)
+    this._kick()
   }
 
   _onTouchStart(e) {
@@ -238,5 +311,6 @@ export default class SmoothScroll {
       0,
       this.max
     )
+    this._kick()
   }
 }

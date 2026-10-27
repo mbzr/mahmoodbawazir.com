@@ -143,17 +143,19 @@ class Fx {
     */
     if (splash && !reduce) {
       const phone = window.matchMedia('(max-width: 767px)').matches
-      const play = () =>
+      const play = () => {
+        splash.style.opacity = '1'
         anime({
           targets: splash,
-          opacity: [1, 1],
           translateY: [0, '-100%'],
           easing,
           duration: 1500,
           complete: () => {
+            splash.style.willChange = 'auto'
             if (this.m.listeners) this.m.listeners.updateNavTheme()
           },
         })
+      }
       if (phone && Transitions.opening) Transitions.opening.then(play)
       else play()
     }
