@@ -49,6 +49,7 @@ class Fx {
   }
 
   play = (el, build, offset) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const tl = anime.timeline({ autoplay: false })
     build(tl)
     this.scroll.when(el, () => tl.play(), offset)
@@ -141,7 +142,9 @@ class Fx {
       one sequence. The visible edge only opens at the end of the slide,
       which is why this is shorter than the desktop one.
     */
-    if (splash && !reduce) {
+    if (reduce) return
+
+    if (splash) {
       const phone = window.matchMedia('(max-width: 767px)').matches
       const play = () => {
         splash.style.opacity = '1'
@@ -243,6 +246,7 @@ class Fx {
 
     const root = M.G.id('case')
     if (!root) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const intro = anime.timeline({ autoplay: false })
     const eyebrow = M.G.class('case-eyebrow', root)[0]

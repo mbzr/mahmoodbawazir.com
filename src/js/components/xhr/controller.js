@@ -21,6 +21,10 @@ export default new (class XhrController {
     this.m = MBZ
     this.m.listeners.off()
     this.m.page = PathListener.run()
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.m.done()
+      return
+    }
     anime({
       targets: this.content,
       opacity: [1, 0],
@@ -36,6 +40,11 @@ export default new (class XhrController {
     this.m.xhr.removeOld()
     this.m.xhr.insertNew()
     this.m.listeners.init()
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.content.style.opacity = '1'
+      this.introCb()
+      return
+    }
     anime({
       targets: this.content,
       opacity: [0, 1],

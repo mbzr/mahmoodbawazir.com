@@ -45,7 +45,28 @@ export default new (class Transitions {
     this.opening = new Promise((resolve) => (this.openWork = resolve))
     setTimeout(this.openWork, SETTLE_CAP)
     if (!this.m.page.is.home) this.openWork()
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.showFinal()
+      return
+    }
+
     this.m.page.is.home ? this.homeIntro() : this.caseIntro()
+  }
+
+  /** Instant final state when the visitor has asked for no motion. */
+  showFinal = () => {
+    const splash = M.G.id('page-splash')
+    if (splash) splash.classList.add('is-settled')
+    const nav = M.G.class('nav')[0]
+    if (nav) {
+      nav.classList.add('is-visible', 'is-ready')
+      nav.classList.remove('is-intro')
+      nav.style.removeProperty('transform')
+    }
+    this.revealSplash()
+    this.openWork()
+    this.settle()
   }
 
   /**

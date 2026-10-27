@@ -730,3 +730,69 @@ body {
     transform-origin: left center;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .txt-up {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .case-title,
+  .case-role,
+  .case-built,
+  .intro__lead,
+  .about-subheading,
+  .about-item-desc,
+  .footer-cta-heading,
+  .testimonial-quote,
+  .intro__lead .txt-up {
+    opacity: 1 !important;
+  }
+
+  .about-item-line,
+  .case-block-line,
+  .footer-divider-line {
+    transform: none !important;
+  }
+
+  .case-fade .tag,
+  .about-stack .tag {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .testimonial-author--fx,
+  .testimonials-controls,
+  .footer-availability,
+  .intro-meta .availability,
+  .link-block,
+  .footer-wordmark {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .work-item-overlay {
+    transform: translate3d(0, -100%, 0) !important;
+  }
+
+  .work-splash {
+    opacity: 0 !important;
+    transform: translate3d(0, -100%, 0) !important;
+  }
+
+  #page-splash {
+    transform: none !important;
+    z-index: -1 !important;
+  }
+
+  .nav {
+    transform: none;
+    pointer-events: auto;
+    transition: color 0.35s ease;
+  }
+
+  [data-speed],
+  [data-speed-x] {
+    transform: none !important;
+  }
+}

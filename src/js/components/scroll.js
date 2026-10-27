@@ -47,17 +47,23 @@ export default class SmoothScroll {
 
     this.wrapper = null
     this.sections = []
-    this.sectionMetrics = []
     this.parallax = []
     this.triggers = []
 
+    this.lerpDefault = lerp
+    this.reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)')
     this.wheelEvent = 'onwheel' in document ? 'wheel' : 'mousewheel'
 
     this._onWheel = this._onWheel.bind(this)
     this._onKeyDown = this._onKeyDown.bind(this)
+    this._onFocusIn = this._onFocusIn.bind(this)
     this._onTouchStart = this._onTouchStart.bind(this)
     this._onTouchMove = this._onTouchMove.bind(this)
+    this._onReduceChange = this._onReduceChange.bind(this)
     this._tick = this._tick.bind(this)
+
+    this._syncReduce()
+    this.reduceMQ.addEventListener('change', this._onReduceChange)
   }
 
   refresh() {
@@ -66,6 +72,9 @@ export default class SmoothScroll {
     this.parallax = this.wrapper
       ? [...this.wrapper.querySelectorAll('[data-speed], [data-speed-x]')]
       : []
+    for (const el of this.sections) {
+      el.style.visibility = ''
+    }
     this.y = 0
     this.target = 0
     this.resize()
@@ -95,14 +104,13 @@ export default class SmoothScroll {
     this.max = Math.max(0, this.wrapper.offsetHeight - window.innerHeight)
     this.target = clamp(this.target, 0, this.max)
     this.y = clamp(this.y, 0, this.max)
-    this._measureSections()
     this._measureTriggers()
     this._draw()
   }
 
   scrollTo(y, immediate = false) {
     this.target = clamp(y, 0, this.max)
-    if (immediate) {
+    if (immediate || this.lerp >= 1) {
       this.y = this.target
       this._draw()
       return
@@ -150,13 +158,16 @@ export default class SmoothScroll {
     return top.length ? top : [root]
   }
 
-  _measureSections() {
-    this.sectionMetrics = this.sections.map((el) => ({
-      el,
-      top: el.getBoundingClientRect().top + this.y,
-      height: el.offsetHeight,
-      hidden: el.style.visibility === 'hidden',
-    }))
+  _syncReduce() {
+    this.lerp = this.reduceMQ.matches ? 1 : this.lerpDefault
+  }
+
+  _onReduceChange() {
+    this._syncReduce()
+    if (this.reduceMQ.matches) {
+      this.y = this.target
+      this._draw()
+    }
   }
 
   _measureTriggers() {
@@ -193,6 +204,12 @@ export default class SmoothScroll {
   _tick() {
     this.raf = null
     if (!this.enabled) return
+    if (this.lerp >= 1) {
+      this.y = this.target
+      this._draw()
+      this._setMoving(false)
+      return
+    }
     const delta = this.target - this.y
     if (Math.abs(delta) >= 0.1) {
       this._setMoving(true)
@@ -210,24 +227,10 @@ export default class SmoothScroll {
 
   _draw() {
     const y = this.y
-    const winH = window.innerHeight
-    const pad = winH
     const t = `translate3d(0, ${-y}px, 0)`
 
-    if (this.sectionMetrics.length) {
-      for (const s of this.sectionMetrics) {
-        s.el.style.transform = t
-        const visTop = s.top - y
-        const inView = visTop + s.height > -pad && visTop < winH + pad
-        if (s.hidden === inView) {
-          s.hidden = !inView
-          s.el.style.visibility = inView ? 'visible' : 'hidden'
-        }
-      }
-    } else {
-      for (const el of this.sections) {
-        el.style.transform = t
-      }
+    for (const el of this.sections) {
+      el.style.transform = t
     }
 
     this._parallax()
@@ -246,6 +249,12 @@ export default class SmoothScroll {
 
   _parallax() {
     if (!this.parallax.length) return
+    if (this.reduceMQ.matches) {
+      for (const el of this.parallax) {
+        el.style.transform = 'translate3d(0, 0, 0)'
+      }
+      return
+    }
     const mid = window.innerHeight / 2
     for (const el of this.parallax) {
       const rect = el.getBoundingClientRect()
@@ -266,6 +275,7 @@ export default class SmoothScroll {
     const opts = { passive: false }
     document[method](this.wheelEvent, this._onWheel, opts)
     document[method]('keydown', this._onKeyDown, opts)
+    document[method]('focusin', this._onFocusIn)
     document[method]('touchstart', this._onTouchStart, opts)
     document[method]('touchmove', this._onTouchMove, opts)
   }
@@ -285,16 +295,43 @@ export default class SmoothScroll {
 
   _onKeyDown(e) {
     if (!this.enabled) return
+    if (e.ctrlKey || e.metaKey || e.altKey) return
+
+    const el = e.target
+    if (el instanceof Element) {
+      const tag = el.tagName
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return
+      if (el.isContentEditable) return
+    }
+
     const { key, shiftKey } = e
-    let step = 0
-    if (key === 'ArrowUp') step = -100
-    else if (key === 'ArrowDown') step = 100
-    else if (key === ' ') step = (window.innerHeight - 40) * (shiftKey ? -1 : 1)
+    const page = window.innerHeight - 40
+    let next = null
+    if (key === 'ArrowUp') next = this.target - 100
+    else if (key === 'ArrowDown') next = this.target + 100
+    else if (key === ' ') next = this.target + page * (shiftKey ? -1 : 1)
+    else if (key === 'PageDown') next = this.target + page
+    else if (key === 'PageUp') next = this.target - page
+    else if (key === 'Home') next = 0
+    else if (key === 'End') next = this.max
     else return
 
     e.preventDefault()
-    this.target = clamp(this.target + step, 0, this.max)
-    this._kick()
+    this.scrollTo(next)
+  }
+
+  _onFocusIn(e) {
+    if (!this.enabled) return
+    const el = e.target
+    if (!(el instanceof Element)) return
+    if (el.closest('.nav, #ls, #page-splash')) return
+
+    const rect = el.getBoundingClientRect()
+    const margin = 120
+    const winH = window.innerHeight
+    if (rect.top >= margin && rect.bottom <= winH) return
+
+    this.scrollTo(this.y + rect.top - margin)
   }
 
   _onTouchStart(e) {
