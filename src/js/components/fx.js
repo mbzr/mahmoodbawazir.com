@@ -336,6 +336,7 @@ class Fx {
     const bodyLines = body ? splitLines(body) : []
     const links = M.G.qsa('.case-link .txt-up, .case-nav-link .txt-up', row)
     const tags = [...M.G.class('tag', row)]
+    const highlights = M.G.qs('.case-highlights', row)
     const copyAt = at + copyGap
 
     tl.add(
@@ -385,6 +386,19 @@ class Fx {
           duration: 2000,
           easing,
           delay: (_, i) => i * 80,
+        },
+        copyAt
+      )
+    }
+
+    if (highlights) {
+      tl.add(
+        {
+          targets: highlights,
+          opacity: [0, 1],
+          translateY: [16, 0],
+          duration: 2000,
+          easing,
         },
         copyAt
       )

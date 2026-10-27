@@ -1,22 +1,17 @@
 ---
 title: 'Puffy'
-description: "Headless Shopify storefront in Next.js, with a component library, Optimizely A/B testing and internal admin tooling."
+description: "Headless Shopify store in Next.js for a US mattress brand, with dozens of A/B tests and internal tools."
 project: true
 weight: 2
 years: '2021–2025'
 role: 'Senior Frontend Developer'
-built: "I built Puffy's headless Shopify storefront with Next.js, along with a reusable component library and an Optimizely A/B testing setup for checkout and product pages. I also built internal admin tools on the Shopify Admin and Klaviyo APIs to automate order fulfillment and marketing data sync, and set up CI/CD with GitHub Actions and Jenkins."
-stack:
-  [
-    'Next.js',
-    'React',
-    'TypeScript',
-    'Shopify',
-    'GraphQL',
-    'Optimizely',
-    'GitHub Actions',
-    'Jenkins',
-  ]
+built: "I proposed Puffy's move from a Shopify theme to a headless Shopify store on Next.js and rebuilt the store's interface in React, TypeScript and Tailwind CSS. We piloted it on the Canadian store, live in about two months, then moved the main US store across."
+highlights:
+  - "Proposed the headless move and presented it to the CEO and managers, then rebuilt the store's UI, including the cart, drawers and modals with shared state in Zustand."
+  - "Built dozens of A/B tests in Optimizely, from the homepage to checkout. Several winners became permanent on the product and checkout pages."
+  - "Built internal Next.js dashboards on Shopify and Klaviyo data, including one that lets staff filter orders and mark them complete in one place, saving hours each week."
+  - "Set up automated builds and deployments with GitHub Actions."
+stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Zustand', 'Shopify', 'GraphQL', 'Optimizely', 'GitHub Actions']
 links:
   - label: 'Puffy'
     url: 'https://puffy.com/'

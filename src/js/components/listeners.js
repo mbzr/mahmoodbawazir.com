@@ -19,6 +19,8 @@ export default class Listeners {
     this.darkEls = []
     this.splashEls = []
     this.m.scroll = this.scroll
+    this.reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)')
+    this.reduceMQ.addEventListener('change', this.syncGallery)
     this.ro = new M.RO({
       cb: this.resize,
       throttleDelay: 150,
@@ -35,8 +37,28 @@ export default class Listeners {
     this.splashEls = [...document.querySelectorAll('.work-splash')]
     this.fx.init(this.scroll)
     this.testimonials.init()
+    this.syncGallery()
     this.resize()
     this.ro.on()
+  }
+
+  syncGallery = () => {
+    const reduce = this.reduceMQ.matches
+    document.querySelectorAll('[data-gallery-video]').forEach((video) => {
+      if (reduce) {
+        video.pause()
+        video.controls = true
+        try {
+          video.currentTime = 0
+        } catch (err) {
+          /* currentTime can throw if the media is not ready */
+        }
+      } else {
+        video.controls = false
+        const play = video.play()
+        if (play && play.catch) play.catch(() => {})
+      }
+    })
   }
 
   resize = () => {
