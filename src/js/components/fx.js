@@ -84,7 +84,7 @@ class Fx {
       const line = M.G.class('about-item-line', item)
       const number = M.G.class('txt-up', M.G.class('about-item-number', item)[0])
       const title = M.G.class('txt-up', M.G.class('about-item-title', item)[0])
-      const desc = M.G.class('txt-up', M.G.class('about-item-desc', item)[0])
+      const desc = splitLines(M.G.class('about-item-desc', item)[0])
 
       this.play(item, (tl) => {
         tl.add({
@@ -108,6 +108,7 @@ class Fx {
             translateY: ['101%', 0],
             duration: 2000,
             easing,
+            delay: (_, i) => i * 100,
           },
           '-=1600'
         )
