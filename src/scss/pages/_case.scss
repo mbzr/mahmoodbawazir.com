@@ -153,22 +153,6 @@
   }
 }
 
-.case-gallery {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25em;
-  width: 100%;
-  padding-top: 2em;
-}
-
-.case-gallery img,
-.case-gallery video {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 0.5em;
-}
-
 /*
   Links
 */
@@ -262,11 +246,6 @@
 
   .case-highlights {
     font-size: 1em;
-  }
-
-  .case-gallery {
-    gap: 1em;
-    padding-top: 1.5em;
   }
 
   .case-nav {

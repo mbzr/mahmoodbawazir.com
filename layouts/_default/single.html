@@ -57,49 +57,6 @@
           </div>
         {{ end }}
       </div>
-
-      {{ $alts := dict
-        "1.png" "Puffy homepage on desktop"
-        "2.png" "Puffy product page on desktop"
-        "3.png" "Puffy contact form on desktop"
-        "1.jpg" "Bayzat homepage on desktop"
-        "2.jpg" "Bayzat work life platform page"
-        "3.mp4" "Bayzat page loading animation"
-        "4.mp4" "Bayzat Why Bayzat page"
-        "5.jpg" "Bayzat case studies page"
-        "6.jpg" "Bayzat Fuchsia Restaurant case study"
-        "7.jpg" "Bayzat case study quotes and more stories"
-        "8.jpg" "Bayzat HR software page"
-      }}
-      {{ $media := slice }}
-      {{ range sort (.Resources.Match "media/*") "Name" }}
-        {{ if not (hasPrefix (path.Base .Name) "hover.") }}
-          {{ $media = $media | append . }}
-        {{ end }}
-      {{ end }}
-      {{ if $media }}
-        <div class="case-gallery">
-          {{ $n := 0 }}
-          {{ range $media }}
-            {{ $n = add $n 1 }}
-            {{ $base := path.Base .Name }}
-            {{ $alt := index $alts $base | default (printf "%s screenshot %d" $.Title $n) }}
-            {{ if eq (path.Ext .Name) ".mp4" }}
-              <video src="{{ .RelPermalink }}" muted loop playsinline data-gallery-video aria-label="{{ $alt }}"></video>
-            {{ else }}
-              {{ $w := .Width }}
-              {{ if gt $w 1600 }}{{ $w = 1600 }}{{ end }}
-              {{ $img := .Resize (printf "%dx webp q80" $w) }}
-              <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="{{ $alt }}" loading="lazy" decoding="async">
-            {{ end }}
-          {{ end }}
-        </div>
-      {{ else if eq .File.Dir "qiddiya/" }}
-        <div class="case-gallery">
-          <img src="{{ "media/work/sixflags.webp" | relURL }}" width="1600" height="922" alt="Six Flags Qiddiya City website" loading="lazy" decoding="async">
-          <img src="{{ "media/work/aquarabia.webp" | relURL }}" width="1600" height="922" alt="Aquarabia website" loading="lazy" decoding="async">
-        </div>
-      {{ end }}
     </div>
   </section>
 
