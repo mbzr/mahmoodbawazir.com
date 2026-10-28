@@ -19,5 +19,5 @@ links:
     url: 'https://aquarabiaqiddiyacity.com/'
 card:
   subtitle: 'Ticket booking and bilingual theme park sites · Svelte 5 · AEM'
-  alt: 'Six Flags Qiddiya City ticket selection'
+  alt: 'Six Flags Qiddiya City website'
 ---
