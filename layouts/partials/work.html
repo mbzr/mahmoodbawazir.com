@@ -12,6 +12,7 @@
         {{ $page := . }}
         {{ $card := .Params.card }}
         {{ $preview := $page.Resources.GetMatch "media/preview.mp4" }}
+        {{ $mobile := $page.Resources.GetMatch "media/preview-mobile.mp4" }}
         {{ $poster := $page.Resources.GetMatch "media/poster.webp" }}
         {{ $hover := $page.Resources.GetMatch "media/hover.png" }}
         {{ $alt := $card.alt | default .Title }}
@@ -39,7 +40,9 @@
               {{ with $preview }}
                 <video class="work-item-preview" muted loop playsinline preload="none"
                        {{ with $poster }}poster="{{ .RelPermalink }}"{{ end }}
-                       data-preview-src="{{ .RelPermalink }}" aria-hidden="true"></video>
+                       data-preview-src="{{ .RelPermalink }}"
+                       {{ with $mobile }}data-preview-mobile="{{ .RelPermalink }}"{{ end }}
+                       aria-hidden="true"></video>
               {{ end }}
             </div>
             <div class="work-item-content">
