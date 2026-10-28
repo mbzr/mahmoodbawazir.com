@@ -2,7 +2,9 @@
 <div id="case">
   <section class="case-intro" id="case-intro" data-scroll-section>
     <div class="case-container">
-      <p class="case-eyebrow"><span class="txt-up-wrap"><span class="txt-up">{{ .Params.years }}{{ with .Params.via }} · Via {{ . }}{{ end }}</span></span></p>
+      {{ if or .Params.years .Params.via }}
+        <p class="case-eyebrow"><span class="txt-up-wrap"><span class="txt-up">{{ .Params.years }}{{ with .Params.via }}{{ if $.Params.years }} · {{ end }}Via {{ . }}{{ end }}</span></span></p>
+      {{ end }}
       <h1 class="case-title">{{ .Title }}</h1>
       {{ with .Params.subtitle }}
         <p class="case-subtitle"><span class="txt-up-wrap"><span class="txt-up">{{ . }}</span></span></p>

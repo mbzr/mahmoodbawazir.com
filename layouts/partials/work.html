@@ -23,8 +23,20 @@
                   </span>
                 {{ end }}
               {{ else }}
-                <img src="{{ $card.image | relURL }}" alt="{{ $card.alt }}"
-                     width="{{ $card.width }}" height="{{ $card.height }}"
+                {{ $hover := .Resources.GetMatch "media/hover.png" }}
+                {{ $src := "" }}
+                {{ $w := $card.width }}
+                {{ $h := $card.height }}
+                {{ $alt := $card.alt | default .Title }}
+                {{ if $card.image }}
+                  {{ $src = $card.image | relURL }}
+                {{ else if $hover }}
+                  {{ $src = $hover.RelPermalink }}
+                  {{ $w = $hover.Width }}
+                  {{ $h = $hover.Height }}
+                {{ end }}
+                <img src="{{ $src }}" alt="{{ $alt }}"
+                     width="{{ $w }}" height="{{ $h }}"
                      class="work-item-img" loading="lazy" decoding="async">
               {{ end }}
             </div>

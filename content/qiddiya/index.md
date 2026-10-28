@@ -2,7 +2,7 @@
 title: 'Six Flags & Aquarabia'
 description: 'Ticket booking, cart, and bilingual English/Arabic interfaces in Svelte 5 on Adobe Experience Manager, shared by Six Flags Qiddiya City and Aquarabia.'
 project: true
-weight: 1
+weight: 2
 aliases:
   - /sixflags/
   - /aquarabia/
