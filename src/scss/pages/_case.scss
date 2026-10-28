@@ -128,31 +128,6 @@
   max-width: 34em;
 }
 
-.case-built-wrap {
-  min-width: 0;
-}
-
-.case-highlights {
-  list-style: disc;
-  margin: 1em 0 0;
-  padding-left: 1.15em;
-  max-width: 34em;
-  font-size: 1.125em;
-  line-height: 140%;
-  letter-spacing: -0.02em;
-  opacity: 0;
-  transform: translate3d(0, 16px, 0);
-
-  li {
-    display: list-item;
-    list-style: disc;
-  }
-
-  li + li {
-    margin-top: 0.55em;
-  }
-}
-
 /*
   Links
 */
@@ -244,10 +219,6 @@
     font-size: 1.125em;
   }
 
-  .case-highlights {
-    font-size: 1em;
-  }
-
   .case-nav {
     padding-block: 2.5em;
   }
@@ -257,9 +228,3 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .case-highlights {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}

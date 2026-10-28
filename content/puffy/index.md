@@ -5,12 +5,7 @@ project: true
 weight: 2
 years: '2021–2025'
 role: 'Senior Frontend Developer'
-built: "I proposed Puffy's move from a Shopify theme to a headless Shopify store on Next.js and rebuilt the store's interface in React, TypeScript and Tailwind CSS. We piloted it on the Canadian store, live in about two months, then moved the main US store across."
-highlights:
-  - "Proposed the headless move and presented it to the CEO and managers, then rebuilt the store's UI, including the cart, drawers and modals with shared state in Zustand."
-  - "Built dozens of A/B tests in Optimizely, from the homepage to checkout. Several winners became permanent on the product and checkout pages."
-  - "Built internal Next.js dashboards on Shopify and Klaviyo data, including one that lets staff filter orders and mark them complete in one place, saving hours each week."
-  - "Set up automated builds and deployments with GitHub Actions."
+built: "I proposed Puffy's move from a Shopify theme to a headless Shopify store on Next.js, starting with a pilot on the Canadian store, live in about two months, before moving the main US store. I rebuilt the store's interface in React, TypeScript and Tailwind CSS, built dozens of A/B tests in Optimizely, and built internal dashboards on Shopify and Klaviyo data that saved the team hours each week."
 stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Zustand', 'Shopify', 'GraphQL', 'Optimizely', 'GitHub Actions']
 links:
   - label: 'Puffy'

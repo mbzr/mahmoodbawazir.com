@@ -10,13 +10,7 @@ years: '2025–2026'
 via: 'Globant'
 subtitle: 'Theme park websites in Saudi Arabia'
 role: 'Senior Frontend Developer (contract)'
-built: "I built core parts of the websites for Six Flags Qiddiya City and Aquarabia, two new theme parks in Saudi Arabia, in Svelte 5 and TypeScript on Adobe Experience Manager. I worked across ticket selection, booking and the cart, in English and Arabic, with a team spread across the Middle East, Europe and Latin America."
-highlights:
-  - "Built the ticket selection component used on both parks' sites, one reusable component that handles single tickets and tickets with several options."
-  - "Built the post-purchase booking flow end to end, where signed-in visitors add extras to tickets they already bought, from the UI through to the API."
-  - "Built shared UI components for the component library used by both sites, with Arabic right-to-left support."
-  - "Made modals and tabs accessible across both sites, with focus management, ARIA attributes and full keyboard support."
-  - "Fixed critical UI and booking issues through both park openings, for around 300k monthly visitors."
+built: "I built core parts of the websites for Six Flags Qiddiya City and Aquarabia, two new theme parks in Saudi Arabia, in Svelte 5 and TypeScript on Adobe Experience Manager. I owned the post-purchase booking flow from UI to API, reworked the ticket selection component used on both sites, built shared UI components with Arabic right-to-left support, and made modals and tabs fully keyboard accessible, for around 300k monthly visitors."
 stack: ['Svelte 5', 'TypeScript', 'Adobe Experience Manager', 'Vite', 'Zod']
 links:
   - label: 'Six Flags Qiddiya City'

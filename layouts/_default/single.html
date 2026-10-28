@@ -18,16 +18,7 @@
         <div class="case-block case-block--wide">
           <span class="case-block-line-wrap"><span class="case-block-line"></span></span>
           <h2 class="case-block-title"><span class="txt-up-wrap"><span class="txt-up">What I built</span></span></h2>
-          <div class="case-built-wrap">
-            <p class="case-built">{{ .Params.built }}</p>
-            {{ with .Params.highlights }}
-              <ul class="case-highlights">
-                {{ range . }}
-                  <li>{{ . }}</li>
-                {{ end }}
-              </ul>
-            {{ end }}
-          </div>
+          <p class="case-built">{{ .Params.built }}</p>
         </div>
 
         <div class="case-block case-block--wide">
