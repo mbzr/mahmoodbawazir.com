@@ -145,14 +145,6 @@
   letter-spacing: -0.025em;
 }
 
-.case-preview {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 0.5em;
-  margin-top: 2em;
-}
-
 /*
   Prev / Next — internal project pages only
 */
@@ -225,10 +217,6 @@
   .case-built,
   .case-link {
     font-size: 1.125em;
-  }
-
-  .case-preview {
-    margin-top: 1.5em;
   }
 
   .case-nav {

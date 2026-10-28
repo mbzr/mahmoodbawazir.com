@@ -11,37 +11,32 @@
       {{ range partial "project-list.html" . }}
         {{ $page := . }}
         {{ $card := .Params.card }}
-        <div class="work-item{{ if $card.feature }} work-item--feature{{ end }}">
+        {{ $preview := $page.Resources.GetMatch "media/preview.mp4" }}
+        {{ $poster := $page.Resources.GetMatch "media/poster.webp" }}
+        {{ $hover := $page.Resources.GetMatch "media/hover.png" }}
+        {{ $alt := $card.alt | default .Title }}
+        {{ $src := "" }}
+        {{ $w := $card.width }}
+        {{ $h := $card.height }}
+        {{ if $poster }}
+          {{ $src = $poster.RelPermalink }}
+          {{ $w = $poster.Width }}
+          {{ $h = $poster.Height }}
+        {{ else if $card.image }}
+          {{ $src = $card.image | relURL }}
+        {{ else if $hover }}
+          {{ $src = $hover.RelPermalink }}
+          {{ $w = $hover.Width }}
+          {{ $h = $hover.Height }}
+        {{ end }}
+        <div class="work-item">
           <a href="{{ .RelPermalink }}" class="work-item-link">
-            <div class="work-item-image{{ if $card.images }} work-item-image--split{{ end }}">
+            <div class="work-item-image{{ if $preview }} work-item-image--preview{{ end }}">
               <div class="work-item-overlay"></div>
-              {{ if $card.images }}
-                {{ range $card.images }}
-                  <span class="work-item-pane">
-                    <img src="{{ .image | relURL }}" alt="{{ .alt }}"
-                         width="{{ .width }}" height="{{ .height }}"
-                         class="work-item-img" loading="lazy" decoding="async">
-                  </span>
-                {{ end }}
-              {{ else }}
-                {{ $hover := .Resources.GetMatch "media/hover.png" }}
-                {{ $src := "" }}
-                {{ $w := $card.width }}
-                {{ $h := $card.height }}
-                {{ $alt := $card.alt | default .Title }}
-                {{ if $card.image }}
-                  {{ $src = $card.image | relURL }}
-                {{ else if $hover }}
-                  {{ $src = $hover.RelPermalink }}
-                  {{ $w = $hover.Width }}
-                  {{ $h = $hover.Height }}
-                {{ end }}
-                <img src="{{ $src }}" alt="{{ $alt }}"
-                     width="{{ $w }}" height="{{ $h }}"
-                     class="work-item-img" loading="lazy" decoding="async">
-              {{ end }}
-              {{ with $page.Resources.GetMatch "media/preview.mp4" }}
-                {{ $poster := $page.Resources.GetMatch "media/hover.png" }}
+              <img src="{{ $src }}" alt="{{ $alt }}"
+                   width="{{ $w }}" height="{{ $h }}"
+                   class="work-item-img" loading="lazy" decoding="async">
+              {{ with $preview }}
                 <video class="work-item-preview" muted loop playsinline preload="none"
                        {{ with $poster }}poster="{{ .RelPermalink }}"{{ end }}
                        data-preview-src="{{ .RelPermalink }}" aria-hidden="true"></video>

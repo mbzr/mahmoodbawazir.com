@@ -18,15 +18,6 @@ links:
   - label: 'Aquarabia'
     url: 'https://aquarabiaqiddiyacity.com/'
 card:
-  feature: true
-  subtitle: 'Six Flags & Aquarabia · Ticket booking and bilingual theme park sites · Svelte 5 · AEM'
-  images:
-    - image: '/media/work/sixflags.webp'
-      width: 1600
-      height: 922
-      alt: 'Six Flags Qiddiya City'
-    - image: '/media/work/aquarabia.webp'
-      width: 1600
-      height: 922
-      alt: 'Aquarabia'
+  subtitle: 'Ticket booking and bilingual theme park sites · Svelte 5 · AEM'
+  alt: 'Six Flags Qiddiya City ticket selection'
 ---

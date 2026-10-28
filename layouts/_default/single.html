@@ -50,18 +50,6 @@
           </div>
         {{ end }}
       </div>
-
-      {{ with .Resources.GetMatch "media/preview.mp4" }}
-        {{ $label := printf "%s website preview" $.Title }}
-        {{ if eq $.File.Dir "qiddiya/" }}
-          {{ $label = "Screen recording of Six Flags Qiddiya City ticket selection, including the age confirmation modal" }}
-        {{ else if eq $.File.Dir "bayzat/" }}
-          {{ $label = "Screen recording of the original Bayzat website, opening the Why Bayzat menu" }}
-        {{ end }}
-        <video class="case-preview" muted loop playsinline preload="none"
-               data-case-preview data-preview-src="{{ .RelPermalink }}"
-               aria-label="{{ $label }}"></video>
-      {{ end }}
     </div>
   </section>
 

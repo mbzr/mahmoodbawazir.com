@@ -548,6 +548,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.35s ease;
@@ -604,43 +605,6 @@ body {
   display: flex;
 }
 
-.work-item--feature {
-  grid-column: 1 / -1;
-}
-
-/* Full width at the shared card ratio made this twice as tall as the cards
-   under it. A wider ratio brings it back to about their height. Phones keep
-   the taller ratio so the two logos still have room. */
-@include min-breakpoint(768) {
-  .work-item--feature .work-item-image {
-    aspect-ratio: 3.4;
-  }
-}
-
-.work-item-image--split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-/* The photo is taken out of flow so its intrinsic height cannot stretch the
-   card past the shared aspect ratio. Overflow stays on the pane so the hover
-   scale does not spill across the seam. */
-.work-item-pane {
-  position: relative;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.work-item-pane .work-item-img {
-  position: absolute;
-  inset: 0;
-}
-
-.work-item--feature .work-item-description {
-  white-space: normal;
-  max-width: 46em;
-}
-
 .work-item-link {
   color: inherit;
   text-decoration: none;
@@ -657,7 +621,10 @@ body {
 }
 
 .work-item-image img {
+  position: absolute;
+  inset: 0;
   object-fit: cover;
+  object-position: center;
   width: 100%;
   height: 100%;
   transform: scale(1);
@@ -665,8 +632,12 @@ body {
   transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.work-item-image--preview img {
+  transition: none;
+}
+
 @media (hover: hover) {
-  .work-item-link:hover .work-item-img {
+  .work-item-link:hover .work-item-image:not(.work-item-image--preview) .work-item-img {
     transform: scale(1.08);
   }
 }
