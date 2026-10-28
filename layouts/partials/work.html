@@ -9,6 +9,7 @@
 
     <div class="work-list">
       {{ range partial "project-list.html" . }}
+        {{ $page := . }}
         {{ $card := .Params.card }}
         <div class="work-item{{ if $card.feature }} work-item--feature{{ end }}">
           <a href="{{ .RelPermalink }}" class="work-item-link">
@@ -38,6 +39,12 @@
                 <img src="{{ $src }}" alt="{{ $alt }}"
                      width="{{ $w }}" height="{{ $h }}"
                      class="work-item-img" loading="lazy" decoding="async">
+              {{ end }}
+              {{ with $page.Resources.GetMatch "media/preview.mp4" }}
+                {{ $poster := $page.Resources.GetMatch "media/hover.png" }}
+                <video class="work-item-preview" muted loop playsinline preload="none"
+                       {{ with $poster }}poster="{{ .RelPermalink }}"{{ end }}
+                       data-preview-src="{{ .RelPermalink }}" aria-hidden="true"></video>
               {{ end }}
             </div>
             <div class="work-item-content">

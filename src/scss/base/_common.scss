@@ -534,11 +534,39 @@ body {
 }
 
 .work-item-overlay {
-  z-index: 1;
+  z-index: 2;
   background-color: #000000;
   pointer-events: none;
   position: absolute;
   inset: 0;
+}
+
+.work-item-preview {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.work-item-preview.is-playing {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-item-preview {
+    display: none;
+  }
+}
+
+@media not ((hover: hover) and (pointer: fine)) {
+  .work-item-preview {
+    display: none;
+  }
 }
 
 

@@ -3,6 +3,7 @@ import SmoothScroll from './scroll'
 import LazyLoader from './lazy-loader'
 import Fx from './fx'
 import Testimonials from './testimonials'
+import Previews from './previews'
 
 export default class Listeners {
   constructor() {
@@ -12,6 +13,7 @@ export default class Listeners {
 
     this.fx = new Fx()
     this.testimonials = new Testimonials()
+    this.previews = new Previews()
     this.scroll = new SmoothScroll({
       wrapper: '#page',
       onUpdate: this.onScroll,
@@ -35,6 +37,7 @@ export default class Listeners {
     this.splashEls = [...document.querySelectorAll('.work-splash')]
     this.fx.init(this.scroll)
     this.testimonials.init()
+    this.previews.init()
     this.resize()
     this.ro.on()
   }
