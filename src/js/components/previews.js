@@ -1,6 +1,6 @@
 /**
- * Work-card hover clips. The mp4 src is left off the tag until first hover
- * (or until the card is near the viewport) so nothing is downloaded on load.
+ * Preview clips on work cards and project pages. The mp4 src is left off the
+ * tag until it is needed so nothing is downloaded on load.
  */
 
 const HOVER = '(hover: hover) and (pointer: fine)'
@@ -12,16 +12,25 @@ export default class Previews {
       this.io.disconnect()
       this.io = null
     }
+    if (this.caseIo) {
+      this.caseIo.disconnect()
+      this.caseIo = null
+    }
 
     this.reduceMQ = window.matchMedia(REDUCE)
     this.hoverMQ = window.matchMedia(HOVER)
-    this.videos = [...document.querySelectorAll('[data-preview-src]')]
-    if (!this.videos.length) return
+    this.initWork()
+    this.initCase()
+  }
+
+  initWork = () => {
+    const videos = [...document.querySelectorAll('.work-item-preview')]
+    if (!videos.length) return
     if (this.reduceMQ.matches || !this.hoverMQ.matches) return
 
     this.io = new IntersectionObserver(this.onNear, { rootMargin: '200px' })
 
-    for (const video of this.videos) {
+    for (const video of videos) {
       const link = video.closest('.work-item-link')
       if (!link) continue
       link.addEventListener('mouseenter', () => this.play(video))
@@ -33,10 +42,32 @@ export default class Previews {
     }
   }
 
+  initCase = () => {
+    const video = document.querySelector('[data-case-preview]')
+    if (!video) return
+
+    if (this.reduceMQ.matches) {
+      this.load(video)
+      video.controls = true
+      return
+    }
+
+    this.caseIo = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) this.play(video)
+          else video.pause()
+        }
+      },
+      { threshold: 0.35 }
+    )
+    this.caseIo.observe(video)
+  }
+
   onNear = (entries) => {
     for (const entry of entries) {
       if (!entry.isIntersecting) continue
-      const video = entry.target.querySelector('[data-preview-src]')
+      const video = entry.target.querySelector('.work-item-preview')
       if (video) this.load(video)
     }
   }
@@ -48,7 +79,7 @@ export default class Previews {
   }
 
   play = (video) => {
-    if (this.reduceMQ.matches || !this.hoverMQ.matches) return
+    if (this.reduceMQ.matches) return
     this.load(video)
     const play = video.play()
     if (play && play.catch) play.catch(() => {})
