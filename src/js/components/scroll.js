@@ -43,6 +43,7 @@ export default class SmoothScroll {
     this.target = 0
     this.max = 0
     this.enabled = false
+    this.listening = false
     this.moving = false
 
     this.wrapper = null
@@ -86,10 +87,21 @@ export default class SmoothScroll {
       this.target = 0
       this._draw()
     }
-    if (this.enabled) return
+    this._resetNative()
     this.enabled = true
     this._listen(true)
+    this.resize()
     this._kick()
+  }
+
+  /*
+    Swallow wheel / touch / keys so the browser cannot latch onto a native
+    scroll while the entrance is still playing. on() then unlocks input.
+  */
+  lock() {
+    this.enabled = false
+    this._listen(true)
+    this._resetNative()
   }
 
   off() {
@@ -270,7 +282,20 @@ export default class SmoothScroll {
     }
   }
 
+  _resetNative() {
+    window.scrollTo(0, 0)
+    const app = document.getElementById('app')
+    if (app) app.scrollTop = 0
+  }
+
   _listen(add) {
+    if (add) {
+      if (this.listening) return
+      this.listening = true
+    } else {
+      if (!this.listening) return
+      this.listening = false
+    }
     const method = add ? 'addEventListener' : 'removeEventListener'
     const opts = { passive: false }
     document[method](this.wheelEvent, this._onWheel, opts)
@@ -294,7 +319,6 @@ export default class SmoothScroll {
   }
 
   _onKeyDown(e) {
-    if (!this.enabled) return
     if (e.ctrlKey || e.metaKey || e.altKey) return
 
     const el = e.target
@@ -317,6 +341,7 @@ export default class SmoothScroll {
     else return
 
     e.preventDefault()
+    if (!this.enabled) return
     this.scrollTo(next)
   }
 

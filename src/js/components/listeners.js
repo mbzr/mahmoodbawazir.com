@@ -18,6 +18,9 @@ export default class Listeners {
       wrapper: '#page',
       onUpdate: this.onScroll,
     })
+    /* Block native scroll from the first paint so a wheel during the
+       entrance cannot steal the page before the scroller is unlocked. */
+    this.scroll.lock()
     this.darkEls = []
     this.splashEls = []
     this.m.scroll = this.scroll
