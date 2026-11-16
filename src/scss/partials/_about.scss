@@ -450,17 +450,29 @@
   letter-spacing: -.06em;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  max-width: 100%;
-  margin-left: 0;
+  /*
+    Full bleed. The box steps out of the container's padding to span the
+    screen, and the name is about 7.5em wide, so this size makes the letters
+    themselves run edge to edge at every width.
+  */
+  box-sizing: border-box;
+  width: 100vw;
+  max-width: none;
+  margin-left: calc(50% - 50vw);
   margin-right: 0;
-  font-size: clamp(1.85rem, 8.2vw, 9rem);
+  /* Centres the letters by eye: letter-spacing trims the right of the last
+     letter, and the M carries more space on its left than the r on its
+     right, so without this the name sits right of centre and clips the r. */
+  padding-right: 0.11em;
+  font-size: 13.2vw;
   line-height: 1;
   display: flex;
   overflow: hidden;
   font-weight: 600;
   transform: translate3d(0, 40%, 0);
-  margin-bottom: -0.18em;
+  /* Takes back the empty descender space under the baseline, and no more:
+     the old -0.18em cut into the bottom of the letters. */
+  margin-bottom: -0.1em;
   margin-top: 0.5em;
   user-select: none;
   white-space: nowrap;
