@@ -46,6 +46,34 @@
 }
 
 /*
+  Media — full content width, same ratio and radius as the home page cards.
+*/
+
+/* Starts hidden like the rest of the page and is revealed by Fx.case. */
+.case-media {
+  margin-bottom: 2em;
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-media {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+.case-media-item {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.735;
+  object-fit: cover;
+  border-radius: 0.5em;
+  background-color: $brand-black;
+}
+
+/*
   splitLines wraps each line in an overflow-hidden box, which at these tight
   line heights would shave the descenders off letters like g and y. Padding the
   inner line gives the clip room to spare, and the negative margin on the

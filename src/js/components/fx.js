@@ -360,6 +360,24 @@ class Fx {
       }
     }
 
+    /* The media joins the cascade like a row: it fades up a step behind the
+       title, the same move as the stack pills. */
+    const media = M.G.class('case-media', root)[0]
+    if (media) {
+      queue(media, (tl, at = 0) => {
+        tl.add(
+          {
+            targets: media,
+            opacity: [0, 1],
+            translateY: [16, 0],
+            duration: INTRO_DURATION,
+            easing,
+          },
+          at
+        )
+      })
+    }
+
     const blocks = M.G.class('case-block', root)
     for (let i = 0; i < blocks.length; i++) {
       queue(blocks[i], this.caseRow(blocks[i]))
