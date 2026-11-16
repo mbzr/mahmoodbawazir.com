@@ -374,6 +374,11 @@
   grid-column-gap: 1.25em;
 }
 
+/* Focus arrives here from the nav's Contact link; it is not a control. */
+.footer-col-contact:focus {
+  outline: none;
+}
+
 .footer-col-title {
   font-size: 1.125em;
   line-height: 116%;

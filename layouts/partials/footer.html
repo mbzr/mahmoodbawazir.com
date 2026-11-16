@@ -13,8 +13,10 @@
     </div>
 
     <div class="footer-columns">
-      <div class="footer-col footer-col-contact">
-        <h3 class="footer-col-title"><span class="txt-up-wrap"><span class="txt-up">Contact</span></span></h3>
+      {{/* The nav's Contact link scrolls here; tabindex="-1" lets scrollToHash
+           hand it keyboard focus, so the next Tab is the email link. */}}
+      <div class="footer-col footer-col-contact" id="contact" role="group" aria-labelledby="contact-heading" tabindex="-1">
+        <h3 class="footer-col-title" id="contact-heading"><span class="txt-up-wrap"><span class="txt-up">Contact</span></span></h3>
         <ul class="footer-list">
           <li><span class="txt-up-wrap"><span class="txt-up"><a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a></span></span></li>
           {{ with .Site.Params.bookingUrl }}
