@@ -126,6 +126,27 @@ body {
 }
 
 /*
+  Section labels. The brackets are decoration, so they are drawn here rather
+  than typed into the heading. The empty alt text after the slash keeps them
+  out of the accessibility tree; the plain declaration before it is for
+  browsers without alt text on generated content, which still show them.
+*/
+
+.about-heading .txt-up::before,
+.experience-heading .txt-up::before,
+.testimonials-heading .txt-up::before {
+  content: '[';
+  content: '[' / '';
+}
+
+.about-heading .txt-up::after,
+.experience-heading .txt-up::after,
+.testimonials-heading .txt-up::after {
+  content: ']';
+  content: ']' / '';
+}
+
+/*
   Line
 */
 
