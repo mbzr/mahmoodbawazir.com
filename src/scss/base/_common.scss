@@ -659,6 +659,14 @@ body {
   white-space: nowrap;
 }
 
+/* Below this the longest card line is wider than a column, and a line that
+   cannot wrap pushes the two-column grid off the right of the screen. */
+@include breakpoint(1199) {
+  .work-item-description {
+    white-space: normal;
+  }
+}
+
 @include breakpoint(767) {
   .work {
     padding-block: 4.5em;

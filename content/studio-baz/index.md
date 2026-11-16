@@ -11,6 +11,6 @@ links:
   - label: 'Studio Baz'
     url: 'https://studiobaz.co/'
 card:
-  subtitle: 'Frontend studio for startups and design agencies'
+  subtitle: 'Frontend studio for startups and design agencies · Next.js · Stripe'
   alt: 'Studio Baz'
 ---
