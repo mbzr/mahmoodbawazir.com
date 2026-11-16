@@ -1,0 +1,26 @@
+{{/*
+  Rows come from data/experience.yaml, newest first, in file order.
+
+  tabindex="-1" lets the nav link hand keyboard focus to the section after the
+  custom scroller has moved it into view (see scrollToHash in scroll.js). The
+  list has no links of its own, so there is nothing else for focus to land on.
+*/}}
+<section class="experience" id="experience" aria-labelledby="experience-heading" tabindex="-1" data-scroll-section>
+  <div class="container">
+    <h2 class="experience-heading" id="experience-heading"><span class="txt-up-wrap"><span class="txt-up">[Experience]</span></span></h2>
+    {{/* role="list" keeps the list semantics that list-style: none drops in Safari/VoiceOver. */}}
+    <ol class="experience-list" role="list">
+      {{ range .Site.Data.experience }}
+        <li class="experience-item">
+          <span class="experience-item-line-wrap" aria-hidden="true"><span class="experience-item-line"></span></span>
+          <p class="experience-item-dates"><span class="txt-up-wrap"><span class="txt-up">{{ .dates }}</span></span></p>
+          <div class="experience-item-head">
+            <h3 class="experience-item-company"><span class="txt-up-wrap"><span class="txt-up">{{ .company }}</span></span></h3>
+            <p class="experience-item-role"><span class="txt-up-wrap"><span class="txt-up">{{ .role }}</span></span></p>
+          </div>
+          <p class="experience-item-desc"><span class="txt-up-wrap"><span class="txt-up">{{ .line }}</span></span></p>
+        </li>
+      {{ end }}
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,110 @@
+/*
+  Experience — sits on the same light page as About. Rows share the About
+  list's grid, type sizes and rule.
+*/
+.experience {
+  padding-block: 6em;
+}
+
+/* Focus arrives here from the nav link; the section is not a control. */
+.experience:focus {
+  outline: none;
+}
+
+.experience-heading {
+  font-size: 1.125em;
+  line-height: 116%;
+  letter-spacing: -0.02em;
+  margin-bottom: 3em;
+}
+
+.experience-list {
+  display: flex;
+  flex-flow: column;
+  row-gap: 3em;
+}
+
+.experience-item {
+  position: relative;
+  padding-top: 3em;
+  display: grid;
+  column-gap: 1em;
+  row-gap: 0px;
+  grid-template-columns: 25% 1fr 1fr;
+  /* Dates and the one-liner are smaller than the company name beside them. */
+  align-items: baseline;
+  width: 100%;
+}
+
+.experience-item-line-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  overflow: hidden;
+}
+
+.experience-item-line {
+  display: block;
+  height: 100%;
+  border-top: 1px solid #909090;
+  transform: translate3d(-100%, 0, 0);
+}
+
+.experience-item-dates,
+.experience-item-role,
+.experience-item-desc {
+  font-size: 1.125em;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+}
+
+.experience-item-dates,
+.experience-item-desc {
+  color: $brand-muted;
+}
+
+.experience-item-company {
+  font-size: 1.875em;
+  line-height: 116%;
+  letter-spacing: -0.02em;
+}
+
+.experience-item-role {
+  margin-top: 0.35em;
+}
+
+@include breakpoint(767) {
+  .experience {
+    padding-block: 4em;
+  }
+
+  .experience-heading {
+    margin-bottom: 2em;
+  }
+
+  .experience-list {
+    row-gap: 2em;
+  }
+
+  .experience-item {
+    grid-template-columns: 1fr;
+    row-gap: 0.35em;
+    padding-top: 2em;
+  }
+
+  .experience-item-company {
+    font-size: 1.5em;
+  }
+
+  .experience-item-role {
+    margin-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-item-line {
+    transform: none !important;
+  }
+}

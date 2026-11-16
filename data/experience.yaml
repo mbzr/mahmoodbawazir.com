@@ -1,0 +1,20 @@
+- company: Studio Baz
+  role: Founder, Senior Frontend Developer
+  dates: Jul 2026 – Present
+  line: Designed, built and launched my frontend studio's site and checkout in 3 weeks.
+- company: Globant
+  role: Senior Frontend Developer
+  dates: Oct 2025 – Jun 2026
+  line: Built core parts of the Six Flags and Aquarabia theme park websites in Saudi Arabia, in Svelte 5 and TypeScript.
+- company: Puffy
+  role: Senior Frontend Developer
+  dates: Mar 2021 – Sep 2025
+  line: Proposed the move to a headless Next.js store for this US mattress brand and rebuilt its interface in React and TypeScript.
+- company: Bayzat
+  role: Senior Frontend Developer
+  dates: Feb 2020 – Jul 2020
+  line: Led the rebuild of bayzat.com in Gatsby and React during a full rebrand.
+- company: TenTwenty
+  role: Frontend Developer
+  dates: Oct 2016 – Jan 2020
+  line: Built responsive websites for clients of a Dubai digital agency.

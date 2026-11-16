@@ -464,6 +464,20 @@ body {
   position: relative;
 }
 
+/* Four links starting from the midpoint run into Contact at these widths,
+   so they sit against the right of a wider span instead. */
+@include breakpoint(1199) {
+  /* Out of the links' way: sharing a column would drop them to a second row. */
+  .brand-link {
+    grid-column: 1 / 5;
+  }
+
+  .nav-links {
+    grid-column: 5 / 11;
+    justify-self: end;
+  }
+}
+
 @include breakpoint(1024) {
   .nav {
     font-size: 1em;

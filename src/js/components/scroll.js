@@ -139,6 +139,14 @@ export default class SmoothScroll {
     const el = document.querySelector(hash)
     if (!el) return
 
+    /*
+      preventDefault on the link also cancels the browser moving focus to the
+      target, so a keyboard user would scroll there and then Tab on from the
+      nav. Sections that opt in with tabindex="-1" take focus instead. It goes
+      before scrollTo because the focusin handler sets its own target.
+    */
+    if (el.hasAttribute('tabindex')) el.focus({ preventScroll: true })
+
     this.scrollTo(el.getBoundingClientRect().top + this.y, immediate)
   }
 

@@ -33,6 +33,7 @@ class Fx {
       if (this.m.page.is.home) {
         this.work()
         this.about()
+        this.experience()
         this.testimonials()
         this.footer()
       } else {
@@ -128,6 +129,57 @@ class Fx {
           duration,
           delay: (_, i) => i * 80,
         })
+      })
+    }
+  }
+
+  /* Same beat as an About row: the rule wipes in and the copy clips up. */
+  experience = () => {
+    const section = M.G.id('experience')
+    if (!section) return
+
+    const heading = M.G.class('experience-heading', section)[0]
+    this.play(heading, (tl) => {
+      tl.add({
+        targets: M.G.class('txt-up', heading),
+        translateY: ['101%', 0],
+        easing,
+        duration,
+      })
+    })
+
+    const items = M.G.class('experience-item', section)
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i]
+      const line = M.G.class('experience-item-line', item)
+      const desc = M.G.class('txt-up', M.G.class('experience-item-desc', item)[0])
+      const copy = [...M.G.class('txt-up', item)].filter((el) => el !== desc[0])
+
+      this.play(item, (tl) => {
+        tl.add({
+          targets: line,
+          translateX: ['-100%', 0],
+          duration: 2000,
+          easing,
+        })
+        tl.add(
+          {
+            targets: copy,
+            translateY: ['101%', 0],
+            duration: 2000,
+            easing,
+          },
+          '-=2000'
+        )
+        tl.add(
+          {
+            targets: desc,
+            translateY: ['101%', 0],
+            duration: 2000,
+            easing,
+          },
+          '-=1600'
+        )
       })
     }
   }
