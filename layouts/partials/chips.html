@@ -1,0 +1,15 @@
+{{- /*
+  Small tech chips, shared by the work cards and the Experience rows.
+
+    {{ partial "chips.html" (dict "tags" .Params.tags "max" 4) }}
+
+  Prints nothing when there are no tags. Styles are .chip-list / .chip in
+  src/scss/base/_common.scss.
+*/ -}}
+{{ with .tags }}
+  <ul class="chip-list" aria-label="Technologies">
+    {{ range first $.max . }}
+      <li class="chip">{{ . }}</li>
+    {{ end }}
+  </ul>
+{{ end }}

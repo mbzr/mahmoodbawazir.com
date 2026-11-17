@@ -1,8 +1,5 @@
-/* No bottom padding: Experience follows on the same background and brings
-   the gap as its own top padding, so its nav anchor lands with the same
-   breathing room as this one. */
 .about {
-  padding-top: 6em;
+  padding-block: 6em;
 }
 
 .about-intro {
@@ -486,7 +483,7 @@
 
 @include breakpoint(767) {
   .about {
-    padding-top: 4em;
+    padding-block: 4em;
   }
 
   .about-intro {

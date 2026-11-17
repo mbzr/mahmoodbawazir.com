@@ -50,6 +50,7 @@
               <p class="work-item-description text-style-body"><span class="txt-up-wrap"><span class="txt-up">{{ $card.subtitle }}</span></span></p>
             </div>
           </a>
+          {{ partial "chips.html" (dict "tags" .Params.tags "max" 4) }}
         </div>
       {{ end }}
     </div>

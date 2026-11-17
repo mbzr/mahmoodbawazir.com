@@ -2,23 +2,42 @@
   Rows come from data/experience.yaml, newest first, in file order.
 
   tabindex="-1" lets the nav link hand keyboard focus to the section after the
-  custom scroller has moved it into view (see scrollToHash in scroll.js). The
-  list has no links of its own, so there is nothing else for focus to land on.
+  custom scroller has moved it into view (see scrollToHash in scroll.js).
+
+  Optional per row: `label` (what the company is), `highlight` (one fact to
+  catch the eye), `tags` (the first five are shown) and `project`, the path of
+  a project page to link to.
 */}}
 <section class="experience" id="experience" aria-labelledby="experience-heading" tabindex="-1" data-scroll-section>
   <div class="container">
     <h2 class="experience-heading" id="experience-heading"><span class="txt-up-wrap"><span class="txt-up">Experience</span></span></h2>
+    <p class="experience-intro"><span class="txt-up-wrap"><span class="txt-up">9+ years building web experiences across e-commerce, SaaS, agencies and large-scale digital projects.</span></span></p>
     {{/* role="list" keeps the list semantics that list-style: none drops in Safari/VoiceOver. */}}
     <ol class="experience-list" role="list">
       {{ range .Site.Data.experience }}
         <li class="experience-item">
           <span class="experience-item-line-wrap" aria-hidden="true"><span class="experience-item-line"></span></span>
-          <p class="experience-item-dates"><span class="txt-up-wrap"><span class="txt-up">{{ .dates }}</span></span></p>
+          {{ $dates := split .dates " – " }}
+          <p class="experience-item-dates"><span class="txt-up-wrap"><span class="txt-up"><time datetime="{{ .start }}">{{ index $dates 0 }}</time> – {{ with .end }}<time datetime="{{ . }}">{{ index $dates 1 }}</time>{{ else }}{{ index $dates 1 }}{{ end }}</span></span></p>
           <div class="experience-item-head">
             <h3 class="experience-item-company"><span class="txt-up-wrap"><span class="txt-up">{{ .company }}</span></span></h3>
+            {{ with .label }}
+              <p class="experience-item-label"><span class="txt-up-wrap"><span class="txt-up">{{ . }}</span></span></p>
+            {{ end }}
             <p class="experience-item-role"><span class="txt-up-wrap"><span class="txt-up">{{ .role }}</span></span></p>
           </div>
-          <p class="experience-item-desc"><span class="txt-up-wrap"><span class="txt-up">{{ .line }}</span></span></p>
+          <div class="experience-item-body">
+            {{ with .highlight }}
+              <p class="experience-item-highlight"><span class="txt-up-wrap"><span class="txt-up">{{ . }}</span></span></p>
+            {{ end }}
+            <p class="experience-item-desc"><span class="txt-up-wrap"><span class="txt-up">{{ .line }}</span></span></p>
+            {{ partial "chips.html" (dict "tags" .tags "max" 5) }}
+            {{/* Four rows share the same visible text, so the label adds which
+                 project each one opens. */}}
+            {{ with .project }}{{ with site.GetPage . }}
+              <a href="{{ .RelPermalink }}" class="experience-item-link" aria-label="View project: {{ .Title }}"><span class="txt-up-wrap"><span class="txt-up">View project {{ partial "icon" "arrow-right" }}</span></span></a>
+            {{ end }}{{ end }}
+          </div>
         </li>
       {{ end }}
     </ol>

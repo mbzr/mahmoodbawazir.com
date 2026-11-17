@@ -32,8 +32,8 @@ class Fx {
     const run = () => {
       if (this.m.page.is.home) {
         this.work()
-        this.about()
         this.experience()
+        this.about()
         this.testimonials()
         this.footer()
       } else {
@@ -139,6 +139,7 @@ class Fx {
     if (!section) return
 
     const heading = M.G.class('experience-heading', section)[0]
+    const intro = M.G.class('experience-intro', section)[0]
     this.play(heading, (tl) => {
       tl.add({
         targets: M.G.class('txt-up', heading),
@@ -146,14 +147,27 @@ class Fx {
         easing,
         duration,
       })
+      if (intro) {
+        tl.add(
+          {
+            targets: M.G.class('txt-up', intro),
+            translateY: ['101%', 0],
+            easing,
+            duration,
+          },
+          '-=1600'
+        )
+      }
     })
 
     const items = M.G.class('experience-item', section)
     for (let i = 0; i < items.length; i++) {
       const item = items[i]
       const line = M.G.class('experience-item-line', item)
-      const desc = M.G.class('txt-up', M.G.class('experience-item-desc', item)[0])
-      const copy = [...M.G.class('txt-up', item)].filter((el) => el !== desc[0])
+      /* The right-hand column: the one-liner and its link, then the chips. */
+      const desc = [...M.G.class('txt-up', M.G.class('experience-item-body', item)[0])]
+      const tags = [...M.G.class('chip', item)]
+      const copy = [...M.G.class('txt-up', item)].filter((el) => !desc.includes(el))
 
       this.play(item, (tl) => {
         tl.add({
@@ -180,6 +194,19 @@ class Fx {
           },
           '-=1600'
         )
+        if (tags.length) {
+          tl.add(
+            {
+              targets: tags,
+              translateY: [16, 0],
+              opacity: [0, 1],
+              duration: 2000,
+              easing,
+              delay: (_, i) => i * 80,
+            },
+            '-=2000'
+          )
+        }
       })
     }
   }
@@ -248,6 +275,7 @@ class Fx {
       const overlay = M.G.class('work-item-overlay', item)[0]
       const title = M.G.class('txt-up', M.G.class('work-item-title', item)[0])
       const desc = M.G.class('txt-up', M.G.class('work-item-description', item)[0])
+      const chips = [...M.G.class('chip', item)]
       const build = (tl) => {
         tl.add({
           targets: overlay,
@@ -265,6 +293,19 @@ class Fx {
           },
           '-=1200'
         )
+        if (chips.length) {
+          tl.add(
+            {
+              targets: chips,
+              translateY: [16, 0],
+              opacity: [0, 1],
+              easing,
+              duration,
+              delay: anime.stagger(80),
+            },
+            '-=1600'
+          )
+        }
       }
       if (phone && onScreen(item)) {
         const tl = anime.timeline({ autoplay: true })
@@ -358,24 +399,6 @@ class Fx {
       } else {
         this.play(el, (tl) => build(tl, 0), offset)
       }
-    }
-
-    /* The media joins the cascade like a row: it fades up a step behind the
-       title, the same move as the stack pills. */
-    const media = M.G.class('case-media', root)[0]
-    if (media) {
-      queue(media, (tl, at = 0) => {
-        tl.add(
-          {
-            targets: media,
-            opacity: [0, 1],
-            translateY: [16, 0],
-            duration: INTRO_DURATION,
-            easing,
-          },
-          at
-        )
-      })
     }
 
     const blocks = M.G.class('case-block', root)

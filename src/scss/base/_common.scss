@@ -286,6 +286,43 @@ body {
 }
 
 /*
+  Chips — the small tech tags on the work cards and the Experience rows
+  (layouts/partials/chips.html). The About pills at three-quarter size, in
+  the muted colour.
+*/
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375em;
+  margin-top: 0.75em;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25em 0.6em;
+  border: 1px solid rgba(26, 26, 26, 0.18);
+  border-radius: 2em;
+  color: $brand-muted;
+  font-size: 0.75em;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.bg-color-dark .chip {
+  border-color: rgba(252, 252, 252, 0.25);
+  color: #a39cab;
+}
+
+/* Revealed in turn with the row or card they belong to; see Fx. */
+.work-item .chip,
+.experience-item .chip {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+}
+
+/*
   Buttons
 */
 
@@ -795,6 +832,8 @@ body {
 
   .testimonial-author--fx,
   .testimonials-controls,
+  .work-item .chip,
+  .experience-item .chip,
   .footer-availability,
   .intro-meta .availability,
   .link-block,

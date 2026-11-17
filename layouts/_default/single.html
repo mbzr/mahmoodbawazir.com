@@ -10,31 +10,6 @@
         <p class="case-subtitle"><span class="txt-up-wrap"><span class="txt-up">{{ . }}</span></span></p>
       {{ end }}
 
-      {{/* Same clip and poster as the home page card. Playback (and the
-           reduced-motion fallback) is handled in src/js/components/previews.js. */}}
-      {{ $preview := .Resources.GetMatch "media/preview.mp4" }}
-      {{ $poster := .Resources.GetMatch "media/poster.webp" }}
-      {{ $mobile := .Resources.GetMatch "media/preview-mobile.mp4" }}
-      {{ $card := .Params.card }}
-      {{ if and $preview $poster }}
-        <div class="case-media">
-          <video class="case-media-item" data-case-media muted loop playsinline preload="metadata"
-                 poster="{{ $poster.RelPermalink }}"
-                 width="{{ $poster.Width }}" height="{{ $poster.Height }}"
-                 aria-label="{{ .Params.mediaLabel | default .Title }}">
-            {{ with $mobile }}<source src="{{ .RelPermalink }}" type="video/mp4" media="(max-width: 768px)">{{ end }}
-            <source src="{{ $preview.RelPermalink }}" type="video/mp4">
-          </video>
-        </div>
-      {{ else if $card.image }}
-        <div class="case-media">
-          <img class="case-media-item" src="{{ $card.image | relURL }}"
-               alt="{{ $card.alt | default .Title }}"
-               width="{{ $card.width }}" height="{{ $card.height }}"
-               fetchpriority="high" decoding="async">
-        </div>
-      {{ end }}
-
       <div class="case-details">
         <div class="case-block">
           <span class="case-block-line-wrap"><span class="case-block-line"></span></span>

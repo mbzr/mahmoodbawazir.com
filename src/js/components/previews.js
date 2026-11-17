@@ -22,7 +22,6 @@ export default class Previews {
     this.reduceMQ = window.matchMedia(REDUCE)
     this.hoverMQ = window.matchMedia(HOVER)
     this.initWork()
-    this.initCase()
   }
 
   teardown = () => {
@@ -33,10 +32,6 @@ export default class Previews {
     if (this.viewIo) {
       this.viewIo.disconnect()
       this.viewIo = null
-    }
-    if (this.caseIo) {
-      this.caseIo.disconnect()
-      this.caseIo = null
     }
     if (this.ac) {
       this.ac.abort()
@@ -91,31 +86,6 @@ export default class Previews {
         link.addEventListener('blur', () => this.stop(video), { signal })
         this.nearIo.observe(link)
       }
-    }
-  }
-
-  /*
-    The clip at the top of a project page. The browser picks the mobile or
-    desktop <source> itself; this only starts and stops it. Reduced motion
-    (and Save-Data) keep the poster and hand the visitor the controls.
-  */
-  initCase = () => {
-    const videos = [...document.querySelectorAll('[data-case-media]')]
-    if (!videos.length) return
-
-    if (this.reduceMQ.matches || saveDataOn()) {
-      for (const video of videos) video.controls = true
-      return
-    }
-
-    this.caseIo = new IntersectionObserver(this.onCaseView, { threshold: 0.25 })
-    for (const video of videos) this.caseIo.observe(video)
-  }
-
-  onCaseView = (entries) => {
-    for (const entry of entries) {
-      if (entry.isIntersecting) entry.target.play().catch(() => {})
-      else entry.target.pause()
     }
   }
 
