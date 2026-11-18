@@ -1,18 +1,3 @@
-/**
- * SmoothScroll — virtual (transform) scrolling. No dependencies.
- *
- * Required CSS: a fixed viewport with overflow hidden; `wrapper` is in-flow
- * content taller than the window.
- *
- * Mark page chunks with [data-scroll-section] so each is its own compositor
- * layer (avoids hitching from translating one tall tree). If none are
- * marked, the wrapper itself moves.
- *
- * Parallax: data-speed (Y) and/or data-speed-x (X) on descendants.
- */
-
-const isFirefox = /firefox/i.test(navigator.userAgent)
-
 const qs = (el) => (typeof el === 'string' ? document.querySelector(el) : el)
 
 const clamp = (n, min, max) => Math.max(min, Math.min(n, max))
@@ -21,7 +6,7 @@ export default class SmoothScroll {
   constructor({
     wrapper,
     sections,
-    lerp = 0.08,
+    lerp = 0.1,
     touchMultiplier = 2,
     onUpdate,
   } = {}) {
@@ -36,7 +21,6 @@ export default class SmoothScroll {
     this.max = 0
     this.enabled = false
     this.listening = false
-    this.moving = false
     this.keyboardFocus = false
 
     this.wrapper = null
@@ -55,6 +39,7 @@ export default class SmoothScroll {
     this._onNativeScroll = this._onNativeScroll.bind(this)
     this._onTouchStart = this._onTouchStart.bind(this)
     this._onTouchMove = this._onTouchMove.bind(this)
+    this._onTouchEnd = this._onTouchEnd.bind(this)
     this._onReduceChange = this._onReduceChange.bind(this)
     this._tick = this._tick.bind(this)
 
@@ -89,10 +74,7 @@ export default class SmoothScroll {
     this._kick()
   }
 
-  /*
-    Swallow wheel / touch / keys so the browser cannot latch onto a native
-    scroll while the entrance is still playing. on() then unlocks input.
-  */
+  // Ignore input while the intro is playing.
   lock() {
     this.enabled = false
     this._listen(true)
@@ -103,7 +85,6 @@ export default class SmoothScroll {
     this.enabled = false
     this._listen(false)
     this._stop()
-    this._setMoving(false)
   }
 
   resize() {
@@ -134,21 +115,13 @@ export default class SmoothScroll {
     const el = document.querySelector(hash)
     if (!el) return
 
-    /*
-      preventDefault on the link also cancels the browser moving focus to the
-      target, so a keyboard user would scroll there and then Tab on from the
-      nav. Sections that opt in with tabindex="-1" take focus instead. It goes
-      before scrollTo because the focusin handler sets its own target.
-    */
+    // Also focus the section, or the next Tab keeps going from the nav.
     if (el.hasAttribute('tabindex')) el.focus({ preventScroll: true })
 
     this.scrollTo(el.getBoundingClientRect().top + this.y, immediate)
   }
 
-  /**
-   * Play `callback` once when scrollY passes the element's trigger line.
-   * `offset` 0.7 ≈ fire when the top sits 70% down the viewport.
-   */
+  // `offset` 0.7 fires once the top is about 70% down the screen.
   when(el, callback, offset = 0.7) {
     const node = qs(el)
     if (!node) return
@@ -189,12 +162,7 @@ export default class SmoothScroll {
     const winH = window.innerHeight
     for (const t of this.triggers) {
       const line = t.el.getBoundingClientRect().top + this.y - winH * t.offset
-      /*
-        An element close to the bottom of the page can sit past the furthest
-        scrollable position, which would leave its trigger permanently unfired
-        — and anything it reveals permanently invisible. Clamp to the end of
-        the page so reaching the bottom always fires it.
-      */
+      // Stuff near the bottom can sit past the last scroll position.
       t.limit = Math.min(line, this.max)
     }
   }
@@ -208,36 +176,34 @@ export default class SmoothScroll {
     if (!this.raf) return
     cancelAnimationFrame(this.raf)
     this.raf = null
+    this.last = 0
   }
 
-  _setMoving(on) {
-    if (this.moving === on) return
-    this.moving = on
-    if (this.wrapper) this.wrapper.classList.toggle('is-scrolling', on)
-  }
-
-  _tick() {
+  _tick(now) {
     this.raf = null
     if (!this.enabled) return
     if (this.lerp >= 1) {
       this.y = this.target
       this._draw()
-      this._setMoving(false)
       return
     }
     const delta = this.target - this.y
-    if (Math.abs(delta) >= 0.1) {
-      this._setMoving(true)
-      this.y += delta * this.lerp
+    if (Math.abs(delta) >= 0.5) {
+      const prev = this.last || now - 16.67
+      const dt = Math.min(Math.max(now - prev, 0), 48)
+      this.last = now
+      // Same ease at 60Hz and 120Hz, and a dropped frame doesn't stall the next one.
+      const step = 1 - Math.pow(1 - this.lerp, dt / 16.67)
+      this.y += delta * step
       this._draw()
       this._kick()
       return
     }
+    this.last = 0
     if (this.y !== this.target) {
       this.y = this.target
       this._draw()
     }
-    this._setMoving(false)
   }
 
   _draw() {
@@ -292,13 +258,8 @@ export default class SmoothScroll {
   }
 
   _listen(add) {
-    if (add) {
-      if (this.listening) return
-      this.listening = true
-    } else {
-      if (!this.listening) return
-      this.listening = false
-    }
+    if (this.listening === add) return
+    this.listening = add
     const method = add ? 'addEventListener' : 'removeEventListener'
     const opts = { passive: false }
     document[method](this.wheelEvent, this._onWheel, opts)
@@ -308,6 +269,8 @@ export default class SmoothScroll {
     document[method]('scroll', this._onNativeScroll, true)
     document[method]('touchstart', this._onTouchStart, opts)
     document[method]('touchmove', this._onTouchMove, opts)
+    document[method]('touchend', this._onTouchEnd)
+    document[method]('touchcancel', this._onTouchEnd)
   }
 
   _onPointerDown() {
@@ -315,20 +278,13 @@ export default class SmoothScroll {
     this.focusAimed = false
   }
 
-  /*
-    #app is overflow: hidden, but the browser can still scroll it natively:
-    focusing an element, dragging a text selection past the edge, find in
-    page. Any such offset would stack on top of the transform, so it is
-    folded back into the virtual position.
-  */
+  // Focus and find-in-page can still scroll for real. Fold that into our position.
   _onNativeScroll() {
     const app = document.getElementById('app')
     const top = (app ? app.scrollTop : 0) + window.scrollY
     if (!top) return
     this._resetNative()
     if (!this.enabled) return
-    /* Moving both keeps the content exactly where the native scroll put it.
-       Keyboard focus has already aimed the target at the focused element. */
     this.y = clamp(this.y + top, 0, this.max)
     if (!this.focusAimed) this.target = clamp(this.target + top, 0, this.max)
     this.focusAimed = false
@@ -340,12 +296,12 @@ export default class SmoothScroll {
     if (e.cancelable) e.preventDefault()
     if (!this.enabled) return
 
-    // wheelDeltaY / -deltaY is negative when scrolling down
-    let delta = e.wheelDeltaY || -e.deltaY
-    if (isFirefox && e.deltaMode === 1) delta *= 60
-    if (e.type === 'wheel') delta *= 0.556
+    let delta = e.deltaY
+    if (e.deltaMode === 1) delta *= 16
+    else if (e.deltaMode === 2) delta *= window.innerHeight
+    if (e.type === 'wheel') delta *= 0.5
 
-    this.target = clamp(this.target - delta, 0, this.max)
+    this.target = clamp(this.target + delta, 0, this.max)
     this._kick()
   }
 
@@ -379,7 +335,7 @@ export default class SmoothScroll {
     this.scrollTo(next)
   }
 
-  /* Keyboard focus only — pointer focus on tabindex="-1" sections must not scroll. */
+  // Keyboard only. Clicking a section shouldn't jump the page.
   _onFocusIn(e) {
     if (!this.enabled || !this.keyboardFocus) return
     const el = e.target
@@ -397,7 +353,11 @@ export default class SmoothScroll {
   }
 
   _onTouchStart(e) {
-    this._touchY = e.targetTouches[0].pageY
+    const y = e.targetTouches[0].pageY
+    this._touchY = y
+    this._lastY = y
+    this._lastT = performance.now()
+    this._vel = 0
     this._touchFrom = this.target
   }
 
@@ -405,12 +365,28 @@ export default class SmoothScroll {
     if (e.target instanceof Element && e.target.closest('video, audio')) return
     if (e.cancelable) e.preventDefault()
     if (!this.enabled) return
-    const dy = e.targetTouches[0].pageY - this._touchY
+    const y = e.targetTouches[0].pageY
+    const now = performance.now()
+    const dt = now - this._lastT
+    if (dt > 0) this._vel = (y - this._lastY) / dt
+    this._lastY = y
+    this._lastT = now
     this.target = clamp(
-      this._touchFrom - dy * this.touchMultiplier,
+      this._touchFrom - (y - this._touchY) * this.touchMultiplier,
       0,
       this.max,
     )
+    this._kick()
+  }
+
+  // A little coast when the finger lifts. Capped so a flick doesn't fly the page.
+  _onTouchEnd() {
+    if (!this.enabled) return
+    const cap = window.innerHeight * 0.45
+    const coast = clamp(-this._vel * 240, -cap, cap)
+    this._vel = 0
+    if (Math.abs(coast) < 12) return
+    this.target = clamp(this.target + coast, 0, this.max)
     this._kick()
   }
 }

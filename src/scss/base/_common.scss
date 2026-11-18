@@ -61,17 +61,8 @@ body {
   min-height: 100vh;
 }
 
-/*
-  Each [data-scroll-section] is its own compositor layer, so lerp scrolling
-  does not promote the entire page as one texture. will-change only while
-  the scroller is moving, then dropped so the layers can be released.
-*/
 [data-scroll-section] {
   position: relative;
-}
-
-.is-scrolling [data-scroll-section] {
-  will-change: transform;
 }
 
 .txt-up-wrap {
@@ -94,6 +85,7 @@ body {
 .case-title,
 .case-role,
 .case-built,
+.case-study-copy p,
 .intro__lead,
 .about-subheading,
 .about-item-desc,
@@ -103,7 +95,8 @@ body {
   opacity: 0;
 }
 
-.is-split {
+.is-split,
+.case-study-copy p.is-split {
   opacity: 1;
 }
 
@@ -602,11 +595,18 @@ body {
   object-position: center;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0s linear 0.3s;
 }
 
 .work-item-preview.is-playing {
   opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.3s ease,
+    visibility 0s;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -827,6 +827,8 @@ body {
   .case-title,
   .case-role,
   .case-built,
+  .case-study-copy p,
+  .case-study-copy li,
   .intro__lead,
   .about-subheading,
   .about-item-desc,
@@ -835,6 +837,10 @@ body {
   .testimonial-quote,
   .intro__lead .txt-up {
     opacity: 1 !important;
+  }
+
+  .case-study-copy li {
+    transform: none !important;
   }
 
   .about-item-line,

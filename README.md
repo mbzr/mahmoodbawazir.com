@@ -16,7 +16,6 @@ Personal portfolio of **Mahmood Bawazir**, Senior Frontend Developer.
 - **Virtual smooth scrolling** — transform-based scroller with wheel, touch, keyboard focus, and reduced-motion support
 - **XHR page transitions** — client-side navigation that crossfades content without a full reload
 - **Split-line text reveals** — lines are measured after fonts load and re-split when the viewport width changes
-- **Work previews** — still posters with on-demand hover/touch video; lighter `preview-mobile.mp4` under 768px
 
 ## Develop
 

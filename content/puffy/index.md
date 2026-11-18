@@ -25,10 +25,6 @@ case_study:
         - "Built dozens of Optimizely A/B tests across Shopify and Next.js storefronts, turning marketing ideas into live experiments on the homepage, product pages and checkout. Used Hotjar to investigate user behavior."
         - "Built internal Next.js dashboards using Shopify and Klaviyo data, including an order-management tool that let staff filter and complete orders in one place."
         - "Set up and maintained CI/CD workflows with GitHub Actions, contributed to TypeScript and ESLint conventions, and created Storybook stories."
-    - heading: Technical challenges
-      text: "The migration meant moving from a traditional Shopify theme to a headless frontend while continuing to support experimentation across both storefronts. Reusable shopping components needed shared state for carts, drawers and modals. Dynamic imports deferred below-the-fold sections to improve initial loading, while internal dashboards brought Shopify and Klaviyo data into tools for day-to-day operations."
-    - heading: Outcome
-      text: "Helped deliver a headless Next.js storefront and reusable shopping interfaces. The experimentation work supported ongoing changes across the shopping journey, while internal dashboards and the order-management tool saved the team hours each week."
 card:
   subtitle: 'Headless Shopify e-commerce'
   image: '/media/work/puffy.webp'

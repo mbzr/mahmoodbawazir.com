@@ -415,8 +415,11 @@ class Fx {
       const line = M.G.class('case-block-line', row)
       const labelEl = M.G.class('case-block-title', row)[0]
       const label = labelEl ? M.G.class('txt-up', labelEl) : []
-      const body = M.G.qs('.case-role, .case-built', row)
-      if (body) splitLines(body)
+      const bodies = [
+        ...M.G.qsa('.case-role, .case-built, .case-study-copy p', row),
+      ]
+      for (const body of bodies) splitLines(body)
+      const items = [...M.G.qsa('.case-study-copy li', row)]
       const links = M.G.qsa('.case-link .txt-up, .case-nav-link .txt-up', row)
       const tags = [...M.G.class('tag', row)]
       const copyAt = at + copyGap
@@ -433,8 +436,22 @@ class Fx {
         )
       }
 
-      if (body) {
+      for (const body of bodies) {
         tl.add(revealLines(body, { duration: 2000, stagger: 100 }), copyAt)
+      }
+
+      if (items.length) {
+        tl.add(
+          {
+            targets: items,
+            opacity: [0, 1],
+            translateY: [16, 0],
+            duration: 2000,
+            easing,
+            delay: (_, i) => i * 80,
+          },
+          copyAt,
+        )
       }
 
       if (links.length) {

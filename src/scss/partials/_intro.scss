@@ -2,14 +2,6 @@
   overflow: hidden;
   display: flex;
 
-  /*
-    The hero is one screen. The scroll cue at its foot is the only thing
-    telling you there is more below, so nothing in here may fall past the
-    fold — hence this, and the viewport-height terms on the rhythm and the
-    display type further down. The nav sits above in flow, so subtract it;
-    --nav-h is measured in Listeners. Phones stack the hero and lay it out
-    with space-between, where filling the screen only pulls the rows apart.
-  */
   @include min-breakpoint(768) {
     min-height: calc(100vh - var(--nav-h, 3.5em));
     min-height: calc(100svh - var(--nav-h, 3.5em));
@@ -56,14 +48,13 @@
 
 .intro-spacer {
   grid-column: 1 / -1;
-  height: clamp(1.5em, 6vh, 6em);
+  height: 8.5em;
 }
 
 .intro-title-wrap {
   grid-column: 1 / 9;
 }
 
-/* Sits under the tagline, sharing its column and left edge. */
 .intro-meta {
   margin-top: 1em;
 
@@ -73,17 +64,10 @@
 }
 
 .intro-availability {
-  /*
-    The footer's small text is 1.125em, which is about half the 1.875em
-    tagline. $brand-muted is #6b6375, about 5.6:1 on the #fcfcfc page, so it
-    stays AA while reading quieter than the tagline.
-  */
   font-size: 1.125em;
   color: $brand-muted;
 }
 
-/* Same heartbeat as the footer, at the hero's 8px size. The standing halo
-   stays off so the mark doesn't sit heavier than the muted line. */
 .intro-availability .availability-dot {
   width: 8px;
   height: 8px;
@@ -97,11 +81,6 @@
 
 .text-style-heading-m {
   letter-spacing: -0.04em;
-  /* 10.3em is the intended size. Below ~1268px wide the root font size stops
-     scaling with the viewport, so the name outgrew its grid column and was
-     clipped — most visibly on a phone held sideways; 13vw covers that. 22vh
-     is the same guard vertically: two lines of the name may not eat the
-     screen the rest of the hero has to share. */
   font-size: min(10.3em, 13vw, 22vh);
   font-weight: 600;
   line-height: 0.95;
@@ -194,19 +173,9 @@
   }
 }
 
-/*
-  A short desktop viewport — a window that is not full height, or a small
-  laptop — still can't fit the hero on the viewport-height terms alone: the
-  lead wraps to a fourth line just as there is least room for it. Tighten the
-  type and the rhythm here rather than let the scroll cue drop off screen.
-*/
 @media (min-width: 768px) and (max-height: 700px) {
   .text-style-heading-m {
     font-size: min(10.3em, 13vw, 18vh);
-  }
-
-  .text-style-heading-s {
-    font-size: 1.5em;
   }
 
   .intro-meta {

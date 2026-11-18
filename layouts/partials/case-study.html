@@ -1,25 +1,5 @@
-{{/* Optional technical case study rows, using the existing detail-row layout.
-     Media is user-controlled: the poster stays still until Play is selected. */}}
+{{/* Optional technical case study rows, using the existing detail-row layout. */}}
 {{ $study := .Params.case_study }}
-{{ $preview := .Resources.GetMatch "media/preview.mp4" }}
-{{ $poster := .Resources.GetMatch "media/poster.webp" }}
-{{ $mobile := .Resources.GetMatch "media/preview-mobile.mp4" }}
-{{ if and $preview $poster }}
-  <div class="case-study-media">
-    <video controls muted playsinline preload="none" poster="{{ $poster.RelPermalink }}"
-           width="{{ $poster.Width }}" height="{{ $poster.Height }}" aria-label="{{ $study.media_label }}">
-      {{ with $mobile }}<source src="{{ .RelPermalink }}" type="video/mp4" media="(max-width: 768px)">{{ end }}
-      <source src="{{ $preview.RelPermalink }}" type="video/mp4">
-      <a href="{{ $preview.RelPermalink }}">Watch the project preview</a>
-    </video>
-  </div>
-{{ else }}{{ with .Params.card.image }}
-  <div class="case-study-media">
-    <img src="{{ . | relURL }}" alt="{{ $study.media_label }}" width="{{ $.Params.card.width }}"
-         height="{{ $.Params.card.height }}" loading="lazy" decoding="async">
-  </div>
-{{ end }}
-{{ end }}
 {{ range $study.sections }}
   <div class="case-block case-block--wide">
     <span class="case-block-line-wrap" aria-hidden="true"><span class="case-block-line"></span></span>

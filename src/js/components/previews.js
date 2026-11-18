@@ -1,12 +1,3 @@
-/**
- * Preview clips on work cards. Hugo always prints the same markup; after
- * mount we decide whether to keep the video, which src to load, and whether
- * playback is hover or in-view.
- *
- * The mp4 src is left off the tag until it is needed so nothing is
- * downloaded on load.
- */
-
 const HOVER = '(hover: hover) and (pointer: fine)'
 const REDUCE = '(prefers-reduced-motion: reduce)'
 const FADE_MS = 300
@@ -25,10 +16,7 @@ export default class Previews {
   }
 
   teardown = () => {
-    if (this.nearIo) {
-      this.nearIo.disconnect()
-      this.nearIo = null
-    }
+    clearTimeout(this.queueTimer)
     if (this.viewIo) {
       this.viewIo.disconnect()
       this.viewIo = null
@@ -43,8 +31,6 @@ export default class Previews {
     const videos = [...document.querySelectorAll('.work-item-preview')]
     if (!videos.length) return
 
-    /* Same HTML from the server for every client. Reduced motion and
-       Save-Data drop the <video> here so only the still remains. */
     if (this.reduceMQ.matches || saveDataOn()) {
       for (const video of videos) {
         const pane = video.closest('.work-item-image')
@@ -60,10 +46,6 @@ export default class Previews {
 
     if (touch) {
       this.viewIo = new IntersectionObserver(this.onView, { threshold: 0.6 })
-    } else {
-      this.nearIo = new IntersectionObserver(this.onNear, {
-        rootMargin: '200px',
-      })
     }
 
     for (const video of videos) {
@@ -86,16 +68,7 @@ export default class Previews {
         link.addEventListener('focus', () => this.play(video), { signal })
         link.addEventListener('mouseleave', () => this.stop(video), { signal })
         link.addEventListener('blur', () => this.stop(video), { signal })
-        this.nearIo.observe(link)
       }
-    }
-  }
-
-  onNear = (entries) => {
-    for (const entry of entries) {
-      if (!entry.isIntersecting) continue
-      const video = entry.target.querySelector('.work-item-preview')
-      if (video) this.load(video)
     }
   }
 
@@ -103,9 +76,20 @@ export default class Previews {
     for (const entry of entries) {
       const video = entry.target.querySelector('.work-item-preview')
       if (!video) continue
-      if (entry.intersectionRatio >= 0.6) this.play(video)
-      else this.pause(video)
+      if (entry.intersectionRatio >= 0.6) this.queue(video)
+      else {
+        if (this.queued === video) this.queued = null
+        this.pause(video)
+      }
     }
+  }
+
+  queue = (video) => {
+    this.queued = video
+    clearTimeout(this.queueTimer)
+    this.queueTimer = setTimeout(() => {
+      if (this.queued === video) this.play(video)
+    }, 200)
   }
 
   src = (video) => {

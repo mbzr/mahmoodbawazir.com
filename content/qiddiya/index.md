@@ -32,10 +32,6 @@ case_study:
         - "Fixed critical UI and booking issues during both park launches."
         - "Reviewed pull requests for code quality and edge cases, and contributed to technical discussions on component design and architecture."
         - "Collaborated remotely with designers and backend engineers across the Middle East, Europe and Latin America."
-    - heading: Technical challenges
-      text: "Ticket selection needed to accommodate different ticket types within a shared component, while the booking flow had to connect new extras to existing paid tickets. That meant handling asynchronous API interactions, loading and error states, and protection against duplicate submissions. Modernizing existing components to Svelte 5 also required attention to the shared interface, with consistent keyboard behavior and focus management across both websites."
-    - heading: Outcome
-      text: "Contributed reusable UI improvements to the existing shared library and delivered the post-purchase booking flow. Documentation, component upgrades and fixes supported the team's work through both park launches."
 card:
   subtitle: 'Ticket booking and bilingual theme park sites'
   alt: 'Six Flags Qiddiya City website'
