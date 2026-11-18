@@ -3,19 +3,19 @@
   role: Senior Frontend Developer · Freelance
   dates: Jul 2026 – Present
   start: '2026-07'
-  highlight: Designed and launched in 3 weeks
-  line: Built the studio's website with Next.js and TypeScript, integrating Stripe Payment Links and a self-service customer portal so clients can manage their own billing.
-  tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Stripe']
+  highlight: From design to deployment
+  line: Built the studio's website with Next.js and TypeScript, integrating Stripe for payments and subscription management.
+  tags: ["Next.js", "TypeScript", "Tailwind CSS", "Stripe", "Vitest"]
   project: /studio-baz/
 - company: Globant
   label: Global digital consultancy
-  role: Senior Frontend Developer
+  role: Senior Frontend Developer · Contract
   dates: Oct 2025 – Jun 2026
   start: '2025-10'
   end: '2026-06'
-  highlight: 2 theme parks · ~300K monthly visitors
-  line: Developed reusable Svelte 5 components shared across Six Flags Qiddiya City and Aquarabia, including a unified ticket selection experience. Took ownership of the post-purchase booking flow from frontend to API integration, with robust loading, error and duplicate-submission handling. Standardized accessibility across interactive components, supported Arabic RTL layouts and helped stabilize both sites for launch.
-  tags: ['Svelte 5', 'TypeScript', 'AEM', 'i18n / RTL', 'Accessibility']
+  highlight: Enterprise web projects
+  line: Built shared Svelte 5 UI components for Six Flags Qiddiya City and Aquarabia and owned the post-purchase booking flow, from frontend development to API integration.
+  tags: ["Svelte 5", "TypeScript", "AEM", "i18n / RTL"]
   project: /qiddiya/
 - company: Puffy
   label: US e-commerce brand
@@ -24,18 +24,18 @@
   start: '2021-03'
   end: '2025-09'
   highlight: Shopify → headless Next.js
-  line: Proposed and helped deliver the migration from a Shopify theme to a headless Next.js storefront. Rebuilt core shopping UI, shipped dozens of A/B tests, and built internal tools that saved the team hours each week.
-  tags: ['Next.js', 'React', 'TypeScript', 'Shopify', 'Optimizely']
+  line: Rebuilt key storefront components, delivered A/B tests across the shopping journey and developed internal dashboards that saved the team hours each week.
+  tags: ["Next.js", "React", "TypeScript", "Shopify", "Optimizely"]
   project: /puffy/
 - company: Bayzat
-  label: HR and payroll platform
+  label: HR and payroll software
   role: Senior Frontend Developer
   dates: Feb 2020 – Jul 2020
   start: '2020-02'
   end: '2020-07'
   highlight: Led a complete website rebuild
-  line: Defined the frontend architecture for Bayzat's rebrand, choosing Gatsby and React and building reusable page templates and animations with GSAP and Framer Motion.
-  tags: ['Gatsby', 'React', 'GSAP', 'Framer Motion']
+  line: Chose Gatsby and React, defined the frontend architecture and built reusable UI components and animations for the company's rebrand.
+  tags: ["Gatsby", "React", "GSAP", "Framer Motion"]
   project: /bayzat/
 - company: TenTwenty
   label: Dubai-based digital agency
@@ -43,5 +43,5 @@
   dates: Oct 2016 – Jan 2020
   start: '2016-10'
   end: '2020-01'
-  line: Built responsive client websites using JavaScript, WordPress, Sass and GSAP, working across multiple agency projects.
-  tags: ['JavaScript', 'WordPress', 'Sass', 'GSAP']
+  line: Built responsive client websites using JavaScript, WordPress, Sass and GSAP.
+  tags: ["JavaScript", "WordPress", "Sass", "GSAP"]

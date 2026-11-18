@@ -1,0 +1,9 @@
+{{- /*
+  The superscript count after a section heading, e.g. "Selected work[4]".
+  Goes inside the heading's .txt-up span so it rises with the heading.
+
+  count: the number in the brackets.
+  label: what a screen reader hears instead, after a comma ("4 projects");
+         the brackets themselves are never read out.
+*/ -}}
+<sup class="heading-count" aria-hidden="true">[{{ .count }}]</sup><span class="h-sr-only">, {{ .label }}</span>

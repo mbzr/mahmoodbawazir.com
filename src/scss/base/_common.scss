@@ -132,16 +132,12 @@ body {
   browsers without alt text on generated content, which still show them.
 */
 
-.about-heading .txt-up::before,
-.experience-heading .txt-up::before,
-.testimonials-heading .txt-up::before {
+.about-heading .txt-up::before {
   content: '[';
   content: '[' / '';
 }
 
-.about-heading .txt-up::after,
-.experience-heading .txt-up::after,
-.testimonials-heading .txt-up::after {
+.about-heading .txt-up::after {
   content: ']';
   content: ']' / '';
 }
@@ -455,30 +451,31 @@ body {
   z-index: 10000;
   font-size: 1.25em;
   color: #000000;
+  background-color: #fcfcfc;
   transform: translate3d(0, -110%, 0);
   pointer-events: none;
   transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1),
     color 0.35s ease;
 }
 
-.nav.is-visible {
+.nav.is-visible,
+.nav:focus-within {
   transform: translate3d(0, 0, 0);
   pointer-events: auto;
 }
 
 .nav.is-intro {
   transition: color 0.35s ease;
+  background-color: transparent;
 }
 
 .nav.is-light {
   color: #fcfcfc;
-  /*
-    Only once the nav has turned light, over a dark section. Difference of
-    black on the cream page is white, so the same blend at the top of the
-    page hides the wordmark. Over a photograph it flips the white type to
-    whatever reads against that image.
-  */
-  mix-blend-mode: difference;
+  background-color: $brand-black;
+}
+
+.nav.is-tint {
+  background-color: $brand-tint;
 }
 
 .nav-spacer {
@@ -648,6 +645,37 @@ body {
   font-weight: 500;
 }
 
+/*
+  The reveal clip is one line box tall, and at this tight line height the
+  letters overflow it: the count's brackets lost their tops and the "p" in
+  Experience its tail. Padding the moving line gives the clip room above and
+  below; the wrapper's negative margin takes that space back out of the
+  layout, and the line still slides fully out of view because the padding
+  moves with it.
+*/
+.section-heading .txt-up {
+  padding-block: 0.15em;
+}
+
+.section-heading .txt-up-wrap {
+  margin-block: -0.15em;
+}
+
+/* The count after a heading: small, dimmed and tucked against the last
+   letter at the top of the line. Opacity rather than a grey so it works on
+   the dark sections too. */
+.heading-count {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 0.12em;
+  margin-top: 0.2em;
+  font-size: 0.3em;
+  line-height: 1;
+  letter-spacing: 0;
+  font-weight: 400;
+  opacity: 0.55;
+}
+
 .section-subheading {
   font-size: 1.125em;
   line-height: 116%;
@@ -741,6 +769,7 @@ body {
     font-size: 2.25em;
   }
 
+
   .work-list {
     grid-template-columns: 1fr;
     grid-row-gap: 2em;
@@ -762,7 +791,8 @@ body {
   transform-origin: right center;
 }
 
-.nav a:hover .line-hover-underline {
+.nav a:hover .line-hover-underline,
+.intro-cv:hover .line-hover-underline {
   transform: scaleX(1);
   transform-origin: left center;
 }
@@ -836,6 +866,7 @@ body {
   .experience-item .chip,
   .footer-availability,
   .intro-meta .availability,
+  .intro-cv,
   .link-block,
   .footer-wordmark {
     opacity: 1 !important;
@@ -866,4 +897,9 @@ body {
   [data-speed-x] {
     transform: none !important;
   }
+}
+
+/* Programmatic focus lands here from Back to projects. */
+.work:focus {
+  outline: none;
 }

@@ -19,6 +19,14 @@ const Xhr = {
         var elem = doc.getElementById('xhr').children[0].outerHTML
 
         M.G.tag('title')[0].textContent = doc.querySelector('title').textContent
+        // Keep page metadata in step with the content during client navigation.
+        const metadata = 'meta[name="description"], meta[name^="twitter:"], meta[property^="og:"], link[rel="canonical"]'
+        for (const incoming of doc.querySelectorAll(metadata)) {
+          const key = incoming.getAttribute('name') || incoming.getAttribute('property') || incoming.getAttribute('rel')
+          const attribute = incoming.hasAttribute('name') ? 'name' : incoming.hasAttribute('property') ? 'property' : 'rel'
+          const current = document.head.querySelector(`${incoming.tagName}[${attribute}="${key}"]`)
+          if (current) current.replaceWith(incoming.cloneNode(true))
+        }
         /**
          * history.pushState(state, title [, url])
          * state: The state object is a JavaScript object which is associated with the new history entry created by pushState(). Whenever the user navigates to the new state, a popstate event is fired, and the state property of the event contains a copy of the history entry's state object.

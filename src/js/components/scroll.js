@@ -334,6 +334,8 @@ export default class SmoothScroll {
       const tag = el.tagName
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return
       if (el.isContentEditable) return
+      if (el.closest('video, audio')) return
+      if (tag === 'BUTTON' && e.key === ' ') return
     }
 
     const { key, shiftKey } = e
@@ -373,6 +375,7 @@ export default class SmoothScroll {
   }
 
   _onTouchMove(e) {
+    if (e.target instanceof Element && e.target.closest('video, audio')) return
     if (e.cancelable) e.preventDefault()
     if (!this.enabled) return
     const dy = e.targetTouches[0].pageY - this._touchY

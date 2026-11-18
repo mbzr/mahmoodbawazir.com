@@ -10,8 +10,8 @@
 */}}
 <section class="experience" id="experience" aria-labelledby="experience-heading" tabindex="-1" data-scroll-section>
   <div class="container">
-    <h2 class="experience-heading" id="experience-heading"><span class="txt-up-wrap"><span class="txt-up">Experience</span></span></h2>
-    <p class="experience-intro"><span class="txt-up-wrap"><span class="txt-up">9+ years building web experiences across e-commerce, SaaS, agencies and large-scale digital projects.</span></span></p>
+    <h2 class="section-heading experience-heading" id="experience-heading"><span class="txt-up-wrap"><span class="txt-up">Experience{{ $n := len .Site.Data.experience }}{{ partial "heading-count.html" (dict "count" $n "label" (printf "%d roles" $n)) }}</span></span></h2>
+    <p class="experience-intro"><span class="txt-up-wrap"><span class="txt-up">9+ years across agencies, e-commerce and enterprise web projects.</span></span></p>
     {{/* role="list" keeps the list semantics that list-style: none drops in Safari/VoiceOver. */}}
     <ol class="experience-list" role="list">
       {{ range .Site.Data.experience }}

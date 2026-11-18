@@ -150,7 +150,7 @@ export default new (class Transitions {
         lead = M.G.class('intro__lead')[0],
         leadTxt = splitLines(lead),
         titleTxt = M.G.class('txt-up', M.G.class('intro__title')[0]),
-        availability = M.G.qs('.intro-meta .availability'),
+        availability = M.G.qsa('.intro-meta .availability, .intro-cv'),
         scrollTxt = M.G.class('link-block')[0],
         at = this.contentAt
 

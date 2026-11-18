@@ -228,3 +228,66 @@
   }
 }
 
+
+/* Technical case studies reuse the detail-row grid and typography. Long body
+   copy stays in normal flow rather than being split into animated lines. */
+.case-study-copy {
+  min-width: 0;
+  max-width: 34em;
+  font-size: 1.5em;
+  line-height: 140%;
+  letter-spacing: -0.025em;
+}
+
+.case-study-copy ul {
+  padding-left: 1em;
+}
+
+.case-study-copy li {
+  display: list-item;
+  list-style: disc;
+  padding-left: 0.25em;
+}
+
+.case-study-copy li + li {
+  margin-top: 0.65em;
+}
+
+.case-study-media {
+  grid-column: 1 / -1;
+  margin-block: 1em 3em;
+}
+
+.case-study-media video,
+.case-study-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.735;
+  object-fit: cover;
+  border-radius: 0.5em;
+}
+
+.case-back {
+  display: inline-block;
+  margin-top: 2em;
+  line-height: 140%;
+}
+
+.case-back:hover {
+  color: $brand-muted;
+}
+
+.case-link:focus-visible,
+.case-nav-link:focus-visible,
+.case-back:focus-visible,
+.case-study-media video:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+@include breakpoint(767) {
+  .case-study-copy {
+    font-size: 1.125em;
+  }
+}

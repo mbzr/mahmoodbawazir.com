@@ -1,10 +1,10 @@
-<section class="work bg-color-dark" id="work" data-scroll-section>
+<section class="work bg-color-dark" id="work" tabindex="-1" aria-labelledby="work-heading" data-scroll-section>
   {{/* Cream sheet over the work that's already on screen under the short
        hero. It plays once the page splash has dropped back. */}}
   <div class="work-splash" aria-hidden="true"></div>
   <div class="container">
     <div class="work-header">
-      <h2 class="section-heading"><span class="txt-up-wrap"><span class="txt-up">Selected work</span></span></h2>
+      <h2 class="section-heading" id="work-heading"><span class="txt-up-wrap"><span class="txt-up">Selected work{{ $n := len (partial "project-list.html" .) }}{{ partial "heading-count.html" (dict "count" $n "label" (printf "%d projects" $n)) }}</span></span></h2>
     </div>
 
     <div class="work-list">

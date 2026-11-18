@@ -37,6 +37,7 @@ export default class Listeners {
     }
     this.scroll.refresh()
     this.darkEls = [...document.querySelectorAll('.bg-color-dark')]
+    this.tintEls = [...document.querySelectorAll('.bg-color-tint')]
     this.splashEls = [...document.querySelectorAll('.work-splash')]
     this.fx.init(this.scroll)
     this.testimonials.init()
@@ -87,17 +88,17 @@ export default class Listeners {
   updateNavTheme = () => {
     if (!this.nav) return
     const probe = 24
-    const dark = this.darkEls.some((el) => {
+    const under = (el) => {
       const rect = el.getBoundingClientRect()
       return rect.top <= probe && rect.bottom > probe
-    })
+    }
+    const dark = this.darkEls.some(under)
     /* The work sheet is cream. While it still covers the probe, the section
        behind it is dark but the nav is sitting on the sheet. */
-    const covered = this.splashEls.some((el) => {
-      const rect = el.getBoundingClientRect()
-      return rect.top <= probe && rect.bottom > probe
-    })
+    const covered = this.splashEls.some(under)
     this.nav.classList.toggle('is-light', dark && !covered)
+    /* Over the tinted band the nav takes its colour, not the page's. */
+    this.nav.classList.toggle('is-tint', this.tintEls.some(under))
   }
 
   on = ({ scroll = true } = {}) => {

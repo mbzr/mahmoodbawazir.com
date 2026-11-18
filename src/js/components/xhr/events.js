@@ -36,6 +36,8 @@ class XhrEvents {
     // return
 
     if (isAnchor) {
+      if (target.hasAttribute('download')) return
+
       const href = target.href
       const url = new URL(href, win.location.href)
 

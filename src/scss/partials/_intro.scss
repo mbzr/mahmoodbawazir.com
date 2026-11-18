@@ -213,3 +213,16 @@
     margin-top: 1em;
   }
 }
+
+.intro-cv {
+  position: relative;
+  display: inline-block;
+  margin-top: 0.75em;
+  font-size: 1em;
+  opacity: 0;
+}
+
+.intro-cv:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}

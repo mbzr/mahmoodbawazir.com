@@ -1,5 +1,5 @@
 .about {
-  padding-block: 6em;
+  padding-block: 8em;
 }
 
 .about-intro {
@@ -9,7 +9,9 @@
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   width: 100%;
   grid-auto-columns: 1fr;
-  margin-bottom: 6em;
+  /* Tighter than the gap between sections, so the intro and the points
+     read as one group. */
+  margin-bottom: 3.5em;
 }
 
 .about-heading {
@@ -45,22 +47,22 @@
   margin-left: calc(25% + 0.3125em);
 }
 
+/* Four columns, each under its own short rule, so the points read as a set
+   and not as more rows of the Experience timeline below. */
 .about-list {
-  column-gap: 3em;
-  row-gap: 3em;
-  display: flex;
-  flex-flow: column;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 2.5em;
+  row-gap: 2.5em;
 }
 
 .about-item {
   position: relative;
-  padding-top: 3em;
+  padding-top: 1.5em;
   display: grid;
-  column-gap: 1em;
-  row-gap: 0px;
-  grid-template-rows: auto;
-  grid-template-columns: 25% 1fr 1fr;
-  width: 100%;
+  grid-template-columns: 1fr;
+  align-content: start;
+  row-gap: 0.75em;
 }
 
 .about-item-line-wrap {
@@ -81,9 +83,14 @@
 
 .about-item-title,
 .about-item-number {
-  font-size: 1.875em;
+  font-size: 1.5em;
   line-height: 116%;
   letter-spacing: -0.02em;
+}
+
+.about-item-number {
+  font-size: 1.125em;
+  color: $brand-muted;
 }
 
 .about-item-desc {
@@ -98,9 +105,7 @@
 }
 
 .about-stack {
-  margin-top: 3em;
-  padding-top: 3em;
-  border-top: 1px solid #909090;
+  margin-top: 3.5em;
 
   /* Same sequence as the Stack row on a project page. */
   .tag {
@@ -109,7 +114,6 @@
   }
 }
 
-
 /* Testimonials */
 .testimonials-section {
   padding-block: 6em;
@@ -117,11 +121,7 @@
 }
 
 .testimonials-heading {
-  font-size: 1.125em;
-  line-height: 116%;
-  letter-spacing: -0.035em;
-  font-weight: 500;
-  margin-bottom: 3em;
+  margin-bottom: 1em;
 }
 
 .testimonial-quote.is-split .txt-up {
@@ -227,7 +227,10 @@
   border: 1px solid #2b2b2b;
   border-radius: 0.5em;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.1s ease;
 }
 
 /* The glyphs these replaced read larger than their font size. */
@@ -350,7 +353,6 @@
   }
 }
 
-
 .footer-divider {
   position: relative;
   height: 1px;
@@ -444,7 +446,7 @@
 }
 
 .footer-wordmark {
-  letter-spacing: -.06em;
+  letter-spacing: -0.06em;
   justify-content: center;
   align-items: center;
   /*
@@ -481,6 +483,18 @@
   color: #fcfcfc;
 }
 
+/* About sits between dark Work and light Experience; the band keeps it from
+   running into Experience, which is on the same page colour. */
+.bg-color-tint {
+  background-color: $brand-tint;
+}
+
+@include breakpoint(1199) {
+  .about-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @include breakpoint(767) {
   .about {
     padding-block: 4em;
@@ -513,35 +527,20 @@
   }
 
   .about-list {
+    grid-template-columns: 1fr;
     row-gap: 2em;
   }
 
   .about-stack {
-    margin-top: 2em;
-    padding-top: 2em;
+    margin-top: 2.5em;
   }
 
   .about-item {
-    grid-template-columns: 1fr;
-    row-gap: 0.35em;
-    padding-top: 2em;
-  }
-
-  .about-item-title,
-  .about-item-number {
-    font-size: 1.5em;
-  }
-
-  .about-item-number {
-    font-size: 1.125em;
+    row-gap: 0.5em;
   }
 
   .testimonials-section {
     padding-block: 4em;
-  }
-
-  .testimonials-heading {
-    margin-bottom: 2em;
   }
 
   .testimonials-slider {

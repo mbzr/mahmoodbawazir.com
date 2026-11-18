@@ -1,10 +1,9 @@
 /*
-  Experience — sits on the same light page as About, which follows it and
-  brings the gap between the two as its own top padding. Rows share the About
-  list's grid, type sizes and rule.
+  Experience — follows About, which sits on its own tinted band, so this
+  section brings the gap between the two as its own top padding.
 */
 .experience {
-  padding-top: 6em;
+  padding-block: 6em;
 }
 
 /* Focus arrives here from the nav link; the section is not a control. */
@@ -13,10 +12,7 @@
 }
 
 .experience-heading {
-  font-size: 1.125em;
-  line-height: 116%;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.75em;
+  margin-bottom: 0.5em;
 }
 
 .experience-intro {
@@ -130,7 +126,7 @@
 
 @include breakpoint(767) {
   .experience {
-    padding-top: 4em;
+    padding-block: 3em;
   }
 
   .experience-intro {
