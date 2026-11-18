@@ -299,7 +299,7 @@ export default class SmoothScroll {
     let delta = e.deltaY
     if (e.deltaMode === 1) delta *= 16
     else if (e.deltaMode === 2) delta *= window.innerHeight
-    if (e.type === 'wheel') delta *= 0.5
+    if (e.type === 'wheel') delta *= 0.65
 
     this.target = clamp(this.target + delta, 0, this.max)
     this._kick()
