@@ -30,7 +30,7 @@
             {{ with .highlight }}
               <p class="experience-item-highlight"><span class="txt-up-wrap"><span class="txt-up">{{ . }}</span></span></p>
             {{ end }}
-            <p class="experience-item-desc"><span class="txt-up-wrap"><span class="txt-up">{{ .line }}</span></span></p>
+            <p class="experience-item-desc">{{ .line }}</p>
             {{ partial "chips.html" (dict "tags" .tags "max" 5) }}
             {{/* Four rows share the same visible text, so the label adds which
                  project each one opens. */}}

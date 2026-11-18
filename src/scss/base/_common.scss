@@ -116,6 +116,7 @@ body {
 .intro__lead,
 .about-subheading,
 .about-item-desc,
+.experience-item-desc,
 .footer-cta-heading,
 .testimonial-quote {
   opacity: 0;
@@ -769,6 +770,13 @@ body {
     font-size: 2.25em;
   }
 
+  /* At the phone heading size, 0.3em came out near 11px and too faint to
+     read; this lands near 14px. */
+  .heading-count {
+    font-size: 0.4em;
+    opacity: 0.75;
+  }
+
 
   .work-list {
     grid-template-columns: 1fr;
@@ -842,6 +850,7 @@ body {
   .intro__lead,
   .about-subheading,
   .about-item-desc,
+  .experience-item-desc,
   .footer-cta-heading,
   .testimonial-quote,
   .intro__lead .txt-up {

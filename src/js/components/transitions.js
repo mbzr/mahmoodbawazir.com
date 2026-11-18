@@ -1,7 +1,7 @@
 import anime from 'animejs/lib/anime.es.js'
 
 import M from '@utils'
-import splitLines from '@utils/el/split-lines'
+import splitLines, { revealLines } from '@utils/el/split-lines'
 
 const DURATION = 2000
 const EASING = 'easeOutExpo'
@@ -148,7 +148,6 @@ export default new (class Transitions {
     this.whenReady(() => {
       const nav = M.G.class('nav')[0],
         lead = M.G.class('intro__lead')[0],
-        leadTxt = splitLines(lead),
         titleTxt = M.G.class('txt-up', M.G.class('intro__title')[0]),
         availability = M.G.qsa('.intro-meta .availability, .intro-cv'),
         scrollTxt = M.G.class('link-block')[0],
@@ -156,15 +155,14 @@ export default new (class Transitions {
 
       this.introTL = this.reveal(nav)
 
+      splitLines(lead)
       this.introTL.add(
-        {
-          targets: leadTxt,
-          opacity: [0, 1],
-          translateY: ['100%', 0],
-          easing: EASING,
+        revealLines(lead, {
           duration: DURATION,
-          delay: (_, i) => i * 100,
-        },
+          stagger: 100,
+          from: 100,
+          opacity: true,
+        }),
         at
       )
 

@@ -45,6 +45,7 @@ export default class SmoothScroll {
     this.enabled = false
     this.listening = false
     this.moving = false
+    this.keyboardFocus = false
 
     this.wrapper = null
     this.sections = []
@@ -58,6 +59,8 @@ export default class SmoothScroll {
     this._onWheel = this._onWheel.bind(this)
     this._onKeyDown = this._onKeyDown.bind(this)
     this._onFocusIn = this._onFocusIn.bind(this)
+    this._onPointerDown = this._onPointerDown.bind(this)
+    this._onNativeScroll = this._onNativeScroll.bind(this)
     this._onTouchStart = this._onTouchStart.bind(this)
     this._onTouchMove = this._onTouchMove.bind(this)
     this._onReduceChange = this._onReduceChange.bind(this)
@@ -309,8 +312,36 @@ export default class SmoothScroll {
     document[method](this.wheelEvent, this._onWheel, opts)
     document[method]('keydown', this._onKeyDown, opts)
     document[method]('focusin', this._onFocusIn)
+    document[method]('pointerdown', this._onPointerDown, true)
+    document[method]('scroll', this._onNativeScroll, true)
     document[method]('touchstart', this._onTouchStart, opts)
     document[method]('touchmove', this._onTouchMove, opts)
+  }
+
+  _onPointerDown() {
+    this.keyboardFocus = false
+    this.focusAimed = false
+  }
+
+  /*
+    #app is overflow: hidden, but the browser can still scroll it natively:
+    focusing an element, dragging a text selection past the edge, find in
+    page. Any such offset would stack on top of the transform, so it is
+    folded back into the virtual position.
+  */
+  _onNativeScroll() {
+    const app = document.getElementById('app')
+    const top = (app ? app.scrollTop : 0) + window.scrollY
+    if (!top) return
+    this._resetNative()
+    if (!this.enabled) return
+    /* Moving both keeps the content exactly where the native scroll put it.
+       Keyboard focus has already aimed the target at the focused element. */
+    this.y = clamp(this.y + top, 0, this.max)
+    if (!this.focusAimed) this.target = clamp(this.target + top, 0, this.max)
+    this.focusAimed = false
+    this._draw()
+    this._kick()
   }
 
   _onWheel(e) {
@@ -327,6 +358,7 @@ export default class SmoothScroll {
   }
 
   _onKeyDown(e) {
+    this.keyboardFocus = true
     if (e.ctrlKey || e.metaKey || e.altKey) return
 
     const el = e.target
@@ -355,17 +387,24 @@ export default class SmoothScroll {
     this.scrollTo(next)
   }
 
+  /*
+    Only keyboard focus scrolls. A click focuses whatever it lands on, and
+    the sections that nav links target take focus too (tabindex="-1"), so
+    following mouse focus jumped the page to the top of the clicked section.
+  */
   _onFocusIn(e) {
-    if (!this.enabled) return
+    if (!this.enabled || !this.keyboardFocus) return
     const el = e.target
     if (!(el instanceof Element)) return
     if (el.closest('.nav, #ls, #page-splash')) return
+    if (el.getAttribute('tabindex') === '-1') return
 
     const rect = el.getBoundingClientRect()
     const margin = 120
     const winH = window.innerHeight
     if (rect.top >= margin && rect.bottom <= winH) return
 
+    this.focusAimed = true
     this.scrollTo(this.y + rect.top - margin)
   }
 

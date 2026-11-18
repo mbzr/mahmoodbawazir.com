@@ -1,6 +1,5 @@
 import BM from '../core/bind-manager'
 import Raf from '../core/raf'
-import Detect from '../core/detect'
 import Throttle from '../core/throttle'
 import L from '../listener/listener'
 
@@ -28,8 +27,9 @@ this.ro.off()
 class RO {
   constructor(o) {
     this.cb = o.cb
-    // Set eventType
-    this.eT = Detect.isMobile ? 'orientationchange' : 'resize'
+    // Rotating fires resize too, and phones and tablets can resize without
+    // rotating (split view, desktop mode), so resize is enough everywhere.
+    this.eT = 'resize'
     // Set a tick flag
     this.tick = false
     // Bind funcs

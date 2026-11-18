@@ -1,4 +1,5 @@
 import M from '@utils'
+import { resplitAll } from '@utils/el/split-lines'
 import SmoothScroll from './scroll'
 import LazyLoader from './lazy-loader'
 import Fx from './fx'
@@ -22,12 +23,21 @@ export default class Listeners {
        entrance cannot steal the page before the scroller is unlocked. */
     this.scroll.lock()
     this.darkEls = []
+    this.tintEls = []
     this.splashEls = []
     this.m.scroll = this.scroll
     this.ro = new M.RO({
       cb: this.resize,
       throttleDelay: 150,
     })
+    this.width = window.innerWidth
+    /* Content height also changes without a window resize: webfonts, images,
+       lines resplitting. The scroll length has to follow or the end of the
+       page becomes unreachable. */
+    this.pageRO =
+      'ResizeObserver' in window
+        ? new ResizeObserver(() => this.scroll.resize())
+        : null
   }
 
   init = () => {
@@ -42,12 +52,23 @@ export default class Listeners {
     this.fx.init(this.scroll)
     this.testimonials.init()
     this.previews.init()
+    this.width = window.innerWidth
     this.resize()
     this.ro.on()
+    if (this.pageRO && this.scroll.wrapper) {
+      this.pageRO.disconnect()
+      this.pageRO.observe(this.scroll.wrapper)
+    }
   }
 
   resize = () => {
     this.setNavHeight()
+    /* Lines break by width and the root font size follows the viewport
+       width. Height-only resizes (a phone's URL bar) leave them alone. */
+    if (window.innerWidth !== this.width) {
+      this.width = window.innerWidth
+      resplitAll()
+    }
     this.scroll.resize()
     this.testimonials.resize()
     this.updateNavTheme()

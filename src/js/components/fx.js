@@ -2,7 +2,7 @@ import anime from 'animejs/lib/anime.es'
 
 import M from '@utils'
 import Transitions from './transitions'
-import splitLines from '@utils/el/split-lines'
+import splitLines, { revealLines } from '@utils/el/split-lines'
 
 const duration = 1800
 const easing = 'easeOutExpo'
@@ -59,7 +59,7 @@ class Fx {
   about = () => {
     const heading = M.G.class('txt-up', M.G.class('about-heading')[0])
     const subheading = M.G.class('about-subheading')[0]
-    const leadTxt = splitLines(subheading)
+    splitLines(subheading)
 
     this.play(M.G.class('about-intro')[0], (tl) => {
       tl.add({
@@ -68,16 +68,7 @@ class Fx {
         easing,
         duration,
       })
-      tl.add(
-        {
-          targets: leadTxt,
-          translateY: ['101%', 0],
-          easing,
-          duration,
-          delay: (_, i) => i * 100,
-        },
-        '-=1600'
-      )
+      tl.add(revealLines(subheading, { duration, stagger: 100 }), '-=1600')
     })
 
     const items = M.G.class('about-item')
@@ -86,7 +77,8 @@ class Fx {
       const line = M.G.class('about-item-line', item)
       const number = M.G.class('txt-up', M.G.class('about-item-number', item)[0])
       const title = M.G.class('txt-up', M.G.class('about-item-title', item)[0])
-      const desc = splitLines(M.G.class('about-item-desc', item)[0])
+      const desc = M.G.class('about-item-desc', item)[0]
+      splitLines(desc)
 
       this.play(item, (tl) => {
         tl.add({
@@ -104,16 +96,7 @@ class Fx {
           },
           '-=2000'
         )
-        tl.add(
-          {
-            targets: desc,
-            translateY: ['101%', 0],
-            duration: 2000,
-            easing,
-            delay: (_, i) => i * 100,
-          },
-          '-=1600'
-        )
+        tl.add(revealLines(desc, { duration: 2000, stagger: 100 }), '-=1600')
       })
     }
 
@@ -164,10 +147,16 @@ class Fx {
     for (let i = 0; i < items.length; i++) {
       const item = items[i]
       const line = M.G.class('experience-item-line', item)
-      /* The right-hand column: the one-liner and its link, then the chips. */
-      const desc = [...M.G.class('txt-up', M.G.class('experience-item-body', item)[0])]
+      const body = M.G.class('experience-item-body', item)[0]
+      const desc = M.G.class('experience-item-desc', item)[0]
+      /* Highlight and the project link stay one clip each; the description
+         splits into lines so it matches About and the case-study copy. */
+      const bodyTxt = body ? [...M.G.class('txt-up', body)] : []
+      if (desc) splitLines(desc)
       const tags = [...M.G.class('chip', item)]
-      const copy = [...M.G.class('txt-up', item)].filter((el) => !desc.includes(el))
+      const copy = [...M.G.class('txt-up', item)].filter(
+        (el) => !el.closest('.experience-item-body')
+      )
 
       this.play(item, (tl) => {
         tl.add({
@@ -185,15 +174,20 @@ class Fx {
           },
           '-=2000'
         )
-        tl.add(
-          {
-            targets: desc,
-            translateY: ['101%', 0],
-            duration: 2000,
-            easing,
-          },
-          '-=1600'
-        )
+        if (bodyTxt.length) {
+          tl.add(
+            {
+              targets: bodyTxt,
+              translateY: ['101%', 0],
+              duration: 2000,
+              easing,
+            },
+            '-=1600'
+          )
+        }
+        if (desc) {
+          tl.add(revealLines(desc, { duration: 2000, stagger: 100 }), '-=1600')
+        }
         if (tags.length) {
           tl.add(
             {
@@ -364,14 +358,9 @@ class Fx {
     }
 
     if (title) {
+      splitLines(title)
       intro.add(
-        {
-          targets: splitLines(title),
-          translateY: ['101%', 0],
-          easing,
-          duration: INTRO_DURATION,
-          delay: (_, i) => i * 100,
-        },
+        revealLines(title, { duration: INTRO_DURATION, stagger: 100 }),
         0
       )
     }
@@ -426,7 +415,7 @@ class Fx {
     const labelEl = M.G.class('case-block-title', row)[0]
     const label = labelEl ? M.G.class('txt-up', labelEl) : []
     const body = M.G.qs('.case-role, .case-built', row)
-    const bodyLines = body ? splitLines(body) : []
+    if (body) splitLines(body)
     const links = M.G.qsa('.case-link .txt-up, .case-nav-link .txt-up', row)
     const tags = [...M.G.class('tag', row)]
     const copyAt = at + copyGap
@@ -443,17 +432,8 @@ class Fx {
       )
     }
 
-    if (bodyLines.length) {
-      tl.add(
-        {
-          targets: bodyLines,
-          translateY: ['101%', 0],
-          duration: 2000,
-          easing,
-          delay: (_, i) => i * 100,
-        },
-        copyAt
-      )
+    if (body) {
+      tl.add(revealLines(body, { duration: 2000, stagger: 100 }), copyAt)
     }
 
     if (links.length) {
@@ -492,12 +472,12 @@ class Fx {
       starts hidden and it is splitLines' .is-split class that brings it back,
       so an unsplit quote stays invisible once the slider reaches it.
     */
-    const lines = [...M.G.class('testimonial-quote')].map((quote) => {
+    const quotes = [...M.G.class('testimonial-quote')]
+    quotes.forEach((quote) => {
       quote.style.textWrap = 'unset'
-      return splitLines(quote)
+      splitLines(quote)
     })
-    const [active = [], ...queued] = lines
-    const waiting = queued.flat()
+    const [active, ...queued] = quotes
 
     const author = M.G.class('testimonial-author--fx')[0]
     const controls = M.G.class('testimonials-controls')[0]
@@ -513,28 +493,13 @@ class Fx {
         easing,
         duration,
       })
-      tl.add(
-        {
-          targets: active,
-          translateY: ['101%', 0],
-          easing,
-          duration,
-          delay: (_, i) => i * 80,
-        },
-        quoteAt
-      )
+      if (active) {
+        tl.add(revealLines(active, { duration, stagger: 80 }), quoteAt)
+      }
       /* The slides queued off to the right only need to be in place by the
          time they are asked for; the track's CSS transition moves them. */
-      if (waiting.length) {
-        tl.add(
-          {
-            targets: waiting,
-            translateY: ['101%', 0],
-            easing,
-            duration,
-          },
-          quoteAt
-        )
+      for (const quote of queued) {
+        tl.add(revealLines(quote, { duration }), quoteAt)
       }
       tl.add(
         {
@@ -611,7 +576,7 @@ class Fx {
 
   footer = () => {
     const heading = M.G.class('footer-cta-heading')[0]
-    const headingLines = splitLines(heading)
+    splitLines(heading)
     const availability = M.G.class('footer-availability')[0]
     const ctaLink = M.G.class('txt-up', M.G.class('footer-cta-link')[0])
     const divider = M.G.class('footer-divider-line')[0]
@@ -622,13 +587,7 @@ class Fx {
     this.play(
       M.G.id('footer'),
       (tl) => {
-        tl.add({
-          targets: headingLines,
-          translateY: ['101%', 0],
-          easing,
-          duration,
-          delay: (_, i) => i * 100,
-        })
+        tl.add(revealLines(heading, { duration, stagger: 100 }))
         tl.add(
           {
             targets: [availability, ctaLink].filter(Boolean),
