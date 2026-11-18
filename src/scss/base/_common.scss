@@ -452,7 +452,6 @@ body {
   z-index: 10000;
   font-size: 1.25em;
   color: #000000;
-  background-color: #fcfcfc;
   transform: translate3d(0, -110%, 0);
   pointer-events: none;
   transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1),
@@ -467,16 +466,17 @@ body {
 
 .nav.is-intro {
   transition: color 0.35s ease;
-  background-color: transparent;
 }
 
 .nav.is-light {
   color: #fcfcfc;
-  background-color: $brand-black;
-}
-
-.nav.is-tint {
-  background-color: $brand-tint;
+  /*
+    Only once the nav has turned light, over a dark section. Difference of
+    black on the cream page is white, so the same blend at the top of the
+    page hides the wordmark. Over a photograph it flips the white type to
+    whatever reads against that image.
+  */
+  mix-blend-mode: difference;
 }
 
 .nav-spacer {

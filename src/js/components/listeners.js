@@ -23,7 +23,6 @@ export default class Listeners {
        entrance cannot steal the page before the scroller is unlocked. */
     this.scroll.lock()
     this.darkEls = []
-    this.tintEls = []
     this.splashEls = []
     this.m.scroll = this.scroll
     this.ro = new M.RO({
@@ -47,7 +46,6 @@ export default class Listeners {
     }
     this.scroll.refresh()
     this.darkEls = [...document.querySelectorAll('.bg-color-dark')]
-    this.tintEls = [...document.querySelectorAll('.bg-color-tint')]
     this.splashEls = [...document.querySelectorAll('.work-splash')]
     this.fx.init(this.scroll)
     this.testimonials.init()
@@ -118,8 +116,6 @@ export default class Listeners {
        behind it is dark but the nav is sitting on the sheet. */
     const covered = this.splashEls.some(under)
     this.nav.classList.toggle('is-light', dark && !covered)
-    /* Over the tinted band the nav takes its colour, not the page's. */
-    this.nav.classList.toggle('is-tint', this.tintEls.some(under))
   }
 
   on = ({ scroll = true } = {}) => {
