@@ -13,7 +13,7 @@ this.raf.run()
 this.raf.stop()
 
 loop (elapsed) {
-    console.log(elapsed)
+    // …
 }
 */
 
@@ -37,7 +37,7 @@ class Raf {
     this.running = true
   }
 
-  stop(tab) {
+  stop(_tab) {
     // Reset running flag
     this.running = false
     // Cancel rAF

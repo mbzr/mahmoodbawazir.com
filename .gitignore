@@ -4,6 +4,10 @@ dist/
 resources/
 public
 scripts/.screenshots-raw/
+scripts/.shots.mjs
+tmp-test-*.cjs
+.claude/
+Claude outputs/
 
 # OS generated files #
 ######################

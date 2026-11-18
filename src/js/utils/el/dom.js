@@ -12,5 +12,5 @@ const body = M.Dom.body
 
 export default {
   html: document.documentElement,
-  body: document.body
+  body: document.body,
 }

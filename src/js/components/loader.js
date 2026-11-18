@@ -37,7 +37,7 @@ class Loader {
         duration,
         delay: anime.stagger(150),
       },
-      '-=2400'
+      '-=2400',
     )
 
     this.m.listeners = new Listeners()
@@ -53,7 +53,6 @@ class Loader {
   intro = () => {
     setTimeout(() => {
       this.rsTl.play()
-      /* Landing on the site, so play the full reveal. */
       Transitions.run(true)
     }, 400)
   }
@@ -67,11 +66,7 @@ class Loader {
 
   hideCb = () => {
     this.m.listeners.init()
-    /*
-      Everything but the scroller starts now. The entrance owns the first
-      screen, so scrolling only joins once it has landed — otherwise a flick
-      of the wheel pulls the page away mid-reveal.
-    */
+    /* Enable listeners now; unlock scroll after the entrance settles. */
     this.m.listeners.on({ scroll: false })
     Transitions.settled.then(() => this.m.listeners.scroll.on({ reset: true }))
     this.m.outroIsOn = true

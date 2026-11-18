@@ -33,8 +33,6 @@
 
   &__years-wrap {
     @extend .h-o-hidden;
-    // height: vw(89.08);
-    // width: vw(15.77);
     margin-top: vw(150);
   }
 
@@ -50,8 +48,6 @@
 
   &__scroll-wrap {
     @extend .h-o-hidden;
-    // height: vw(89.08);
-    // width: vw(15.77);
     margin-top: auto;
     margin-bottom: vw(60);
   }

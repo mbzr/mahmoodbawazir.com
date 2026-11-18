@@ -84,7 +84,8 @@ export default function splitLines(el) {
     const indent = el.previousElementSibling
     el._split = {
       words: el.textContent.trim().split(/\s+/),
-      indent: indent && indent.classList.contains('text-indent') ? indent : null,
+      indent:
+        indent && indent.classList.contains('text-indent') ? indent : null,
       lines: [],
       apply: null,
     }
@@ -119,7 +120,7 @@ export function resplitAll() {
  */
 export function revealLines(
   el,
-  { duration, stagger = 0, from = 101, opacity = false } = {}
+  { duration, stagger = 0, from = 101, opacity = false } = {},
 ) {
   const s = el && el._split
   const count = s ? s.lines.length : 0

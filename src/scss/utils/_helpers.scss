@@ -76,17 +76,18 @@
   }
 }
 
-
 /* The very latest clearfix needed: http://cssmojo.com/the-very-latest-clearfix-reloaded/ */
 .h-clearfix:after {
-  content: " ";
+  content: ' ';
   display: block;
-  clear: both; }
+  clear: both;
+}
 
 /* for supporting browsers, this is the standard way to clear floats in an element */
 /* Some good discussion here: https://rachelandrew.co.uk/archives/2017/01/24/the-end-of-the-clearfix-hack/ (see comments) */
 .h-clearfix {
-  display: flow-root; }
+  display: flow-root;
+}
 
 .h-inline-block {
   display: inline-block !important;
@@ -128,7 +129,8 @@
   position: absolute !important;
   height: 1px;
   width: 1px;
-  overflow: hidden; }
+  overflow: hidden;
+}
 
 /* Visually hide any element (mostly text) accessibly. 
    Support includes IE9+ */
@@ -139,12 +141,13 @@
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
-  width: 1px; }
+  width: 1px;
+}
 
-  .text-primary {
-    color: $brand-primary;
-  }
+.text-primary {
+  color: $brand-primary;
+}
 
-  .h-o-hidden {
-    overflow: hidden;
-  }
+.h-o-hidden {
+  overflow: hidden;
+}

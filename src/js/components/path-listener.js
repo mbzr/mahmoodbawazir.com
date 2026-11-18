@@ -4,11 +4,11 @@ export default new (class PathListener {
     const newPath = this.m.path.new
     const paths = {
       home: '/' === newPath,
-      case: '/' !== newPath
+      case: '/' !== newPath,
     }
 
     return {
-      is: paths
+      is: paths,
     }
   }
 })()

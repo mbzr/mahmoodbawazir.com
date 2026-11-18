@@ -2,21 +2,13 @@
  * SmoothScroll — virtual (transform) scrolling. No dependencies.
  *
  * Required CSS: a fixed viewport with overflow hidden; `wrapper` is in-flow
- * content whose height is taller than the window.
+ * content taller than the window.
  *
- * Sections: mark page chunks with [data-scroll-section]. Each one is its own
- * compositor layer, the same pattern locomotive used. Translating one tall
- * #xhr instead made the splash and lerp hitch. If none are marked, the
- * wrapper itself moves.
+ * Mark page chunks with [data-scroll-section] so each is its own compositor
+ * layer (avoids hitching from translating one tall tree). If none are
+ * marked, the wrapper itself moves.
  *
- *   const scroll = new SmoothScroll({
- *     wrapper: '#page',
- *   })
- *   scroll.refresh()
- *   scroll.on()
- *   scroll.when('#about', () => tl.play())
- *
- * Parallax: mark descendants with data-speed (Y) and/or data-speed-x (X).
+ * Parallax: data-speed (Y) and/or data-speed-x (X) on descendants.
  */
 
 const isFirefox = /firefox/i.test(navigator.userAgent)
@@ -176,7 +168,7 @@ export default class SmoothScroll {
     if (!root) return []
     const marked = [...root.querySelectorAll('[data-scroll-section]')]
     const top = marked.filter(
-      (el) => !el.parentElement.closest('[data-scroll-section]')
+      (el) => !el.parentElement.closest('[data-scroll-section]'),
     )
     return top.length ? top : [root]
   }
@@ -372,7 +364,7 @@ export default class SmoothScroll {
 
     const { key, shiftKey } = e
     const page = window.innerHeight - 40
-    let next = null
+    let next
     if (key === 'ArrowUp') next = this.target - 100
     else if (key === 'ArrowDown') next = this.target + 100
     else if (key === ' ') next = this.target + page * (shiftKey ? -1 : 1)
@@ -387,11 +379,7 @@ export default class SmoothScroll {
     this.scrollTo(next)
   }
 
-  /*
-    Only keyboard focus scrolls. A click focuses whatever it lands on, and
-    the sections that nav links target take focus too (tabindex="-1"), so
-    following mouse focus jumped the page to the top of the clicked section.
-  */
+  /* Keyboard focus only — pointer focus on tabindex="-1" sections must not scroll. */
   _onFocusIn(e) {
     if (!this.enabled || !this.keyboardFocus) return
     const el = e.target
@@ -421,7 +409,7 @@ export default class SmoothScroll {
     this.target = clamp(
       this._touchFrom - dy * this.touchMultiplier,
       0,
-      this.max
+      this.max,
     )
     this._kick()
   }

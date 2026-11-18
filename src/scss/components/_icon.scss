@@ -1,13 +1,4 @@
-/*
-  Inline icons, pulled from the sprite in icons.html by the "icon" partial.
-
-  These replaced the ↗ ↓ ↑ ← → characters the links used to carry. As text,
-  an arrow is at the mercy of whichever font answers for it: the glyphs land
-  at different sizes and baselines from the surrounding word, and the global
-  `span { display: block }` reset in _base.scss kept knocking the wrapper
-  onto a line of its own. Drawn as strokes instead, they take the link's
-  colour from currentColor and scale with its font size.
-*/
+/* Inline stroke icons from the sprite in icons.html via the "icon" partial. */
 .icon {
   display: inline-block;
   width: 1em;
@@ -30,10 +21,7 @@
   vertical-align: 0.02em;
 }
 
-/*
-  Links whose arrow pushes off in the direction it points when hovered. The
-  hover rules used to hang off the wrapper spans these icons replaced.
-*/
+/* Hover nudge in the arrow's direction. */
 .case-link .icon,
 .testimonial-author-name .icon,
 .footer-list .icon {

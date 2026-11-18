@@ -5,43 +5,25 @@ import splitLines, { revealLines } from '@utils/el/split-lines'
 
 const DURATION = 2000
 const EASING = 'easeOutExpo'
-/* The light sheet rising over the black background to become the page. */
 const SPLASH_DURATION = 1500
-/* On a cold load the content follows while the sheet is still settling. */
+/* First-load content starts while the splash is still settling. */
 const CONTENT_AT = SPLASH_DURATION - 400
-/* Gap between one piece of the hero joining the entrance and the next. */
 const STEP = 140
-/*
-  easeOutExpo covers nearly all of its distance in the first third, so the
-  entrance reads as over — and the page is handed back to the scroller — well
-  before the last tween formally ends.
-*/
+/* Unlock scroll before easeOutExpo formally ends (most motion is early). */
 const SETTLE = 700
-/* Webfonts may never report ready; the page must never stay locked. */
+/* Cap so a hung fonts.ready never leaves the page locked. */
 const SETTLE_CAP = 6000
 
 export default new (class Transitions {
-  /**
-   * `isFirstLoad` separates the two entrances. Landing on the site plays the
-   * full reveal: black, then the splash up, then the nav and content. Moving
-   * between pages leaves the background and nav alone — XhrController has
-   * already crossfaded the content — so only the content animates, and
-   * without the splash's head start.
-   */
+  /** First load: splash + content. Later navigations: content only. */
   run(isFirstLoad = false) {
     this.m = MBZ
     this.isFirstLoad = isFirstLoad
-    /* Nav, lead, and name share this beat on every screen. On a phone the
-       sheet is in front until then, and steps behind so the type is visible. */
     this.contentAt = isFirstLoad ? CONTENT_AT : 0
     this.settled = new Promise((resolve) => (this.settle = resolve))
     setTimeout(this.settle, SETTLE_CAP)
-    /* Resolves when the full-screen sheet has landed and stepped aside.
-       There is no sheet on later navigations, so those resolve immediately. */
     this.revealed = new Promise((resolve) => (this.revealSplash = resolve))
     if (!isFirstLoad) this.revealSplash()
-    /* The work sheet starts on this, just before the intro is considered
-       done, rather than after the settle hold. */
     this.opening = new Promise((resolve) => (this.openWork = resolve))
     setTimeout(this.openWork, SETTLE_CAP)
     if (!this.m.page.is.home) this.openWork()
@@ -128,7 +110,7 @@ export default new (class Transitions {
           : undefined,
         complete: land,
       },
-      0
+      0,
     )
 
     tl.add(
@@ -138,7 +120,7 @@ export default new (class Transitions {
         easing: EASING,
         duration: DURATION,
       },
-      CONTENT_AT
+      CONTENT_AT,
     )
 
     return tl
@@ -163,7 +145,7 @@ export default new (class Transitions {
           from: 100,
           opacity: true,
         }),
-        at
+        at,
       )
 
       this.introTL.add(
@@ -174,13 +156,9 @@ export default new (class Transitions {
           duration: DURATION,
           delay: (_, i) => i * 100,
         },
-        at
+        at,
       )
 
-      /*
-        The lead and the name arrive together, then the availability line and
-        the scroll cue follow a step apart.
-      */
       this.introTL.add(
         {
           targets: availability,
@@ -189,7 +167,7 @@ export default new (class Transitions {
           easing: EASING,
           duration: DURATION,
         },
-        at + STEP
+        at + STEP,
       )
 
       this.introTL.add(
@@ -200,39 +178,29 @@ export default new (class Transitions {
           easing: EASING,
           duration: DURATION,
         },
-        at + STEP * 2
+        at + STEP * 2,
       )
 
       this.introTL.play()
       this.settleAfter(at + STEP * 2)
-      /* The work sheet is part of this intro. It starts with the name, and
-         its slide is short enough to open the section as the last line lands. */
       setTimeout(this.openWork, at + STEP * 2)
     })
   }
 
-  /**
-   * Fx builds the timeline for a project page's own content but leaves it to
-   * be played here, so it always starts in step with the entrance.
-   */
+  /** Play the project-page timeline in step with the entrance. */
   caseIntro = () => {
     this.whenReady(() => {
       const at = this.contentAt
       this.introTL = this.reveal(M.G.class('nav')[0])
       this.introTL.play()
 
-      /*
-        Read the timeline when the delay fires rather than now: Fx and this
-        both wait on document.fonts, and on a cold load this runs first.
-      */
+      /* Fx also waits on fonts; read the timeline when the delay fires. */
       const start = () => {
         const content = this.m.listeners && this.m.listeners.fx.introTL
         if (content) content.play()
       }
       at ? setTimeout(start, at) : start()
 
-      /* The eyebrow and title are the first screen; the rows cascading in
-         behind them are free to keep moving once scrolling is live. */
       this.settleAfter(at)
     })
   }

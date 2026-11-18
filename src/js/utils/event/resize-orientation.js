@@ -18,7 +18,7 @@ this.ro = new M.RO({cb: this.resize, throttleDelay: 100})
 this.ro.on()
 
 resize (event) {
-    console.log(event)
+    // …
 }
 
 this.ro.off()

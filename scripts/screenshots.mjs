@@ -78,7 +78,9 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 async function settle(page) {
   try {
-    await page.waitForLoadState('networkidle', { timeout: NETWORK_IDLE_TIMEOUT })
+    await page.waitForLoadState('networkidle', {
+      timeout: NETWORK_IDLE_TIMEOUT,
+    })
   } catch {
     /* some sites keep a socket open forever; the fixed wait below is enough */
   }
@@ -87,7 +89,9 @@ async function settle(page) {
 
 async function dismissConsent(page) {
   const candidates = await page
-    .locator('button, [role="button"], a[class*="accept" i], input[type="button"]')
+    .locator(
+      'button, [role="button"], a[class*="accept" i], input[type="button"]',
+    )
     .all()
     .catch(() => [])
 
@@ -97,7 +101,11 @@ async function dismissConsent(page) {
   for (const el of candidates) {
     try {
       if (!(await el.isVisible())) continue
-      const label = ((await el.innerText()) || (await el.getAttribute('aria-label')) || '').trim()
+      const label = (
+        (await el.innerText()) ||
+        (await el.getAttribute('aria-label')) ||
+        ''
+      ).trim()
       if (label && label.length <= 40) visible.push({ el, label })
     } catch {
       /* element detached while we looked at it */
@@ -143,7 +151,10 @@ async function dismissModals(page) {
 
   for (let pass = 0; pass < 3; pass++) {
     let clicked = false
-    const buttons = await page.locator(selector).all().catch(() => [])
+    const buttons = await page
+      .locator(selector)
+      .all()
+      .catch(() => [])
 
     for (const el of buttons) {
       try {
@@ -182,7 +193,8 @@ async function hideOverlays(page) {
       for (const el of document.querySelectorAll('body *')) {
         const style = getComputedStyle(el)
         if (style.position !== 'fixed' || style.display === 'none') continue
-        if (style.visibility === 'hidden' || parseFloat(style.opacity) === 0) continue
+        if (style.visibility === 'hidden' || parseFloat(style.opacity) === 0)
+          continue
 
         const r = el.getBoundingClientRect()
         if (r.width < 1 || r.height < 1) continue
@@ -196,7 +208,7 @@ async function hideOverlays(page) {
 
         el.style.setProperty('display', 'none', 'important')
         hidden.push(
-          `${el.tagName.toLowerCase()}${el.id ? '#' + el.id : ''} ${Math.round(coverage * 100)}%`
+          `${el.tagName.toLowerCase()}${el.id ? '#' + el.id : ''} ${Math.round(coverage * 100)}%`,
         )
       }
 
@@ -247,7 +259,10 @@ async function capture(browser, { url, dir, name }) {
     const page = await context.newPage()
 
     try {
-      const res = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45_000 })
+      const res = await page.goto(url, {
+        waitUntil: 'domcontentloaded',
+        timeout: 45_000,
+      })
       const status = res ? res.status() : 0
       if (status >= 400) throw new Error(`HTTP ${status}`)
 
@@ -273,7 +288,11 @@ async function capture(browser, { url, dir, name }) {
       })
       console.log(`  ok    ${name}-${variant}  ${info.width}x${info.height}`)
     } catch (err) {
-      results.skipped.push({ name: `${name}-${variant}`, url, reason: err.message })
+      results.skipped.push({
+        name: `${name}-${variant}`,
+        url,
+        reason: err.message,
+      })
       console.log(`  SKIP  ${name}-${variant}  ${err.message}`)
     } finally {
       await context.close()
@@ -308,10 +327,15 @@ async function followLink(browser, from, pattern) {
     const hrefs = await page.$$eval('a[href]', (as) =>
       as
         .filter((a) => a.offsetParent !== null || a.getClientRects().length)
-        .map((a) => ({ href: a.href, text: (a.innerText || a.getAttribute('aria-label') || '').trim() }))
+        .map((a) => ({
+          href: a.href,
+          text: (a.innerText || a.getAttribute('aria-label') || '').trim(),
+        })),
     )
 
-    const hit = hrefs.find((a) => pattern.test(a.text)) || hrefs.find((a) => pattern.test(a.href))
+    const hit =
+      hrefs.find((a) => pattern.test(a.text)) ||
+      hrefs.find((a) => pattern.test(a.href))
     if (!hit) throw new Error(`no link matching ${pattern}`)
     return hit.href
   })
@@ -331,7 +355,10 @@ async function resolveArabic(browser, base) {
       return page
         .evaluate(() => {
           const html = document.documentElement
-          return (html.lang || '').toLowerCase().startsWith('ar') || html.dir === 'rtl'
+          return (
+            (html.lang || '').toLowerCase().startsWith('ar') ||
+            html.dir === 'rtl'
+          )
         })
         .catch(() => false)
     })
@@ -345,9 +372,11 @@ async function resolveArabic(browser, base) {
     await dismissConsent(page)
 
     const hrefs = await page.$$eval('a[href]', (as) =>
-      as.map((a) => ({ href: a.href, text: (a.innerText || '').trim() }))
+      as.map((a) => ({ href: a.href, text: (a.innerText || '').trim() })),
     )
-    const hit = hrefs.find((a) => ARABIC_SWITCH.test(a.text) || /\/ar(\/|$|\?)/.test(a.href))
+    const hit = hrefs.find(
+      (a) => ARABIC_SWITCH.test(a.text) || /\/ar(\/|$|\?)/.test(a.href),
+    )
     if (!hit) throw new Error('no Arabic version found')
     return hit.href
   })
@@ -373,7 +402,9 @@ async function resolveWayback(browser, site, stamps) {
       if (!res || res.status() >= 400) return 0
       // Replays are slow and often JS-rendered, so give them room.
       await settle(page)
-      return page.evaluate(() => document.body.innerText.trim().length).catch(() => 0)
+      return page
+        .evaluate(() => document.body.innerText.trim().length)
+        .catch(() => 0)
     })
 
     if (length > 400) return url
@@ -472,7 +503,9 @@ async function deriveBayzatCard() {
       file: path.relative(ROOT, out),
       size: `${info.width}x${info.height}`,
     })
-    console.log(`  ok    bayzat-2020-home-card  ${info.width}x${info.height}  (cropped from ${path.relative(ROOT, src)})`)
+    console.log(
+      `  ok    bayzat-2020-home-card  ${info.width}x${info.height}  (cropped from ${path.relative(ROOT, src)})`,
+    )
   } catch (err) {
     results.skipped.push({ name: 'bayzat-2020-home-card', reason: err.message })
     console.log(`  SKIP  bayzat-2020-home-card  ${err.message}`)
@@ -481,7 +514,8 @@ async function deriveBayzatCard() {
 
 async function main() {
   const filter = process.argv.slice(2).filter((a) => !a.startsWith('-'))
-  const wants = (name) => filter.length === 0 || filter.some((f) => name.includes(f))
+  const wants = (name) =>
+    filter.length === 0 || filter.some((f) => name.includes(f))
 
   const browser = await launchBrowser()
 
@@ -508,21 +542,34 @@ async function main() {
         name: 'sixflags-tickets',
         url: () => followLink(browser, SIXFLAGS, /\/tickets-passes\/?$/i),
       },
-      { dir: 'qiddiya', name: 'sixflags-home-ar', url: () => resolveArabic(browser, SIXFLAGS) },
+      {
+        dir: 'qiddiya',
+        name: 'sixflags-home-ar',
+        url: () => resolveArabic(browser, SIXFLAGS),
+      },
       { dir: 'qiddiya', name: 'aquarabia-home', url: () => AQUARABIA },
-      { dir: 'qiddiya', name: 'aquarabia-home-ar', url: () => resolveArabic(browser, AQUARABIA) },
+      {
+        dir: 'qiddiya',
+        name: 'aquarabia-home-ar',
+        url: () => resolveArabic(browser, AQUARABIA),
+      },
 
       { dir: 'puffy', name: 'puffy-home', url: () => PUFFY },
       {
         dir: 'puffy',
         name: 'puffy-product',
-        url: () => followLink(browser, PUFFY, /\/products\/[a-z0-9-]*mattress/i),
+        url: () =>
+          followLink(browser, PUFFY, /\/products\/[a-z0-9-]*mattress/i),
       },
       {
         dir: 'puffy',
         name: 'puffy-2024-home',
         url: () =>
-          resolveWayback(browser, 'https://puffy.com/', ['20240601', '20240101', '20231201']),
+          resolveWayback(browser, 'https://puffy.com/', [
+            '20240601',
+            '20240101',
+            '20231201',
+          ]),
       },
 
       /* No Bayzat target: the repo already carries full-page captures of the
@@ -550,10 +597,16 @@ async function main() {
   }
 
   await mkdir(RAW_DIR, { recursive: true })
-  await writeFile(path.join(RAW_DIR, 'report.json'), JSON.stringify(results, null, 2))
+  await writeFile(
+    path.join(RAW_DIR, 'report.json'),
+    JSON.stringify(results, null, 2),
+  )
 
-  console.log(`\n${results.captured.length} captured, ${results.skipped.length} skipped`)
-  for (const s of results.skipped) console.log(`  skipped ${s.name}: ${s.reason}`)
+  console.log(
+    `\n${results.captured.length} captured, ${results.skipped.length} skipped`,
+  )
+  for (const s of results.skipped)
+    console.log(`  skipped ${s.name}: ${s.reason}`)
 }
 
 main().catch((err) => {

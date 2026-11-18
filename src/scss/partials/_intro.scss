@@ -22,7 +22,7 @@
   }
 
   &__content {
-    @include min-breakpoint(500){
+    @include min-breakpoint(500) {
       padding: 0 vw(98);
     }
   }
@@ -96,7 +96,7 @@
 }
 
 .text-style-heading-m {
-  letter-spacing: -.04em;
+  letter-spacing: -0.04em;
   /* 10.3em is the intended size. Below ~1268px wide the root font size stops
      scaling with the viewport, so the name outgrew its grid column and was
      clipped — most visibly on a phone held sideways; 13vw covers that. 22vh
@@ -104,13 +104,13 @@
      screen the rest of the hero has to share. */
   font-size: min(10.3em, 13vw, 22vh);
   font-weight: 600;
-  line-height: .95;
+  line-height: 0.95;
 }
 
 .text-style-heading-s {
   font-size: 1.875em;
   line-height: 116%;
-  letter-spacing: -.02em;
+  letter-spacing: -0.02em;
 }
 
 .intro__lead .txt-up {
@@ -121,7 +121,7 @@
 .text-style-body {
   font-size: 1.125em;
   line-height: 116%;
-  letter-spacing: -.02em;
+  letter-spacing: -0.02em;
 }
 
 .link-block {

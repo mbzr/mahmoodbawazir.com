@@ -1,17 +1,17 @@
 export default {
   get w() {
-      return innerWidth
+    return window.innerWidth
   },
   get h() {
-      return innerHeight
+    return window.innerHeight
   },
   get path() {
-      return location.pathname
+    return window.location.pathname
   },
   get hostname() {
-      return location.hostname
+    return window.location.hostname
   },
   get href() {
-      return location.href
-  }
+    return window.location.href
+  },
 }

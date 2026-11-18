@@ -61,7 +61,9 @@ export default class Previews {
     if (touch) {
       this.viewIo = new IntersectionObserver(this.onView, { threshold: 0.6 })
     } else {
-      this.nearIo = new IntersectionObserver(this.onNear, { rootMargin: '200px' })
+      this.nearIo = new IntersectionObserver(this.onNear, {
+        rootMargin: '200px',
+      })
     }
 
     for (const video of videos) {
@@ -74,7 +76,7 @@ export default class Previews {
         () => {
           video.classList.add('is-playing')
         },
-        { signal }
+        { signal },
       )
 
       if (touch) {
@@ -145,7 +147,7 @@ export default class Previews {
       video.pause()
       try {
         video.currentTime = 0
-      } catch (err) {
+      } catch {
         /* currentTime throws if the media is not ready */
       }
       video._fadeTimer = 0

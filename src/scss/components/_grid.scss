@@ -20,7 +20,7 @@
     justify-content: center;
   }
 
-  @include breakpoint(767){
+  @include breakpoint(767) {
     display: block;
   }
 }

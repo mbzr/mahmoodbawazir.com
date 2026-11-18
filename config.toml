@@ -17,7 +17,5 @@ disableKinds = ["RSS", "taxonomy"]
   linkedin = "https://www.linkedin.com/in/mbzr"
   github = "https://github.com/mbzr"
   cv = "/media/pdf/Mahmood_Bawazir_CV.pdf"
-  # TODO: paste your free Cal.com link here to show the "Book a 15-min call"
-  # button in the hero and footer. Leave empty to hide the button entirely.
   bookingUrl = "https://cal.com/mahmood-bawazir/intro-call"
   ThemeColor = "#ffffff"

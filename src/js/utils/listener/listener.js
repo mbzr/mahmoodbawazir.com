@@ -41,7 +41,7 @@ this.listen('r')
 
 export default function (el, a, e, cb) {
   const d = document
-  var el = Select.el(el)
+  el = Select.el(el)
   const elL = el.length
   let type = e
   const w = 'wheel'

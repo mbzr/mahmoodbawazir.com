@@ -40,5 +40,5 @@ export default {
 
   qsa: function (el, p) {
     return this.p(p).querySelectorAll(el)
-  }
+  },
 }

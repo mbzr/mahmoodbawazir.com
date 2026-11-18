@@ -1,12 +1,5 @@
 @charset "UTF-8";
 
-/*
-  The "Please turn your device." overlay used to cover the whole screen in
-  landscape on phones and small tablets. It has been removed: the site works
-  in both orientations, and short viewports (sideways phones, short laptop
-  screens) should not be locked out.
-*/
-
 body {
   &.old-browser {
     .update-browser {
@@ -80,18 +73,6 @@ body {
 .is-scrolling [data-scroll-section] {
   will-change: transform;
 }
-
-// #_p {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   z-index: 9998;
-//   height: 100%;
-//   -webkit-transform: translateZ(0);
-//   transform: translateZ(0);
-//   pointer-events: none;
-// }
 
 .txt-up-wrap {
   display: block;
@@ -173,7 +154,8 @@ body {
   &::after {
     opacity: 1;
     transform: translate3d(102%, 0, 0);
-    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1),
+    transition:
+      transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1),
       -webkit-transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 
@@ -181,7 +163,8 @@ body {
     &::before {
       opacity: 1;
       transform: translateZ(0);
-      transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1),
+      transition:
+        transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1),
         -webkit-transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
@@ -335,7 +318,10 @@ body {
   letter-spacing: -0.02em;
   text-decoration: none;
   white-space: nowrap;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .btn--solid {
@@ -438,7 +424,6 @@ body {
 }
 
 .section-header {
-  // margin-bottom: vw(115);
   &__content {
     padding-top: vw(60);
   }
@@ -454,7 +439,8 @@ body {
   color: #000000;
   transform: translate3d(0, -110%, 0);
   pointer-events: none;
-  transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1),
+  transition:
+    transform 0.7s cubic-bezier(0.19, 1, 0.22, 1),
     color 0.35s ease;
 }
 
@@ -567,7 +553,6 @@ body {
   }
 }
 
-
 .work {
   position: relative;
   padding-block: 8.5em;
@@ -576,17 +561,13 @@ body {
   overflow: hidden;
 }
 
-/* Covers the whole section and later slides up, staying in the page.
-   Opacity stays 0 until the opening sheet has landed, so a phone doesn't
-   show a cream block under a black hero before that sheet rises. */
+/* One-viewport cream sheet; opacity stays 0 until the opening splash lands. */
 .work-splash {
   position: absolute;
   z-index: 5;
   top: 0;
   left: 0;
   right: 0;
-  /* One screen, not the whole work section — translating a 4000px sheet
-     was what made the opening feel like it was dragging. */
   height: 100vh;
   height: 100dvh;
   background: #fcfcfc;
@@ -634,11 +615,10 @@ body {
   }
 }
 
-
 .section-heading {
   font-size: 3.875em;
   line-height: 104%;
-  letter-spacing: -.045em;
+  letter-spacing: -0.045em;
   margin-left: -0.1em;
   margin-right: -0.1em;
   padding-left: 0.1em;
@@ -680,10 +660,9 @@ body {
 .section-subheading {
   font-size: 1.125em;
   line-height: 116%;
-  letter-spacing: -.035em;
+  letter-spacing: -0.035em;
   font-weight: 500;
 }
-
 
 .work-list {
   grid-column-gap: 1.25em;
@@ -709,7 +688,7 @@ body {
 
 .work-item-image {
   aspect-ratio: 1.735;
-  border-radius: .5em;
+  border-radius: 0.5em;
   overflow: hidden;
   position: relative;
   margin-bottom: 1em;
@@ -732,7 +711,9 @@ body {
 }
 
 @media (hover: hover) {
-  .work-item-link:hover .work-item-image:not(.work-item-image--preview) .work-item-img {
+  .work-item-link:hover
+    .work-item-image:not(.work-item-image--preview)
+    .work-item-img {
     transform: scale(1.08);
   }
 }
@@ -776,7 +757,6 @@ body {
     font-size: 0.4em;
     opacity: 0.75;
   }
-
 
   .work-list {
     grid-template-columns: 1fr;

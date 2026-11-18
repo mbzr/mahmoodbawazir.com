@@ -6,18 +6,11 @@ import splitLines, { revealLines } from '@utils/el/split-lines'
 
 const duration = 1800
 const easing = 'easeOutExpo'
-/* Matches the homepage hero so both entrances move at the same speed. */
+/* Shared with the homepage hero entrance. */
 const INTRO_DURATION = 2000
-/* Gap between one project-page row joining the entrance and the next. The
-   homepage hero steps by the same amount, so both entrances share a pulse. */
+/* Stagger between project-page rows; matches the homepage hero pulse. */
 const ROW_STEP = 140
-/*
-  Revealed on its own, a row reads as the rule wiping in with the copy
-  following a moment behind. Rows that arrive as part of the entrance skip
-  that gap and move on a single beat instead: holding the copy back left a
-  hole in the middle of the entrance while the labels had already landed,
-  which is what put the whole thing out of rhythm.
-*/
+/* Skip the copy lag when a row joins the entrance so the beat stays even. */
 const COPY_GAP = 400
 
 class Fx {
@@ -75,7 +68,10 @@ class Fx {
     for (let i = 0; i < items.length; i++) {
       const item = items[i]
       const line = M.G.class('about-item-line', item)
-      const number = M.G.class('txt-up', M.G.class('about-item-number', item)[0])
+      const number = M.G.class(
+        'txt-up',
+        M.G.class('about-item-number', item)[0],
+      )
       const title = M.G.class('txt-up', M.G.class('about-item-title', item)[0])
       const desc = M.G.class('about-item-desc', item)[0]
       splitLines(desc)
@@ -94,7 +90,7 @@ class Fx {
             duration: 2000,
             easing,
           },
-          '-=2000'
+          '-=2000',
         )
         tl.add(revealLines(desc, { duration: 2000, stagger: 100 }), '-=1600')
       })
@@ -138,7 +134,7 @@ class Fx {
             easing,
             duration,
           },
-          '-=1600'
+          '-=1600',
         )
       }
     })
@@ -155,7 +151,7 @@ class Fx {
       if (desc) splitLines(desc)
       const tags = [...M.G.class('chip', item)]
       const copy = [...M.G.class('txt-up', item)].filter(
-        (el) => !el.closest('.experience-item-body')
+        (el) => !el.closest('.experience-item-body'),
       )
 
       this.play(item, (tl) => {
@@ -172,7 +168,7 @@ class Fx {
             duration: 2000,
             easing,
           },
-          '-=2000'
+          '-=2000',
         )
         if (bodyTxt.length) {
           tl.add(
@@ -182,7 +178,7 @@ class Fx {
               duration: 2000,
               easing,
             },
-            '-=1600'
+            '-=1600',
           )
         }
         if (desc) {
@@ -198,7 +194,7 @@ class Fx {
               easing,
               delay: (_, i) => i * 80,
             },
-            '-=2000'
+            '-=2000',
           )
         }
       })
@@ -268,7 +264,10 @@ class Fx {
     const revealItem = (item) => {
       const overlay = M.G.class('work-item-overlay', item)[0]
       const title = M.G.class('txt-up', M.G.class('work-item-title', item)[0])
-      const desc = M.G.class('txt-up', M.G.class('work-item-description', item)[0])
+      const desc = M.G.class(
+        'txt-up',
+        M.G.class('work-item-description', item)[0],
+      )
       const chips = [...M.G.class('chip', item)]
       const build = (tl) => {
         tl.add({
@@ -285,7 +284,7 @@ class Fx {
             duration,
             delay: anime.stagger(80),
           },
-          '-=1200'
+          '-=1200',
         )
         if (chips.length) {
           tl.add(
@@ -297,7 +296,7 @@ class Fx {
               duration,
               delay: anime.stagger(80),
             },
-            '-=1600'
+            '-=1600',
           )
         }
       }
@@ -353,7 +352,7 @@ class Fx {
           easing,
           duration: INTRO_DURATION,
         },
-        0
+        0,
       )
     }
 
@@ -361,7 +360,7 @@ class Fx {
       splitLines(title)
       intro.add(
         revealLines(title, { duration: INTRO_DURATION, stagger: 100 }),
-        0
+        0,
       )
     }
 
@@ -373,7 +372,7 @@ class Fx {
           easing,
           duration: INTRO_DURATION,
         },
-        0
+        0,
       )
     }
 
@@ -410,59 +409,61 @@ class Fx {
    * intro timeline, and anime resolves a relative offset against the end of
    * the whole timeline — which would push each row further out of step.
    */
-  caseRow = (row) => (tl, at = 0, copyGap = COPY_GAP) => {
-    const line = M.G.class('case-block-line', row)
-    const labelEl = M.G.class('case-block-title', row)[0]
-    const label = labelEl ? M.G.class('txt-up', labelEl) : []
-    const body = M.G.qs('.case-role, .case-built', row)
-    if (body) splitLines(body)
-    const links = M.G.qsa('.case-link .txt-up, .case-nav-link .txt-up', row)
-    const tags = [...M.G.class('tag', row)]
-    const copyAt = at + copyGap
+  caseRow =
+    (row) =>
+    (tl, at = 0, copyGap = COPY_GAP) => {
+      const line = M.G.class('case-block-line', row)
+      const labelEl = M.G.class('case-block-title', row)[0]
+      const label = labelEl ? M.G.class('txt-up', labelEl) : []
+      const body = M.G.qs('.case-role, .case-built', row)
+      if (body) splitLines(body)
+      const links = M.G.qsa('.case-link .txt-up, .case-nav-link .txt-up', row)
+      const tags = [...M.G.class('tag', row)]
+      const copyAt = at + copyGap
 
-    tl.add(
-      { targets: line, translateX: ['-100%', 0], duration: 2000, easing },
-      at
-    )
-
-    if (label.length) {
       tl.add(
-        { targets: label, translateY: ['101%', 0], duration: 2000, easing },
-        at
+        { targets: line, translateX: ['-100%', 0], duration: 2000, easing },
+        at,
       )
-    }
 
-    if (body) {
-      tl.add(revealLines(body, { duration: 2000, stagger: 100 }), copyAt)
-    }
+      if (label.length) {
+        tl.add(
+          { targets: label, translateY: ['101%', 0], duration: 2000, easing },
+          at,
+        )
+      }
 
-    if (links.length) {
-      tl.add(
-        {
-          targets: links,
-          translateY: ['101%', 0],
-          duration: 2000,
-          easing,
-          delay: anime.stagger(100),
-        },
-        copyAt
-      )
-    }
+      if (body) {
+        tl.add(revealLines(body, { duration: 2000, stagger: 100 }), copyAt)
+      }
 
-    if (tags.length) {
-      tl.add(
-        {
-          targets: tags,
-          opacity: [0, 1],
-          translateY: [16, 0],
-          duration: 2000,
-          easing,
-          delay: (_, i) => i * 80,
-        },
-        copyAt
-      )
+      if (links.length) {
+        tl.add(
+          {
+            targets: links,
+            translateY: ['101%', 0],
+            duration: 2000,
+            easing,
+            delay: anime.stagger(100),
+          },
+          copyAt,
+        )
+      }
+
+      if (tags.length) {
+        tl.add(
+          {
+            targets: tags,
+            opacity: [0, 1],
+            translateY: [16, 0],
+            duration: 2000,
+            easing,
+            delay: (_, i) => i * 80,
+          },
+          copyAt,
+        )
+      }
     }
-  }
 
   testimonials = () => {
     const heading = M.G.class('txt-up', M.G.class('testimonials-heading')[0])
@@ -509,69 +510,9 @@ class Fx {
           easing,
           duration,
         },
-        '-=1500'
+        '-=1500',
       )
     })
-  }
-
-  skills = () => {
-    const title = M.G.id('skills-title')
-    const titleTxt = M.G.class('txt-up', title)
-    const desc = M.G.class('skills__desc')[0]
-    const items = M.G.class('skills__item')
-
-    this.play(M.G.class('skills__header')[0], (tl) => {
-      tl.add({ targets: titleTxt, translateY: ['100%', 0], easing, duration })
-      tl.add(
-        {
-          targets: desc,
-          translateY: ['20px', 0],
-          opacity: [0, 1],
-          easing,
-          duration,
-        },
-        '-=1500'
-      )
-    })
-
-    for (let i = 0; i < items.length; i++) {
-      this.play(items[i], (tl) => {
-        tl.add({ targets: items[i], opacity: [0, 1], easing, duration })
-      })
-    }
-  }
-
-  contact = () => {
-    const blocks = M.G.class('contact__block')
-    for (let i = 0; i < blocks.length; i++) {
-      const block = blocks[i]
-      const title = M.G.class('contact__title-text', block)
-      const label = M.G.class('contact__label', block)
-
-      this.play(
-        block,
-        (tl) => {
-          tl.add({
-            targets: label,
-            translateY: ['15px', 0],
-            opacity: [0, 1],
-            easing,
-            duration,
-          })
-          tl.add(
-            {
-              targets: title,
-              translateY: ['100%', 0],
-              easing,
-              duration,
-              delay: (_, i) => (i === 0 ? 0 : 100),
-            },
-            '-=1500'
-          )
-        },
-        0.9
-      )
-    }
   }
 
   footer = () => {
@@ -596,7 +537,7 @@ class Fx {
             easing,
             duration,
           },
-          '-=1800'
+          '-=1800',
         )
         tl.add(
           {
@@ -605,7 +546,7 @@ class Fx {
             duration: 2000,
             easing,
           },
-          '-=1600'
+          '-=1600',
         )
         tl.add(
           {
@@ -615,7 +556,7 @@ class Fx {
             duration,
             delay: anime.stagger(50),
           },
-          '-=1800'
+          '-=1800',
         )
         tl.add(
           {
@@ -625,10 +566,10 @@ class Fx {
             easing,
             duration: 2000,
           },
-          '-=1600'
+          '-=1600',
         )
       },
-      0.9
+      0.9,
     )
   }
 }

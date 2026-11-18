@@ -2,10 +2,7 @@ export default new (class LazyLoader {
   run() {
     var lazyImages = [].slice.call(document.querySelectorAll('img.lazy'))
     if ('IntersectionObserver' in window && lazyImages.length !== 0) {
-      let lazyImageObserver = new IntersectionObserver(function (
-        entries,
-        observer
-      ) {
+      let lazyImageObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             let lazyImage = entry.target

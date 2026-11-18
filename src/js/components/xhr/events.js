@@ -10,30 +10,14 @@ class XhrEvents {
   }
 
   eventDelegation = (event) => {
-    for (
-      var win = window,
-        target = event.target,
-        isAnchor = false,
-        isSubmitButton = false;
-      target;
-
-    ) {
+    for (var win = window, target = event.target, isAnchor = false; target;) {
       if (target.tagName === 'A') {
         isAnchor = true
-        break
-      }
-      if (
-        (target.tagName === 'INPUT' || target.tagName === 'BUTTON') &&
-        target.type === 'submit'
-      ) {
-        isSubmitButton = true
         break
       }
 
       target = target.parentNode
     }
-
-    // return
 
     if (isAnchor) {
       if (target.hasAttribute('download')) return
@@ -106,7 +90,7 @@ class XhrEvents {
     Xhr.controller(
       this.path.new,
       this.xhrCallback,
-      this.path.new + (this.m.hash || '')
+      this.path.new + (this.m.hash || ''),
     )
   }
 

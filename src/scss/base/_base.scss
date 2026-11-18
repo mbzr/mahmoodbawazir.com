@@ -75,17 +75,11 @@ img {
 }
 
 html {
-  /*
-    The page starts black. #page-splash is the light sheet that animates up
-    over it to become the page background, which is why no section sets its
-    own light background.
-  */
+  /* Black until #page-splash rises and becomes the page background. */
   background-color: $brand-black;
-  // background-image: url('/images/noise.png');
   color: $brand-color;
   font-size: max(16px, 1.25vw);
   font-weight: 500;
-  // font-family: font-family(roboto);
   font-family: 'Inter', sans-serif;
   line-height: normal;
 

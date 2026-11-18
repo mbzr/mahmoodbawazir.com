@@ -1,4 +1,3 @@
-
 /*
 
 ──────────────────────────────────────────
@@ -11,5 +10,5 @@ const clamp = M.Clamp(val)
 
 */
 export default (t, i, e) => {
-  return Math.min(Math.max(t, i), e);
+  return Math.min(Math.max(t, i), e)
 }

@@ -20,11 +20,21 @@ const Xhr = {
 
         M.G.tag('title')[0].textContent = doc.querySelector('title').textContent
         // Keep page metadata in step with the content during client navigation.
-        const metadata = 'meta[name="description"], meta[name^="twitter:"], meta[property^="og:"], link[rel="canonical"]'
+        const metadata =
+          'meta[name="description"], meta[name^="twitter:"], meta[property^="og:"], link[rel="canonical"]'
         for (const incoming of doc.querySelectorAll(metadata)) {
-          const key = incoming.getAttribute('name') || incoming.getAttribute('property') || incoming.getAttribute('rel')
-          const attribute = incoming.hasAttribute('name') ? 'name' : incoming.hasAttribute('property') ? 'property' : 'rel'
-          const current = document.head.querySelector(`${incoming.tagName}[${attribute}="${key}"]`)
+          const key =
+            incoming.getAttribute('name') ||
+            incoming.getAttribute('property') ||
+            incoming.getAttribute('rel')
+          const attribute = incoming.hasAttribute('name')
+            ? 'name'
+            : incoming.hasAttribute('property')
+              ? 'property'
+              : 'rel'
+          const current = document.head.querySelector(
+            `${incoming.tagName}[${attribute}="${key}"]`,
+          )
           if (current) current.replaceWith(incoming.cloneNode(true))
         }
         /**
@@ -38,7 +48,7 @@ const Xhr = {
             key: 'value',
           },
           'title',
-          pushUrl || url
+          pushUrl || url,
         )
         cb(elem)
       }

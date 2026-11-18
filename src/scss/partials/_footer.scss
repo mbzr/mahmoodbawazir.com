@@ -6,24 +6,17 @@
     margin-bottom: vw(15);
     @extend .h-o-hidden;
 
-    @include breakpoint(767){
+    @include breakpoint(767) {
       font-size: em(13);
     }
   }
 
   &__anchor {
-      display: inline-block;
+    display: inline-block;
   }
 
   &__link-wrap {
     @extend .h-o-hidden;
-  }
-
-  &__link {
-    // color: $brand-primary;
-    // font-size: vw(22);
-    // font-weight: font-weight(bold);
-    // text-transform: uppercase;
   }
 
   &__top {
@@ -39,7 +32,7 @@
     text-align: center;
     padding: vw(15) 0;
 
-    @include breakpoint(767){
+    @include breakpoint(767) {
       font-size: em(13);
     }
   }
